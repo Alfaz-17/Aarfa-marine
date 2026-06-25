@@ -9,7 +9,7 @@ import { AppContextType, AppPropsType } from 'next/dist/shared/lib/utils'
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 
 interface DocumentProps {
-  emotionStylesTags: any[]
+  emotionStyleTags: any[]
 }
 
 class MyDocument extends Document<DocumentProps> {
@@ -29,14 +29,11 @@ class MyDocument extends Document<DocumentProps> {
           <meta content="#fbfbfb" name="apple-mobile-web-app-status-bar-style" />
           <meta content="yes" name="apple-mobile-web-app-capable" />
 
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
+                  <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,700;1,500;1,700&display=swap"
-            rel="stylesheet"
-          />
+          <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet" />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
-          {this.props.emotionStylesTags}
+          {this.props.emotionStyleTags}
         </Head>
         <body>
           <Main />

@@ -3,62 +3,50 @@ import type { Testimonial } from '@/interfaces/testimonial'
 export const data: Array<Testimonial> = [
   {
     id: 1,
-    title: 'Detailed learning materials',
+    title: 'Top Tier Navigation Equipment',
     content:
-      'Classes that provide very detailed material in term of making UI UX Design starting team making low and hight quality, system designs, using data layout and make prototypes and testing.',
+      'Aarfa Marine provided us with the latest Furuno radar systems. The installation was seamless and the equipment performs flawlessly in rough weather conditions.',
     user: {
       id: 1,
-      name: 'Luis Sera',
-      professional: 'UI/UX Engineer',
+      name: 'Captain John S.',
+      professional: 'Commercial Fleet Captain',
       photo: '1.jpg',
     },
   },
   {
     id: 2,
-    title: 'Best Quality Online Course!',
+    title: 'Reliable Communication Systems',
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'We recently upgraded our entire radio suite with Aarfa Marine. Their expertise in GMDSS equipment and swift delivery time saved us from critical downtime.',
     user: {
-      id: 1,
-      name: 'Riski',
-      professional: 'Software Engineer',
+      id: 2,
+      name: 'Sarah M.',
+      professional: 'Marine Fleet Manager',
       photo: '2.jpg',
     },
   },
   {
     id: 3,
-    title: 'Very complete class',
+    title: 'Excellent Spares Sourcing',
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Finding reconditioned parts for older navigation panels can be a nightmare, but Aarfa Marine always manages to source exactly what we need from Alang within 48 hours.',
     user: {
-      id: 1,
-      name: 'Nguyễn Văn',
-      professional: 'FullStack Designer',
+      id: 3,
+      name: 'David R.',
+      professional: 'Chief Engineer',
       photo: '3.jpg',
     },
   },
   {
     id: 4,
-    title: 'Great Quality!',
+    title: 'Outstanding Automation Service',
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      'Their technical team helped us troubleshoot and replace our aging engine alarm systems. The new automation panels are incredibly intuitive and robust.',
     user: {
-      id: 1,
-      name: 'Diana Jordan',
-      professional: 'SEO Expert',
+      id: 4,
+      name: 'Michael T.',
+      professional: 'Vessel Operator',
       photo: '4.jpg',
-    },
-  },
-  {
-    id: 5,
-    title: 'Detailed learning materials',
-    content:
-      'Classes that provide very detailed material in term of making UI UX Design starting team making low and hight quality, system designs, using data layout and make prototypes and testing.',
-    user: {
-      id: 1,
-      name: 'Ashley Graham',
-      professional: 'Back-End Developer',
-      photo: '5.jpg',
     },
   },
 ]

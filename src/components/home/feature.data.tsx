@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
-import ArtTrackIcon from '@mui/icons-material/ArtTrack'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary'
-import ContactSupportIcon from '@mui/icons-material/ContactSupport'
+import MemoryIcon from '@mui/icons-material/Memory'
+import PublicIcon from '@mui/icons-material/Public'
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 
 interface Data {
   title: string
@@ -12,23 +12,23 @@ interface Data {
 
 export const data: Data[] = [
   {
-    title: 'Easy Accessable',
-    description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore',
-    icon: <ArtTrackIcon />,
+    title: 'Advanced Technology',
+    description: 'Efficient, reliable, sustainable marine solutions',
+    icon: <MemoryIcon />,
   },
   {
-    title: 'More Affordable Cost',
-    description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore',
-    icon: <AttachMoneyIcon />,
+    title: 'Export Worldwide',
+    description: 'Global export of advanced marine electronics',
+    icon: <PublicIcon />,
   },
   {
-    title: 'Flexible Study Time',
-    description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore',
-    icon: <LocalLibraryIcon />,
+    title: 'Quality Assurance',
+    description: 'Products sourced from Alang shipbreaking yard',
+    icon: <VerifiedUserIcon />,
   },
   {
-    title: 'Consultation With Mentor',
-    description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore',
-    icon: <ContactSupportIcon />,
+    title: 'Timely Delivery',
+    description: 'Spare parts delivered within 24 hours of order confirmation',
+    icon: <LocalShippingIcon />,
   },
 ]

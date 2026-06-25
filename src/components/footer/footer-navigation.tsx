@@ -6,22 +6,22 @@ import type { Navigation } from '@/interfaces/navigation'
 import { navigations as headerNavigations } from '@/components/navigation/navigation.data'
 import { FooterSectionTitle } from '@/components/footer'
 
-const courseMenu: Array<Navigation> = [
+const productMenu: Array<Navigation> = [
   {
-    label: 'UI/UX Design',
-    path: '#',
+    label: 'Navigation Equipment',
+    path: '/products',
   },
   {
-    label: 'Mobile Development',
-    path: '#',
+    label: 'Communication Equipment',
+    path: '/products',
   },
   {
-    label: 'Machine Learning',
-    path: '#',
+    label: 'Spare Parts',
+    path: '/products',
   },
   {
-    label: 'Web Development',
-    path: '#',
+    label: 'Installation & Services',
+    path: '/services',
   },
 ]
 
@@ -60,9 +60,9 @@ const FooterNavigation: FC = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={4}>
-        <FooterSectionTitle title="Course" />
-        {courseMenu.map(({ label, path }, index) => (
-          <NavigationItem key={index + path} label={label} path={/* path */ '#'} />
+        <FooterSectionTitle title="Products & Services" />
+        {productMenu.map(({ label, path }, index) => (
+          <NavigationItem key={index + path} label={label} path={path} />
         ))}
       </Grid>
       <Grid item xs={12} md={4}>

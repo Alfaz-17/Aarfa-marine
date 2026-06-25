@@ -1,66 +1,179 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Logo } from '@/components/logo'
-import { Navigation, AuthNavigation } from '@/components/navigation'
+import { Navigation } from '@/components/navigation'
 import { useTheme } from '@mui/material/styles'
-import { Menu, Close } from '@mui/icons-material'
+import Menu from '@mui/icons-material/Menu'
+import Close from '@mui/icons-material/Close'
+import WhatsApp from '@mui/icons-material/WhatsApp'
 
 const Header: FC = () => {
   const [visibleMenu, setVisibleMenu] = useState<boolean>(false)
+  const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const { breakpoints } = useTheme()
   const matchMobileView = useMediaQuery(breakpoints.down('md'))
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20)
+      
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const links = [
+    { label: 'Home', path: '/' },
+    { 
+      label: 'About Us', 
+      path: '/about',
+      children: [
+        { label: 'Who We Are', path: '/about#who-we-are' },
+        { label: 'Our Story', path: '/about#our-story' },
+        { label: 'The Team', path: '/about#the-team' },
+        { label: 'Why Choose Us', path: '/about#why-choose' },
+        { label: 'Customer Reviews', path: '/about#customer-reviews' },
+      ]
+    },
+    { label: 'Services', path: '/services' },
+    { 
+      label: 'Products', 
+      path: '/products',
+      children: [
+        { label: 'Navigation', path: '/products?category=Navigation' },
+        { label: 'Automation', path: '/products?category=Automation' },
+        { label: 'Communication', path: '/products?category=Communication' },
+      ]
+    },
+    { label: 'New Arrivals', path: '/new-arrivals' },
+    { label: 'Contact Us', path: '/contact' },
+  ]
+
   return (
-    <Box sx={{ backgroundColor: 'background.paper' }}>
-      <Container sx={{ py: { xs: 2, md: 3 } }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Logo />
-          <Box sx={{ ml: 'auto', display: { xs: 'inline-flex', md: 'none' } }}>
-            <IconButton onClick={() => setVisibleMenu(!visibleMenu)}>
+    <Box sx={{ 
+      position: 'fixed',
+      top: { xs: isScrolled ? 10 : 0, md: isScrolled ? 20 : 0 },
+      left: 0,
+      right: 0,
+      zIndex: 999,
+      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+      px: { xs: 1.5, md: 4 },
+      display: 'flex',
+      justifyContent: 'center',
+    }}>
+      <Box sx={{
+        width: '100%', // Full width inside the padding
+        maxWidth: 1400,
+        backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'transparent',
+        backdropFilter: isScrolled ? 'blur(16px)' : 'none',
+        border: isScrolled ? '1px solid rgba(30, 95, 166, 0.28)' : '1px solid transparent',
+        borderRadius: isScrolled ? { xs: 2, md: 50 } : 0,
+        boxShadow: isScrolled ? '0 10px 40px rgba(0, 0, 0, 0.08)' : 'none',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        py: isScrolled ? 1 : 2, // Thinner when scrolled
+        px: { xs: 1.5, md: 4 },
+      }}>
+        {/* Desktop Navigation */}
+        {!matchMobileView ? (
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Logo isScrolled={isScrolled} />
+            </Box>
+            <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+              <Navigation isScrolled={isScrolled} items={links} />
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <IconButton 
+                component="a" 
+                href="https://www.ebay.com/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ 
+                  '&:hover': { opacity: 0.8 }
+                }}
+              >
+                <img src="/images/ebay.png" alt="eBay" style={{ height: '24px', width: '24px', objectFit: 'contain', borderRadius: '4px' }} />
+              </IconButton>
+              <IconButton 
+                component="a" 
+                href="https://www.indiamart.com/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ 
+                  '&:hover': { opacity: 0.8 }
+                }}
+              >
+                <img src="/images/indiamart.png" alt="IndiaMART" style={{ height: '24px', width: '24px', objectFit: 'contain', borderRadius: '4px' }} />
+              </IconButton>
+              <IconButton 
+                component="a" 
+                href="https://wa.me/1234567890" 
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ 
+                  color: isScrolled ? '#25D366' : '#25D366', // WhatsApp Brand Color
+                  '&:hover': { opacity: 0.8 }
+                }}
+              >
+                <WhatsApp />
+              </IconButton>
+            </Box>
+          </Box>
+        ) : (
+          /* Mobile Navigation (Centered Logo, Left Hamburguer trigger) */
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
+            <IconButton 
+              onClick={() => setVisibleMenu(!visibleMenu)} 
+              sx={{ color: isScrolled ? 'text.primary' : 'common.white' }}
+            >
               <Menu />
             </IconButton>
-          </Box>
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexDirection: { xs: 'column', md: 'row' },
+            <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+              <Logo isScrolled={isScrolled} />
+            </Box>
+            <Box sx={{ width: 48 }} /> {/* Spacing spacer to balance flex box */}
 
-              transition: (theme) => theme.transitions.create(['top']),
-              ...(matchMobileView && {
-                py: 6,
-                backgroundColor: 'background.paper',
-                zIndex: 'appBar',
-                position: 'fixed',
-                height: { xs: '100vh', md: 'auto' },
-                top: visibleMenu ? 0 : '-120vh',
-                left: 0,
-              }),
-            }}
-          >
-            <Box /> {/* Magic space */}
-            <Navigation />
-            <AuthNavigation />
-            {visibleMenu && matchMobileView && (
-              <IconButton
+            {/* Mobile Navigation Drawer */}
+            {visibleMenu && (
+              <Box
                 sx={{
+                  py: 6,
+                  px: 4,
+                  backgroundColor: 'background.paper',
+                  zIndex: 'appBar',
                   position: 'fixed',
-                  top: 10,
-                  right: 10,
+                  height: '100svh',
+                  width: '100%',
+                  top: 0,
+                  left: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                 }}
-                onClick={() => setVisibleMenu(!visibleMenu)}
               >
-                <Close />
-              </IconButton>
+                <IconButton
+                  sx={{
+                    position: 'absolute',
+                    top: 10,
+                    right: 10,
+                  }}
+                  onClick={() => setVisibleMenu(false)}
+                >
+                  <Close />
+                </IconButton>
+                <Box sx={{ mb: 4, mt: 2 }}>
+                  <Logo isScrolled={true} />
+                </Box>
+                <Navigation isScrolled={true} items={links} />
+              </Box>
             )}
           </Box>
-        </Box>
-      </Container>
+        )}
+      </Box>
     </Box>
   )
 }

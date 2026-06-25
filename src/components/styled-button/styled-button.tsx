@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react'
 import Box from '@mui/material/Box'
-import { Theme } from '@mui/material'
+import { Theme, SxProps } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { ButtonProps } from '@mui/material/Button'
 import { fontFamily } from '@/config/theme/typography'
@@ -30,6 +30,7 @@ const StyledButtonRoot = styled('button', {
 
   display: 'inline-flex',
   alignItems: 'center',
+  justifyContent: 'center',
   userSelect: 'none',
   transform: 'unset',
   position: 'relative',
@@ -156,12 +157,13 @@ const StyledButtonRoot = styled('button', {
 
 interface Props extends BaseButtonProps {
   children: ReactNode
+  sx?: SxProps<Theme>
 }
 
 const StyledButton: FC<Props> = (props: Props) => {
-  const { children, onClick, disableHoverEffect, startIcon, endIcon, ...rest } = props
+  const { children, onClick, disableHoverEffect, startIcon, endIcon, sx, ...rest } = props
   return (
-    <StyledButtonRoot onClick={onClick} disableHoverEffect={disableHoverEffect} {...rest}>
+    <StyledButtonRoot onClick={onClick} disableHoverEffect={disableHoverEffect} sx={sx} {...rest}>
       {startIcon && (
         <Box component="span" sx={{ display: 'inherit', mr: 1, ml: -0.5 }}>
           {startIcon}
