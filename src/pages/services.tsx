@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Box from '@mui/material/Box'
@@ -12,7 +12,8 @@ import CardMedia from '@mui/material/CardMedia'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
 import PageHero from '@/components/page-hero'
-import { CtaBand } from '@/components/home'
+import { CtaBand, KeyFacts, CustomerReviews } from '@/components/home'
+import { InquiryModal } from '@/components/common/inquiry-modal'
 import connectToDatabase from '@/lib/db'
 import { Service } from '@/lib/models'
 
@@ -21,6 +22,14 @@ interface ServicesProps {
 }
 
 const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
+  const [inquiryMessage, setInquiryMessage] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleServiceClick = (serviceName: string) => {
+    setInquiryMessage(`I am inquiring about the ${serviceName} service.`)
+    setIsModalOpen(true)
+  }
+
   return (
     <>
       <Head>
@@ -42,9 +51,9 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
           <Box sx={{ textAlign: 'center', mb: 8 }}>
             <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, color: 'text.primary', position: 'relative', display: 'inline-block' }}>
               Comprehensive Service{' '}
-              <Box component="span" sx={{ position: 'relative', display: 'inline-block' }}>
+              <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
                 Coverage
-                <Box sx={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 80, md: 120 }, opacity: 0.9 }, zIndex: -1 }}>
+                <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 80, md: 120 }, opacity: 0.9 }, zIndex: -1 }}>
                   <img src="/images/headline-curve.svg" alt="Headline curve" />
                 </Box>
               </Box>
@@ -54,15 +63,19 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
             {services && services.length > 0 ? (
               services.map((service, index) => (
                 <Grid item xs={12} sm={6} md={4} key={service._id || index}>
-                  <Card sx={{ 
+                  <Card 
+                    onClick={() => handleServiceClick(service.name)}
+                    sx={{ 
                     height: '100%', 
                     display: 'flex', 
                     flexDirection: 'column',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    cursor: 'pointer',
                     '&:hover': {
                       transform: 'translateY(-5px)',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                      borderColor: 'primary.light'
                     }
                   }}>
                     <CardMedia
@@ -90,6 +103,16 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
           </Grid>
         </Container>
       </Box>
+
+      <InquiryModal 
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        source="Services Page"
+        defaultMessage={inquiryMessage}
+      />
+
+      <KeyFacts />
+      <CustomerReviews />
 
       <CtaBand tone="dark" />
     </>

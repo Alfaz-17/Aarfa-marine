@@ -50,9 +50,7 @@ const Navigation: FC<NavigationProps> = ({ isScrolled, items }) => {
   const renderCurve = (showByDefault = false) => (
     <Box
       className="hover-curve"
-      sx={{
-        position: 'absolute',
-        bottom: -4,
+      sx={{ position: 'absolute', bottom: 0,
         left: '50%',
         transform: 'translateX(-50%) rotate(2deg)',
         lineHeight: 0,

@@ -8,21 +8,19 @@ import Avatar from '@mui/material/Avatar'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import StarIcon from '@mui/icons-material/Star'
+import { GetServerSideProps } from 'next'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
 import PageHero from '@/components/page-hero'
-import { CtaBand, WhyChoose } from '@/components/home'
+import { CtaBand, WhyChoose, BrandsSection } from '@/components/home'
+import connectToDatabase from '@/lib/db'
+import { Brand } from '@/lib/models'
 
-const reviews = [
-  { name: 'Oleg Shcherbakov', country: 'Austria', product: 'Gyrocompass' },
-  { name: 'Rafael', country: 'Venezuela', product: 'Navigational Equipment' },
-  { name: 'Tran Khanh Tuong', country: 'Vietnam', product: 'Fish Finder' },
-  { name: 'Barwil Syed Shafi', country: 'Chennai', product: 'Gyrocompass' },
-  { name: 'Sandeep Surana', country: 'Kolkata', product: 'Fish Finder' },
-  { name: 'Allipilli Chinnarao', country: 'Visakhapatnam', product: 'Marine GPS' },
-]
+interface AboutUsProps {
+  brands: any[]
+}
 
-const AboutUs: NextPageWithLayout = () => {
+const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
   return (
     <>
       <Head>
@@ -51,7 +49,7 @@ const AboutUs: NextPageWithLayout = () => {
               </Typography>
               <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, mb: 3, color: 'text.primary', position: 'relative', display: 'inline-block' }}>
                 We Are Aarfa Marine
-                <Box sx={{ position: 'absolute', bottom: '-15px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 70, md: 90 }, opacity: 0.9 }, zIndex: -1 }}>
+                <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 70, md: 90 }, opacity: 0.9 }, zIndex: -1 }}>
                   <img src="/images/headline-curve.svg" alt="Headline curve" />
                 </Box>
               </Typography>
@@ -76,7 +74,7 @@ const AboutUs: NextPageWithLayout = () => {
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption" sx={{ color: '#5B9BD5', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
+              <Typography variant="caption" sx={{ color: '#1E5FA6', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
                 Section 02
               </Typography>
               <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, mb: 3 }}>
@@ -89,7 +87,7 @@ const AboutUs: NextPageWithLayout = () => {
                 Today, the company operates from Bhavnagar — home to the world-famous Alang Shipbreaking Yard — which gives us a unique advantage in sourcing genuine, tested marine equipment at competitive prices.
               </Typography>
               
-              <Box sx={{ borderLeft: '4px solid #5B9BD5', pl: 3, py: 1 }}>
+              <Box sx={{ borderLeft: '4px solid #1E5FA6', pl: 3, py: 1 }}>
                 <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>Our Mission</Typography>
                 <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', lineHeight: 1.6 }}>
                   To be the most trusted supplier of marine equipment by stocking genuine tested parts, delivering within 24 hours, providing expert advice, and giving honest, transparent pricing.
@@ -149,47 +147,34 @@ const AboutUs: NextPageWithLayout = () => {
 
       <WhyChoose />
 
-      {/* SECTION 5: CUSTOMER REVIEWS */}
-      <Box id="customer-reviews" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.default' }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
-              Section 05
-            </Typography>
-            <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, color: 'text.primary', position: 'relative', display: 'inline-block' }}>
-              Trusted by Customers Across the World
-              <Box sx={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 80, md: 120 }, opacity: 0.9 }, zIndex: -1 }}>
-                <img src="/images/headline-curve.svg" alt="Headline curve" />
-              </Box>
-            </Typography>
-          </Box>
-          
-          <Grid container spacing={3}>
-            {reviews.map((review, idx) => (
-              <Grid item xs={12} sm={6} md={4} key={idx}>
-                <Card sx={{ height: '100%', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', border: '1px solid', borderColor: 'grey.100' }}>
-                  <CardContent sx={{ p: 3 }}>
-                    <Box sx={{ display: 'flex', color: '#FAAF00', mb: 2 }}>
-                      {[1,2,3,4,5].map(star => <StarIcon key={star} fontSize="small" />)}
-                    </Box>
-                    <Typography sx={{ color: 'text.secondary', fontStyle: 'italic', mb: 2, minHeight: 48 }}>
-                      "Excellent service and fast delivery for our {review.product} requirements."
-                    </Typography>
-                    <Box>
-                      <Typography sx={{ fontWeight: 700, color: 'text.primary' }}>{review.name}</Typography>
-                      <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 600 }}>{review.country}</Typography>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+      {/* SECTION 5: BRANDS */}
+      <Box sx={{ py: 8 }}>
+        <BrandsSection brands={brands} />
       </Box>
+
 
       <CtaBand tone="dark" />
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    await connectToDatabase()
+    const brands = await Brand.find({}).lean()
+    
+    return {
+      props: {
+        brands: JSON.parse(JSON.stringify(brands)),
+      },
+    }
+  } catch (error) {
+    return {
+      props: {
+        brands: [],
+      },
+    }
+  }
 }
 
 AboutUs.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>

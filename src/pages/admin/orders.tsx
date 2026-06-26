@@ -85,8 +85,8 @@ export default function AdminOrdersPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-12 text-[#5B9BD5]">
-        <Loader2 className="w-8 h-8 animate-spin text-[#5B9BD5]" />
+      <div className="flex items-center justify-center p-12 text-primary-light">
+        <Loader2 className="w-8 h-8 animate-spin text-primary-light" />
       </div>
     )
   }
@@ -101,15 +101,15 @@ export default function AdminOrdersPage() {
           </a>
         </Link>
         <h1 className="text-3xl font-extrabold text-white uppercase tracking-tighter font-syne m-0">Inquiry Ledger</h1>
-        <p className="text-xs font-mono font-bold text-[#5B9BD5] uppercase tracking-[0.3em] mt-2 m-0">{orders.length} total transmissions</p>
+        <p className="text-xs font-mono font-bold text-primary-light uppercase tracking-[0.3em] mt-2 m-0">{orders.length} total transmissions</p>
       </div>
 
       {orders.length === 0 ? (
-        <div className="bg-[#0A1F40]/55 border border-[#5B9BD5]/20 p-12 text-center relative">
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+        <div className="bg-primary/55 border border-primary-light/20 p-12 text-center relative">
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
           
           <Package className="w-12 h-12 text-slate-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold text-white mb-2 font-syne">No Transmission Logs</h2>
@@ -120,12 +120,12 @@ export default function AdminOrdersPage() {
           {orders.map((order) => {
             const StatusIcon = statusConfig[order.status].icon
             return (
-              <div key={order._id} className="bg-[#0A1F40]/40 border border-[#5B9BD5]/20 p-6 relative">
+              <div key={order._id} className="bg-primary/40 border border-primary-light/20 p-6 relative">
                 {/* Corner Tech bracket */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/30" />
-                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/30" />
-                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/30" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/30" />
+                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/30" />
+                <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/30" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/30" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/30" />
 
                 <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
                   {/* Inquiry details */}
@@ -136,7 +136,7 @@ export default function AdminOrdersPage() {
                         {statusConfig[order.status].label}
                       </span>
                       <span className="text-[10px] font-mono text-slate-400 flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-[#5B9BD5]" />
+                        <Calendar className="w-3.5 h-3.5 text-primary-light" />
                         {formatDate(order.createdAt)}
                       </span>
                     </div>
@@ -144,12 +144,12 @@ export default function AdminOrdersPage() {
                     <h3 className="text-lg font-bold text-white mb-2 font-syne uppercase tracking-tight">{order.customerName}</h3>
                     
                     <div className="flex flex-wrap gap-6 text-xs font-mono text-slate-350 mb-4">
-                      <a href={`tel:${order.customerPhone}`} className="flex items-center gap-1.5 hover:text-white text-[#5B9BD5] no-underline">
+                      <a href={`tel:${order.customerPhone}`} className="flex items-center gap-1.5 hover:text-white text-primary-light no-underline">
                         <Phone className="w-4 h-4" />
                         {order.customerPhone}
                       </a>
                       {order.customerEmail && (
-                        <a href={`mailto:${order.customerEmail}`} className="flex items-center gap-1.5 hover:text-white text-[#5B9BD5] no-underline">
+                        <a href={`mailto:${order.customerEmail}`} className="flex items-center gap-1.5 hover:text-white text-primary-light no-underline">
                           <Mail className="w-4 h-4" />
                           {order.customerEmail}
                         </a>
@@ -158,11 +158,11 @@ export default function AdminOrdersPage() {
 
                     {/* Spares Selected list */}
                     <div className="border-t border-slate-800 pt-4">
-                      <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#5B9BD5] block mb-2">Requested Fleet Components</span>
+                      <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-primary-light block mb-2">Requested Fleet Components</span>
                       {order.items && order.items.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between py-2 border-b border-slate-850 last:border-0 font-mono text-xs text-slate-300">
                           <span className="font-semibold text-white">{item.productTitle}</span>
-                          <span className="text-[#5B9BD5]">Qty: {item.quantity}</span>
+                          <span className="text-primary-light">Qty: {item.quantity}</span>
                         </div>
                       ))}
                     </div>
@@ -176,12 +176,12 @@ export default function AdminOrdersPage() {
 
                   {/* Actions */}
                   <div className="flex flex-col gap-3 lg:w-48">
-                    <label className="text-[8px] font-mono font-bold text-[#5B9BD5] uppercase tracking-widest block">Update Registry</label>
+                    <label className="text-[8px] font-mono font-bold text-primary-light uppercase tracking-widest block">Update Registry</label>
                     <select
                       value={order.status}
                       onChange={(e) => updateStatus(order._id, e.target.value)}
                       disabled={updating === order._id}
-                      className="w-full px-3 py-3 bg-slate-950 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs font-bold font-mono text-white tracking-widest uppercase cursor-pointer"
+                      className="w-full px-3 py-3 bg-slate-950 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs font-bold font-mono text-white tracking-widest uppercase cursor-pointer"
                     >
                       <option value="pending" className="bg-slate-950 text-white">Pending</option>
                       <option value="confirmed" className="bg-slate-950 text-white">Confirmed</option>

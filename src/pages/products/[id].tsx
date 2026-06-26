@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Box from '@mui/material/Box'
@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from 'next/link'
+import { ChevronLeft } from 'lucide-react'
 import Chip from '@mui/material/Chip'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -18,14 +19,25 @@ import Paper from '@mui/material/Paper'
 
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
+import ProductCard from '@/components/product-card'
+import { InquiryModal } from '@/components/common/inquiry-modal'
 import connectToDatabase from '@/lib/db'
 import { Product } from '@/lib/models'
 
 interface ProductDetailPageProps {
   product: any
+  relatedProducts: any[]
 }
 
-const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product }) => {
+const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product, relatedProducts }) => {
+  const [inquiryMessage, setInquiryMessage] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleRequestQuoteClick = () => {
+    setInquiryMessage(`I am interested in requesting a quote for: ${product.title}`)
+    setIsModalOpen(true)
+  }
+
   if (!product) {
     return (
       <Box sx={{ py: 20, textAlign: 'center' }}>
@@ -68,17 +80,33 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
         <meta name="description" content={product.metaDescription || product.description?.substring(0, 160)} />
       </Head>
 
-      {/* Breadcrumbs Banner */}
-      <Box sx={{ bgcolor: 'primary.main', color: 'white', pt: { xs: 13, md: 18 }, pb: { xs: 3, md: 4 } }}>
+      {/* Top Navigation Banner */}
+      <Box sx={{ bgcolor: 'primary.main', color: 'white', pt: { xs: 13, md: 16 }, pb: { xs: 3, md: 4 } }}>
         <Container maxWidth="lg">
-          <Breadcrumbs aria-label="breadcrumb" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+          <Link href="/products" passHref>
+            <Button 
+              component="a" 
+              startIcon={<ChevronLeft size={20} />} 
+              sx={{ 
+                color: 'rgba(255,255,255,0.7)', 
+                textTransform: 'uppercase', 
+                letterSpacing: 2, 
+                fontWeight: 700, 
+                mb: 2,
+                '&:hover': { color: 'white', bgcolor: 'transparent' } 
+              }}
+            >
+              Back to Products
+            </Button>
+          </Link>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
             <Link href="/" passHref>
               <Box component="a" sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { color: 'white' } }}>Home</Box>
             </Link>
             <Link href="/products" passHref>
               <Box component="a" sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { color: 'white' } }}>Products</Box>
             </Link>
-            <Typography sx={{ color: 'white' }}>{product.title}</Typography>
+            <Typography sx={{ color: 'white', fontWeight: 600 }}>{product.title}</Typography>
           </Breadcrumbs>
         </Container>
       </Box>
@@ -168,7 +196,12 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
               </Typography>
 
               <Box sx={{ display: 'flex', gap: 2, mb: 6, flexDirection: { xs: 'column', sm: 'row' } }}>
-                <Button variant="contained" size="large" sx={{ py: 1.5, px: 4, fontWeight: 700, width: { xs: '100%', sm: 'auto' } }}>
+                <Button 
+                  variant="contained" 
+                  size="large" 
+                  onClick={handleRequestQuoteClick}
+                  sx={{ py: 1.5, px: 4, fontWeight: 700, width: { xs: '100%', sm: 'auto' } }}
+                >
                   Request Quote
                 </Button>
                 <Button variant="outlined" size="large" sx={{ py: 1.5, px: 4, fontWeight: 700, width: { xs: '100%', sm: 'auto' } }}>
@@ -189,9 +222,32 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
 
           {/* Specifications Table */}
           {renderSpecifications()}
+
+          {/* Related Products Section */}
+          {relatedProducts && relatedProducts.length > 0 && (
+            <Box sx={{ mt: 10, pt: 6, borderTop: '1px solid', borderColor: 'divider' }}>
+              <Typography variant="h3" sx={{ fontWeight: 800, mb: 4, color: 'primary.main' }}>
+                Suggested Products
+              </Typography>
+              <Grid container spacing={4}>
+                {relatedProducts.map((relProduct) => (
+                  <Grid item xs={12} sm={6} md={3} key={relProduct._id}>
+                    <ProductCard product={relProduct} tone="light" />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          )}
           
         </Container>
       </Box>
+
+      <InquiryModal 
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        source="Product Page"
+        defaultMessage={inquiryMessage}
+      />
     </>
   )
 }
@@ -214,9 +270,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const serializedProduct = JSON.parse(JSON.stringify(product))
 
+    // Fetch related products
+    let relatedProducts = []
+    if (product.category) {
+      const categoryId = product.category._id || product.category
+      const related = await Product.find({ 
+        category: categoryId,
+        _id: { $ne: product._id }
+      })
+      .limit(4)
+      .populate('category brand')
+      .lean()
+      
+      relatedProducts = JSON.parse(JSON.stringify(related))
+    }
+
     return {
       props: {
         product: serializedProduct,
+        relatedProducts,
       },
     }
   } catch (error) {

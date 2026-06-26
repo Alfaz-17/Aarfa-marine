@@ -94,6 +94,20 @@ const SettingsSchema = new Schema({
   contactEmail: { type: String },
   contactPhone: { type: String },
   address: { type: String },
+  geminiApiKey: { type: String },
 }, { timestamps: true })
 
 export const Settings: Model<any> = models.Settings || model('Settings', SettingsSchema)
+
+// ── Inquiry ──
+const InquirySchema = new Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String },
+  company: { type: String },
+  message: { type: String, required: true },
+  source: { type: String },
+  status: { type: String, enum: ['new', 'read', 'replied'], default: 'new' }
+}, { timestamps: true })
+
+export const Inquiry: Model<any> = models.Inquiry || model('Inquiry', InquirySchema)

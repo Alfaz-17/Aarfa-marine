@@ -43,7 +43,7 @@ const Contact: NextPageWithLayout = () => {
 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                 <Box sx={{ display: 'flex', gap: 3 }}>
-                  <Box sx={{ bgcolor: 'rgba(30,95,166,0.1)', p: 2, borderRadius: 1, display: 'flex' }}>
+                  <Box sx={{ bgcolor: '#1E5FA61A', p: 2, borderRadius: 1, display: 'flex' }}>
                     <LocationOn sx={{ color: 'primary.light' }} />
                   </Box>
                   <Box>
@@ -53,7 +53,7 @@ const Contact: NextPageWithLayout = () => {
                 </Box>
                 
                 <Box sx={{ display: 'flex', gap: 3 }}>
-                  <Box sx={{ bgcolor: 'rgba(30,95,166,0.1)', p: 2, borderRadius: 1, display: 'flex' }}>
+                  <Box sx={{ bgcolor: '#1E5FA61A', p: 2, borderRadius: 1, display: 'flex' }}>
                     <Email sx={{ color: 'primary.light' }} />
                   </Box>
                   <Box>
@@ -63,7 +63,7 @@ const Contact: NextPageWithLayout = () => {
                 </Box>
                 
                 <Box sx={{ display: 'flex', gap: 3 }}>
-                  <Box sx={{ bgcolor: 'rgba(30,95,166,0.1)', p: 2, borderRadius: 1, display: 'flex' }}>
+                  <Box sx={{ bgcolor: '#1E5FA61A', p: 2, borderRadius: 1, display: 'flex' }}>
                     <Phone sx={{ color: 'primary.light' }} />
                   </Box>
                   <Box>

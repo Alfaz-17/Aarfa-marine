@@ -1,9 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
+import Head from 'next/head'
 import { StyledButton } from '@/components/styled-button'
 
 interface Exp {
@@ -52,28 +53,84 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
 }
 
 const HomeHero: FC = () => {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoReady, setVideoReady] = useState(false)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const handleCanPlay = () => setVideoReady(true)
+    video.addEventListener('canplay', handleCanPlay)
+
+    // If already ready (cached)
+    if (video.readyState >= 3) {
+      setVideoReady(true)
+    }
+
+    return () => video.removeEventListener('canplay', handleCanPlay)
+  }, [])
+
   return (
-    <Box id="hero" sx={{ 
-      position: 'relative', 
-      minHeight: { xs: '100svh', md: '100vh' },
-      height: { md: '100vh' },
-      display: 'flex',
-      alignItems: 'center',
-      pt: { xs: 11, md: 8 },
-      pb: { xs: 5, md: 2 },
-      overflow: 'hidden',
-      backgroundColor: 'primary.dark',
-    }}>
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
-        style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', top: 0, left: 0, zIndex: 1, opacity: 0.8 }}
-      >
-        <source src="/videos/hero.webm" type="video/webm" />
-        <source src="/videos/hero.mp4" type="video/mp4" />
-      </video>
+    <>
+      {/* Preload the hero video for fastest possible start */}
+      <Head>
+        <link rel="preload" href="/videos/hero.webm" as="video" type="video/webm" />
+        <link rel="preload" href="/videos/hero-poster.jpg" as="image" />
+      </Head>
+      <Box id="hero" sx={{ 
+        position: 'relative', 
+        minHeight: { xs: '100svh', md: '100vh' },
+        height: { md: '100vh' },
+        display: 'flex',
+        alignItems: 'center',
+        pt: { xs: 11, md: 8 },
+        pb: { xs: 5, md: 2 },
+        overflow: 'hidden',
+        backgroundColor: 'primary.dark',
+      }}>
+        {/* Tiny blurred placeholder — renders instantly (~1KB) */}
+        <Box
+          component="img"
+          src="/videos/hero-poster-tiny.jpg"
+          alt=""
+          aria-hidden="true"
+          sx={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            top: 0,
+            left: 0,
+            zIndex: 0,
+            filter: 'blur(20px)',
+            transform: 'scale(1.1)', // prevent blur edge artifacts
+          }}
+        />
+        {/* Video element with poster for fast first-frame display */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/videos/hero-poster.jpg"
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            top: 0,
+            left: 0,
+            zIndex: 1,
+            opacity: videoReady ? 0.8 : 0,
+            transition: 'opacity 0.6s ease-in-out',
+          }}
+        >
+          <source src="/videos/hero.webm" type="video/webm" />
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
       {/* Slight black overlay for cinematic feel and text contrast */}
       <Box sx={{ 
         position: 'absolute', 
@@ -222,6 +279,7 @@ const HomeHero: FC = () => {
         </Box>
       </Container>
     </Box>
+    </>
   )
 }
 

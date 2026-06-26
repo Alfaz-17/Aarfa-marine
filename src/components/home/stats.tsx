@@ -8,41 +8,41 @@ const StatsBand: FC = () => {
   return (
     <Box
       sx={{
-        backgroundColor: 'background.default',
-        borderTop: '1px solid rgba(10,25,47,0.08)',
-        borderBottom: '1px solid rgba(10,25,47,0.08)',
-        py: { xs: 6, md: 8 },
-        color: 'text.primary',
+        backgroundColor: 'primary.dark',
+        py: { xs: 8, md: 10 },
+        color: 'common.white',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         <Grid container spacing={4} sx={{ alignItems: 'center' }}>
           {/* Stat 1 */}
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center', borderRight: { md: '1px solid rgba(10,25,47,0.1)' } }}>
-            <Typography variant="h2" sx={{ fontSize: { xs: '3rem', md: '4rem' }, fontWeight: 800, mb: 1, color: 'text.primary' }}>
-              9<Typography component="sup" sx={{ fontSize: '1.5rem', color: 'primary.light', ml: 0.5 }}>+</Typography>
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center', borderRight: { md: '1px solid rgba(255,255,255,0.1)' } }}>
+            <Typography variant="h2" sx={{ fontSize: { xs: '3.5rem', md: '4.5rem' }, fontWeight: 800, mb: 1, color: 'common.white' }}>
+              9<Typography component="sup" sx={{ fontSize: '1.8rem', color: 'secondary.main', ml: 0.5 }}>+</Typography>
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', letterSpacing: 1, textTransform: 'uppercase', fontSize: '0.8rem' }}>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontSize: '0.85rem', fontWeight: 600 }}>
               Years of Marine<br />Electronics Expertise
             </Typography>
           </Grid>
 
           {/* Stat 2 */}
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center', borderRight: { md: '1px solid rgba(10,25,47,0.1)' } }}>
-            <Typography variant="h2" sx={{ fontSize: { xs: '3rem', md: '4rem' }, fontWeight: 800, mb: 1, color: 'text.primary' }}>
-              500<Typography component="sup" sx={{ fontSize: '1.5rem', color: 'primary.light', ml: 0.5 }}>+</Typography>
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center', borderRight: { md: '1px solid rgba(255,255,255,0.1)' } }}>
+            <Typography variant="h2" sx={{ fontSize: { xs: '3.5rem', md: '4.5rem' }, fontWeight: 800, mb: 1, color: 'common.white' }}>
+              500<Typography component="sup" sx={{ fontSize: '1.8rem', color: 'secondary.main', ml: 0.5 }}>+</Typography>
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', letterSpacing: 1, textTransform: 'uppercase', fontSize: '0.8rem' }}>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontSize: '0.85rem', fontWeight: 600 }}>
               Vessels Equipped &<br />Successfully Serviced
             </Typography>
           </Grid>
 
           {/* Stat 3 */}
           <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
-            <Typography variant="h2" sx={{ fontSize: { xs: '3rem', md: '4rem' }, fontWeight: 800, mb: 1, color: 'text.primary' }}>
-              24<Typography component="sup" sx={{ fontSize: '1.5rem', color: 'primary.light', ml: 0.5 }}>hr</Typography>
+            <Typography variant="h2" sx={{ fontSize: { xs: '3.5rem', md: '4.5rem' }, fontWeight: 800, mb: 1, color: 'common.white' }}>
+              24<Typography component="sup" sx={{ fontSize: '1.8rem', color: 'secondary.main', ml: 0.5 }}>hr</Typography>
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', letterSpacing: 1, textTransform: 'uppercase', fontSize: '0.8rem' }}>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', letterSpacing: 1.5, textTransform: 'uppercase', fontSize: '0.85rem', fontWeight: 600 }}>
               Rapid Spares Delivery<br />Worldwide
             </Typography>
           </Grid>

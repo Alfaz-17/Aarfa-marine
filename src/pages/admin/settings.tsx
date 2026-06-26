@@ -5,10 +5,8 @@ import api from '@/lib/api';
 import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminSettingsPage() {
-  const [settings, setSettings] = useState({
-    autoBackgroundRemoval: false,
-    applyWatermark: true,
-    watermarkText: 'Aarfa Marine'
+  const [settings, setSettings] = useState<{geminiApiKey?: string}>({
+    geminiApiKey: ''
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -20,9 +18,7 @@ export default function AdminSettingsPage() {
         const { data } = await api.get('/settings');
         if (data) {
           setSettings({
-            autoBackgroundRemoval: data.autoBackgroundRemoval,
-            applyWatermark: data.applyWatermark,
-            watermarkText: data.watermarkText || 'Aarfa Marine Solutions'
+            geminiApiKey: data.geminiApiKey || ''
           });
         }
       } catch (err) {
@@ -49,7 +45,7 @@ export default function AdminSettingsPage() {
     }
   };
 
-  if (isLoading) return <div className="text-[10px] font-mono font-bold uppercase tracking-widest p-10 text-[#5B9BD5]">Accessing secure telemetry settings...</div>;
+  if (isLoading) return <div className="text-[10px] font-mono font-bold uppercase tracking-widest p-10 text-primary-light">Accessing secure telemetry settings...</div>;
 
   return (
     <div className="max-w-4xl mx-auto space-y-12 font-sans">
@@ -57,9 +53,9 @@ export default function AdminSettingsPage() {
       <div className="flex items-center justify-between border-b border-slate-800 pb-8 relative">
         <div>
           <h1 className="text-3xl font-extrabold text-white uppercase tracking-tighter font-syne m-0">System Console</h1>
-          <p className="text-xs font-mono font-bold text-[#5B9BD5] uppercase tracking-[0.3em] mt-2 m-0">Global UI & Asset Processing Configuration</p>
+          <p className="text-xs font-mono font-bold text-primary-light uppercase tracking-[0.3em] mt-2 m-0">Global UI & Asset Processing Configuration</p>
         </div>
-        <ShieldCheck className="w-8 h-8 text-[#5B9BD5]/20" />
+        <ShieldCheck className="w-8 h-8 text-primary-light/20" />
       </div>
 
       {message.text && (
@@ -74,85 +70,29 @@ export default function AdminSettingsPage() {
         </motion.div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Background Removal Toggle */}
-        <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 space-y-6 group hover:border-[#5B9BD5] transition-all relative">
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+      <div className="grid grid-cols-1 gap-8">
+        {/* Gemini API Configuration */}
+        <div className="bg-primary/55 p-10 border border-primary-light/20 space-y-8 relative">
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-          <div className="flex items-center gap-4 text-[#5B9BD5]">
+          <div className="flex items-center gap-4 text-primary-light border-b border-slate-800 pb-6">
             <Sparkles className="w-5 h-5" />
-            <h2 className="text-xs font-mono font-bold uppercase tracking-widest m-0">Asset Normalization</h2>
+            <h2 className="text-xs font-mono font-bold uppercase tracking-widest m-0">AI Integration</h2>
           </div>
-          <p className="text-[10px] text-slate-400 font-mono uppercase leading-relaxed tracking-wider m-0">
-            Automatically remove backgrounds from all uploaded product images using local AI processing (Simulated fallback).
-          </p>
-          <div className="pt-4">
-            <button
-              onClick={() => setSettings(prev => ({ ...prev, autoBackgroundRemoval: !prev.autoBackgroundRemoval }))}
-              className={`w-full py-4 text-[10px] font-mono font-bold uppercase tracking-widest transition-all border cursor-pointer ${
-                settings.autoBackgroundRemoval 
-                  ? 'bg-[#1C3F95] text-white border-[#1C3F95] shadow-xl' 
-                  : 'bg-slate-950/40 text-slate-400 border-[#5B9BD5]/20 hover:border-[#5B9BD5]'
-              }`}
-            >
-              Auto BG Removal: {settings.autoBackgroundRemoval ? 'ENABLED' : 'DISABLED'}
-            </button>
+          <div className="space-y-4">
+            <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-[0.2em] block">Gemini API Key</label>
+            <input
+              type="password"
+              value={settings.geminiApiKey || ''}
+              onChange={(e) => setSettings(prev => ({ ...prev, geminiApiKey: e.target.value }))}
+              className="w-full bg-slate-950/60 border border-primary-light/20 p-5 text-sm outline-none focus:border-primary-light transition-colors font-mono text-white"
+              placeholder="Enter your Gemini API key"
+            />
+            <p className="text-[9px] font-mono text-slate-400 italic m-0">This key is used to power AI features across the admin panel.</p>
           </div>
-        </div>
-
-        {/* Watermarking Controls */}
-        <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 space-y-6 group hover:border-[#5B9BD5] transition-all relative">
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
-
-          <div className="flex items-center gap-4 text-[#5B9BD5]">
-            <ShieldCheck className="w-5 h-5" />
-            <h2 className="text-xs font-mono font-bold uppercase tracking-widest m-0">Brand Protection</h2>
-          </div>
-          <p className="text-[10px] text-slate-400 font-mono uppercase leading-relaxed tracking-wider m-0">
-            Apply a subtle overlay watermark to all main and gallery images during the registry upload process.
-          </p>
-          <div className="pt-4 space-y-4">
-            <button
-              onClick={() => setSettings(prev => ({ ...prev, applyWatermark: !prev.applyWatermark }))}
-              className={`w-full py-4 text-[10px] font-mono font-bold uppercase tracking-widest transition-all border cursor-pointer ${
-                settings.applyWatermark 
-                  ? 'bg-[#1C3F95] text-white border-[#1C3F95] shadow-xl' 
-                  : 'bg-slate-950/40 text-slate-400 border-[#5B9BD5]/20 hover:border-[#5B9BD5]'
-              }`}
-            >
-              Apply Watermark: {settings.applyWatermark ? 'ENABLED' : 'DISABLED'}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Watermark Text Configuration */}
-      <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 space-y-8 relative">
-        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
-
-        <div className="flex items-center gap-4 text-[#5B9BD5] border-b border-slate-800 pb-6">
-          <Type className="w-5 h-5" />
-          <h2 className="text-xs font-mono font-bold uppercase tracking-widest m-0">Watermark Identity</h2>
-        </div>
-        <div className="space-y-4">
-          <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-[0.2em] block">Identifier Text overlay</label>
-          <input
-            type="text"
-            value={settings.watermarkText}
-            onChange={(e) => setSettings(prev => ({ ...prev, watermarkText: e.target.value }))}
-            className="w-full bg-slate-950/60 border border-[#5B9BD5]/20 p-5 text-sm outline-none focus:border-[#5B9BD5] transition-colors font-mono text-white"
-            placeholder="e.g. AARFA MARINE"
-          />
-          <p className="text-[9px] font-mono text-slate-400 italic m-0">Current watermark stamp: "{settings.watermarkText || 'None'}"</p>
         </div>
       </div>
 
@@ -161,7 +101,7 @@ export default function AdminSettingsPage() {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="w-full md:w-auto px-12 py-5 bg-[#1E5FA6] hover:bg-[#5B9BD5] text-white font-mono font-bold uppercase tracking-[0.4em] text-[10px] transition-all shadow-2xl flex items-center justify-center gap-4 disabled:opacity-50 border-0 cursor-pointer"
+          className="w-full md:w-auto px-12 py-5 bg-primary-light hover:bg-primary-light text-white font-mono font-bold uppercase tracking-[0.4em] text-[10px] transition-all shadow-2xl flex items-center justify-center gap-4 disabled:opacity-50 border-0 cursor-pointer"
         >
           {isSaving ? (
             <>

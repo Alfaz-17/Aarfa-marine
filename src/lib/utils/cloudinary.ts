@@ -1,27 +1,30 @@
 export const uploadToCloudinary = async (file: File, folder = "aarfa-marine") => {
   try {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || "coursespace");
-    formData.append("folder", folder);
+    // Convert file to base64
+    const fileBase64 = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
 
-    // If Cloudinary credentials are not fully set up or we want to fallback, we can use default values
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "npdq8wcn";
-    
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`Cloudinary error: ${errText}`);
-    }
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileBase64,
+        folder
+      })
+    });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to upload image');
+    }
+
     return data.secure_url;
   } catch (error: any) {
     console.error("Cloudinary upload error:", error);

@@ -27,9 +27,9 @@ const KeyFacts: FC = () => {
               </Typography>
               <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '2.8rem' }, fontWeight: 700, color: 'text.primary', mb: 3 }}>
                 Our{' '}
-                <Box component="span" sx={{ position: 'relative', display: 'inline-block' }}>
+                <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
                   Vision
-                  <Box sx={{ position: 'absolute', bottom: '-15px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 70, md: 80 }, opacity: 0.9 }, zIndex: -1 }}>
+                  <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 70, md: 80 }, opacity: 0.9 }, zIndex: -1 }}>
                     <img src="/images/headline-curve.svg" alt="Headline curve" />
                   </Box>
                 </Box>
@@ -53,7 +53,7 @@ const KeyFacts: FC = () => {
               <Grid container spacing={3}>
                 {facts.map((fact, idx) => (
                   <Grid item xs={6} sm={4} key={idx}>
-                    <Box sx={{ borderLeft: '3px solid #5B9BD5', pl: 2, py: 0.5 }}>
+                    <Box sx={{ borderLeft: '3px solid #1E5FA6', pl: 2, py: 0.5 }}>
                       <Typography sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: 1, mb: 0.5 }}>
                         {fact.label}
                       </Typography>

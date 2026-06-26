@@ -1,8 +1,6 @@
 import React, { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import ArrowForward from '@mui/icons-material/ArrowForward'
 import Link from 'next/link'
 
 interface ProductCardProps {
@@ -12,12 +10,17 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
   const isLight = tone === 'light'
+  const categoryName = typeof product.category === 'object' ? product.category?.name : ''
 
   return (
-    <Box
-      sx={{
-        p: { xs: 1.5, sm: 2, md: 3 },
-        mb: { xs: 2, md: 4 },
+    <Link href={`/products/${product.slug || product._id}`} passHref>
+      <Box
+        component="a"
+        sx={{
+          display: 'block',
+          textDecoration: 'none',
+          p: { xs: 1.5, sm: 2, md: 2 },
+        mb: 0,
         bgcolor: isLight ? 'common.white' : 'rgba(255, 255, 255, 0.03)',
         border: isLight ? '1px solid' : '1px solid rgba(255,255,255,0.12)',
         borderColor: isLight ? 'divider' : 'rgba(255,255,255,0.12)',
@@ -25,14 +28,29 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
         borderRadius: 1,
         height: '100%',
         boxShadow: isLight ? '0 16px 40px rgba(10,25,47,0.08)' : 'none',
-        transition: 'all 0.3s ease-in-out',
+        transition: 'all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         '&:hover': {
-          transform: 'translateY(-5px)',
-          borderColor: isLight ? 'primary.light' : 'rgba(255,255,255,0.24)',
-          boxShadow: isLight ? '0 22px 50px rgba(10,25,47,0.14)' : '0 10px 40px rgba(0,0,0,0.2)',
+          transform: 'translateY(-6px)',
+          bgcolor: isLight ? 'primary.main' : 'common.white',
+          borderColor: isLight ? 'primary.main' : 'common.white',
+          boxShadow: isLight
+            ? '0 20px 40px rgba(10,25,47,0.2), 0 8px 16px #1E5FA624'
+            : '0 20px 40px rgba(0,0,0,0.3)',
+          '& .product-img': {
+            transform: 'scale(1.08)',
+          },
+          '& .product-overlay': {
+            opacity: 1,
+          },
           '& .MuiIconButton-root': {
-            backgroundColor: 'primary.light',
-            color: isLight ? 'common.white' : '#051021',
+            backgroundColor: isLight ? 'common.white' : 'primary.main',
+            color: isLight ? 'primary.main' : 'common.white',
+          },
+          '& .product-title': {
+            color: isLight ? 'common.white' : 'primary.main',
+          },
+          '& .product-desc, & .product-brand': {
+            color: isLight ? 'rgba(255,255,255,0.7)' : 'text.secondary',
           },
         },
       }}
@@ -42,9 +60,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           lineHeight: 0,
           overflow: 'hidden',
           borderRadius: 1,
-          mb: 3,
+          mb: 2,
           position: 'relative',
-          height: { xs: 150, sm: 180, md: 220 },
+          height: { xs: 170, sm: 200, md: 240 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -53,18 +71,48 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
       >
         {product.image || product.images?.[0] ? (
           <img
+            className="product-img"
             src={product.image || product.images[0]}
             alt={product.title}
-            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '10px' }}
+            style={{
+              width: '100%', height: '100%', objectFit: 'contain', padding: '10px',
+              transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            }}
           />
         ) : (
           <Typography variant="body2" sx={{ color: isLight ? 'text.secondary' : 'rgba(255,255,255,0.4)' }}>
             No Image Available
           </Typography>
         )}
+        {/* Hover gradient overlay */}
+        <Box
+          className="product-overlay"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: 1,
+            background: isLight
+              ? 'linear-gradient(180deg, transparent 50%, rgba(10,31,64,0.45) 100%)'
+              : 'linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.45) 100%)',
+            opacity: 0,
+            transition: 'opacity 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            pointerEvents: 'none',
+          }}
+        />
       </Box>
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ mb: 2 }}>
+        {/* Category tag */}
+        {categoryName && (
+          <Typography sx={{
+            fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase',
+            letterSpacing: 1, color: 'secondary.main', mb: 0.75,
+          }}>
+            {categoryName}
+          </Typography>
+        )}
+
         <Typography
+          className="product-title"
           component="h3"
           variant="h5"
           sx={{
@@ -72,6 +120,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
             fontWeight: 700,
             mb: 1,
             color: isLight ? 'text.primary' : 'common.white',
+            transition: 'color 0.3s ease',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
@@ -82,39 +131,39 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
         >
           {product.title}
         </Typography>
+
+        {/* Description */}
+        {product.description && (
+          <Typography className="product-desc" variant="body2" sx={{
+            color: isLight ? 'text.secondary' : 'rgba(255,255,255,0.5)',
+            transition: 'color 0.3s ease',
+            fontSize: { xs: '0.78rem', md: '0.85rem' },
+            lineHeight: 1.5,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            mb: 0.5,
+          }}>
+            {product.description}
+          </Typography>
+        )}
         
-        {/* Render brand text if we don't have the object populated */}
-        <Typography variant="body2" sx={{ color: isLight ? 'text.secondary' : 'rgba(255,255,255,0.5)', mb: 1, minHeight: '1.25rem', fontSize: { xs: '0.78rem', md: '0.9rem' } }}>
-          {product.brandName ? `Brand: ${product.brandName}` : 'Marine Equipment'}
-        </Typography>
-        
-        <Typography variant="body1" sx={{ color: 'primary.light', fontWeight: 700, fontSize: { xs: '0.95rem', md: '1.1rem' } }}>
-          {product.price > 0 ? `$${product.price.toFixed(2)}` : 'Request Quote'}
-        </Typography>
+        {/* Brand (optional, subtle) */}
+        {product.brandName && (
+          <Typography className="product-brand" variant="body2" sx={{ 
+            color: isLight ? 'text.secondary' : 'rgba(255,255,255,0.5)', 
+            transition: 'color 0.3s ease',
+            minHeight: '1.25rem', fontSize: { xs: '0.78rem', md: '0.9rem' } 
+          }}>
+            Brand: {product.brandName}
+          </Typography>
+        )}
       </Box>
-      
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 1, borderTop: isLight ? '1px solid rgba(10,25,47,0.08)' : '1px solid rgba(255,255,255,0.1)', pt: 2 }}>
-        <Link href={`/products/${product.slug || product._id}`} passHref>
-          <Box component="a" sx={{ textDecoration: 'none', color: isLight ? 'text.primary' : 'common.white', display: 'flex', alignItems: 'center', fontWeight: 700, fontSize: { xs: '0.76rem', md: '0.9rem' }, letterSpacing: 0, '&:hover': { color: 'primary.light' } }}>
-            View Details
-          </Box>
-        </Link>
-        <Link href={`/products/${product.slug || product._id}`} passHref>
-          <IconButton
-            component="a"
-            sx={{
-              backgroundColor: isLight ? 'rgba(10,25,47,0.06)' : 'rgba(255,255,255,0.1)',
-              color: isLight ? 'text.primary' : 'common.white',
-              transition: 'all 0.3s',
-              width: { xs: 34, md: 40 },
-              height: { xs: 34, md: 40 },
-            }}
-          >
-            <ArrowForward fontSize="small" />
-          </IconButton>
-        </Link>
+
       </Box>
-    </Box>
+    </Link>
   )
 }
 

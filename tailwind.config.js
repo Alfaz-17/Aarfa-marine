@@ -13,25 +13,10 @@ module.exports = {
           dark: '#051021',
         },
         secondary: {
-          DEFAULT: '#1E5FA6',
-          light: '#D9EAF8',
-          dark: '#051021',
-        },
-        accent: {
           DEFAULT: '#ED1C24',
-          light: '#FF5E66',
+          light: '#FF6B72',
           dark: '#A80E14',
-          hover: '#FF5E66',
         },
-        marine: {
-          navy: '#0A1F40',
-          blue: '#1E5FA6',
-          sky: '#D9EAF8',
-          mist: '#F5F7FA',
-        },
-        techbg: '#040d1a',
-        techcard: '#0a1f40',
-        techborder: 'rgba(30, 95, 166, 0.22)',
       },
       fontFamily: {
         sans: ['Outfit', 'sans-serif'],

@@ -30,7 +30,7 @@ const WhyChoose: FC = () => {
               Your trusted marine partner<br />
               <Typography component="span" sx={{ color: 'primary.light', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'inherit', position: 'relative', display: 'inline-block' }}>
                 in cost and compliance
-                <Box sx={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 80, md: 100 }, opacity: 0.9 }, zIndex: -1 }}>
+                <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 80, md: 100 }, opacity: 0.9 }, zIndex: -1 }}>
                   <img src="/images/headline-curve.svg" alt="Headline curve" />
                 </Box>
               </Typography>

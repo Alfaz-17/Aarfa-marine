@@ -13,7 +13,7 @@ export default function AdminProductFormPage() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    price: '',
+    brandName: '',
     category: '',
     featured: false
   });
@@ -207,7 +207,7 @@ export default function AdminProductFormPage() {
 
       setMessage({ type: "success", text: "Asset added successfully to registry." });
       // Reset form
-      setFormData({ title: '', description: '', price: '', category: '', featured: false });
+      setFormData({ title: '', description: '', brandName: '', category: '', featured: false });
       setImageFile(null);
       setImagePreview('');
       setImagesFile([]);
@@ -247,23 +247,23 @@ export default function AdminProductFormPage() {
       <form onSubmit={handleSubmit} className="space-y-12">
         {/* Main Image Upload */}
         <div className="space-y-12">
-           <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 space-y-6 relative">
+           <div className="bg-primary/55 p-10 border border-primary-light/20 space-y-6 relative">
               {/* Corner highlights */}
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
               <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-2">
-                <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] m-0">Main Image</h2>
+                <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light m-0">Main Image</h2>
                 
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 px-3 py-1 bg-slate-950 border border-slate-800 text-[9px] font-mono font-bold uppercase tracking-tight text-slate-400">
-                    <ShieldCheck className="w-3 h-3 text-[#5B9BD5]" />
+                    <ShieldCheck className="w-3 h-3 text-primary-light" />
                     Watermark: {globalSettings.applyWatermark ? 'AUTO' : 'OFF'}
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1 bg-slate-950 border border-slate-800 text-[9px] font-mono font-bold uppercase tracking-tight text-slate-400">
-                    <Sparkles className="w-3 h-3 text-[#5B9BD5]" />
+                    <Sparkles className="w-3 h-3 text-primary-light" />
                     Auto BG: {globalSettings.autoBackgroundRemoval ? 'AUTO' : 'OFF'}
                   </div>
                 </div>
@@ -285,7 +285,7 @@ export default function AdminProductFormPage() {
                            <button
                              type="button"
                              onClick={() => imagePreview && setCropTarget({ type: 'main', url: imagePreview })}
-                             className="bg-[#1E5FA6]/80 p-2 text-white border-0 cursor-pointer hover:bg-[#1E5FA6]"
+                             className="bg-primary-light/80 p-2 text-white border-0 cursor-pointer hover:bg-primary-light"
                              title="Crop Image"
                            >
                              <Crop className="w-4 h-4" />
@@ -295,8 +295,8 @@ export default function AdminProductFormPage() {
                        {isRemovingBg && bgProcessingIndex?.type === 'main' && (
                          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[2px] flex items-center justify-center flex-col gap-3">
                            <div className="flex items-center gap-2 px-6 py-3 bg-slate-900 border border-slate-800">
-                             <Loader2 className="w-4 h-4 animate-spin text-[#5B9BD5]" />
-                             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#5B9BD5]">{bgStatus}</span>
+                             <Loader2 className="w-4 h-4 animate-spin text-primary-light" />
+                             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary-light">{bgStatus}</span>
                            </div>
                          </div>
                        )}
@@ -312,13 +312,13 @@ export default function AdminProductFormPage() {
            </div>
 
            {/* Gallery Images */}
-           <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 relative">
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+           <div className="bg-primary/55 p-10 border border-primary-light/20 relative">
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-              <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] border-b border-slate-800 pb-4 mb-6 m-0">Gallery Images</h2>
+              <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light border-b border-slate-800 pb-4 mb-6 m-0">Gallery Images</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
                  {imagePreviews.map((src, idx) => (
                     <div key={idx} className="relative aspect-square border border-slate-850 bg-slate-950/60 flex items-center justify-center overflow-hidden">
@@ -336,7 +336,7 @@ export default function AdminProductFormPage() {
                         <button 
                           type="button"
                           onClick={() => setCropTarget({ type: 'gallery', index: idx, url: src })} 
-                          className="absolute -bottom-1 -right-1 bg-[#1E5FA6] p-1 text-white rounded-full shadow-lg border-0 cursor-pointer"
+                          className="absolute -bottom-1 -right-1 bg-primary-light p-1 text-white rounded-full shadow-lg border-0 cursor-pointer"
                           title="Crop Image"
                         >
                           <Crop className="w-3 h-3" />
@@ -353,13 +353,13 @@ export default function AdminProductFormPage() {
 
         {/* Details Form */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-8 bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 relative">
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+          <div className="space-y-8 bg-primary/55 p-10 border border-primary-light/20 relative">
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-            <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] border-b border-slate-800 pb-4 mb-6 m-0">Asset Spec Sheets</h2>
+            <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light border-b border-slate-800 pb-4 mb-6 m-0">Asset Spec Sheets</h2>
             
             <div className="space-y-6">
                <div className="space-y-2">
@@ -367,7 +367,7 @@ export default function AdminProductFormPage() {
                   <input
                     name="title"
                     placeholder="E.g., MAN B&W Cylinder Liner"
-                    className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono"
+                    className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono"
                     value={formData.title}
                     onChange={handleChange}
                     required
@@ -379,7 +379,7 @@ export default function AdminProductFormPage() {
                     <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Category *</label>
                     <select
                       name="category"
-                      className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs font-bold font-mono text-white tracking-widest uppercase"
+                      className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs font-bold font-mono text-white tracking-widest uppercase"
                       value={formData.category}
                       onChange={handleChange}
                       required
@@ -391,13 +391,13 @@ export default function AdminProductFormPage() {
                     </select>
                    </div>
                    <div className="space-y-2">
-                      <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Suggested Price ($)</label>
+                      <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Brand (Optional)</label>
                       <input
-                        name="price"
-                        type="number"
-                        placeholder="0.00"
-                        className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono"
-                        value={formData.price}
+                        name="brandName"
+                        type="text"
+                        placeholder="e.g. Raytheon, JRC, Furuno"
+                        className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono"
+                        value={formData.brandName}
                         onChange={handleChange}
                       />
                    </div>
@@ -408,7 +408,7 @@ export default function AdminProductFormPage() {
                     type="checkbox"
                     name="featured"
                     id="featured"
-                    className="w-4 h-4 border-slate-700 bg-slate-950 accent-[#5B9BD5] cursor-pointer"
+                    className="w-4 h-4 border-slate-700 bg-slate-950 accent-[#1E5FA6] cursor-pointer"
                     checked={formData.featured}
                     onChange={handleChange}
                   />
@@ -418,17 +418,17 @@ export default function AdminProductFormPage() {
           </div>
 
           {/* Description */}
-          <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 flex flex-col relative">
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+          <div className="bg-primary/55 p-10 border border-primary-light/20 flex flex-col relative">
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-            <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] border-b border-slate-800 pb-4 mb-6 m-0">Detailed Specs & Notes</h2>
+            <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light border-b border-slate-800 pb-4 mb-6 m-0">Detailed Specs & Notes</h2>
             <textarea
               name="description"
               placeholder="Enter comprehensive product specification, condition, model numbers, OEM availability, etc."
-              className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono flex-grow min-h-[200px]"
+              className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono flex-grow min-h-[200px]"
               value={formData.description}
               onChange={handleChange}
               required
@@ -441,7 +441,7 @@ export default function AdminProductFormPage() {
           <button
             type="submit"
             disabled={isLoading || isUploading}
-            className="w-full lg:w-1/2 py-5 bg-[#1E5FA6] hover:bg-[#5B9BD5] text-white font-mono font-bold uppercase tracking-[0.3em] text-xs transition-all shadow-2xl flex items-center justify-center gap-4 disabled:opacity-70 border-0 cursor-pointer"
+            className="w-full lg:w-1/2 py-5 bg-primary-light hover:bg-primary-light text-white font-mono font-bold uppercase tracking-[0.3em] text-xs transition-all shadow-2xl flex items-center justify-center gap-4 disabled:opacity-70 border-0 cursor-pointer"
           >
             {isLoading || isUploading ? (
               <>

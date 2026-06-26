@@ -10,10 +10,10 @@ const DynamicHomeHero = dynamic(() => import('../components/home/hero'))
 const DynamicStatsBand = dynamic(() => import('../components/home/stats'))
 const DynamicAboutSection = dynamic(() => import('../components/home/about-section'))
 const DynamicBrandsSection = dynamic(() => import('../components/home/brands-section'))
-const DynamicWhatWeDo = dynamic(() => import('../components/home/what-we-do'))
 const DynamicKeyFacts = dynamic(() => import('../components/home/key-facts'))
 const DynamicFeaturedProducts = dynamic(() => import('../components/home/featured-products'))
-const DynamicWhyChoose = dynamic(() => import('../components/home/why-choose'))
+const DynamicWhatWeDo = dynamic(() => import('../components/home/what-we-do'))
+const DynamicCustomerReviews = dynamic(() => import('../components/home/customer-reviews'))
 const DynamicCtaBand = dynamic(() => import('../components/home/cta-band'))
 
 interface HomeProps {
@@ -25,13 +25,11 @@ const Home: NextPageWithLayout<HomeProps> = ({ featuredProducts, brands }) => {
   return (
     <>
       <DynamicHomeHero />
-      <DynamicStatsBand />
-      <DynamicAboutSection />
       <DynamicBrandsSection brands={brands} />
-      <DynamicFeaturedProducts products={featuredProducts} />
       <DynamicWhatWeDo />
-      <DynamicKeyFacts />
-      <DynamicWhyChoose />
+      <DynamicFeaturedProducts products={featuredProducts} />
+      <DynamicStatsBand />
+      <DynamicCustomerReviews />
       <DynamicCtaBand />
     </>
   )

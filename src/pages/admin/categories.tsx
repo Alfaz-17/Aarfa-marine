@@ -66,14 +66,14 @@ export default function AdminCategoryPage() {
     }
   };
 
-  if (isLoading) return <div className="text-xs font-mono font-bold uppercase tracking-widest animate-pulse text-[#5B9BD5]">Scanning Sector Registries...</div>;
+  if (isLoading) return <div className="text-xs font-mono font-bold uppercase tracking-widest animate-pulse text-primary-light">Scanning Sector Registries...</div>;
 
   return (
     <div className="max-w-4xl space-y-12 font-sans">
       {/* Header */}
       <div className="border-b border-slate-800 pb-8 relative">
         <h1 className="text-3xl font-extrabold text-white uppercase tracking-tighter font-syne m-0">Sector Management</h1>
-        <p className="text-xs font-mono font-bold text-[#5B9BD5] uppercase tracking-[0.3em] mt-2 m-0">Classify Fleet Inventory & Components</p>
+        <p className="text-xs font-mono font-bold text-primary-light uppercase tracking-[0.3em] mt-2 m-0">Classify Fleet Inventory & Components</p>
       </div>
 
       {message.text && (
@@ -83,16 +83,16 @@ export default function AdminCategoryPage() {
       )}
 
       {/* Register Form */}
-      <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 relative">
-         <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-         <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-         <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-         <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+      <div className="bg-primary/55 p-10 border border-primary-light/20 relative">
+         <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+         <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+         <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+         <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-         <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] mb-6 m-0">Register New Sub-Sector</h2>
+         <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light mb-6 m-0">Register New Sub-Sector</h2>
          <form onSubmit={handleAddCategory} className="flex flex-col sm:flex-row gap-4">
             <select
-              className="px-6 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] outline-none text-xs text-[#5B9BD5] font-mono font-bold uppercase tracking-widest cursor-pointer"
+              className="px-6 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light outline-none text-xs text-primary-light font-mono font-bold uppercase tracking-widest cursor-pointer"
               value={newMainCategory}
               onChange={(e) => setNewMainCategory(e.target.value)}
             >
@@ -103,22 +103,22 @@ export default function AdminCategoryPage() {
             <input 
               type="text" 
               placeholder="Sub-Sector Name (e.g. Radar Systems)" 
-              className="flex-1 px-6 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono"
+              className="flex-1 px-6 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
               required
             />
-            <button type="submit" className="px-10 py-4 bg-[#1E5FA6] hover:bg-[#5B9BD5] text-white text-[10px] font-mono font-bold uppercase tracking-widest transition-colors shadow-xl border-0 cursor-pointer">
+            <button type="submit" className="px-10 py-4 bg-primary-light hover:bg-primary-light text-white text-[10px] font-mono font-bold uppercase tracking-widest transition-colors shadow-xl border-0 cursor-pointer">
                Register
             </button>
          </form>
       </div>
 
       {/* Sectors Table */}
-      <div className="bg-[#0A1F40]/20 border border-slate-800 shadow-2xl">
+      <div className="bg-primary/20 border border-slate-800 shadow-2xl">
          <table className="w-full text-left">
             <thead>
-               <tr className="bg-slate-900 border-b border-slate-800 text-[#5B9BD5] text-[10px] font-mono font-bold uppercase tracking-widest">
+               <tr className="bg-slate-900 border-b border-slate-800 text-primary-light text-[10px] font-mono font-bold uppercase tracking-widest">
                   <th className="py-5 px-8">Main Category</th>
                   <th className="py-5 px-8">Sub-Sector Designation</th>
                   <th className="py-5 px-8 text-right">Operations</th>
@@ -126,13 +126,13 @@ export default function AdminCategoryPage() {
             </thead>
             <tbody className="divide-y divide-slate-800 font-mono text-xs text-white">
                {categories.map(cat => (
-                  <tr key={cat._id} className="hover:bg-[#5B9BD5]/5 transition-colors">
+                  <tr key={cat._id} className="hover:bg-primary-light/5 transition-colors">
                      <td className="py-6 px-8">
-                        <div className="flex items-center gap-3 text-[#5B9BD5]">
+                        <div className="flex items-center gap-3 text-primary-light">
                            <Layers className="w-4 h-4 opacity-70" />
                            {editingId === cat._id ? (
                               <select
-                                className="px-2 py-2 border border-[#5B9BD5] bg-slate-900 outline-none text-xs font-bold text-[#5B9BD5] w-full max-w-[150px] font-mono uppercase"
+                                className="px-2 py-2 border border-primary-light bg-slate-900 outline-none text-xs font-bold text-primary-light w-full max-w-[150px] font-mono uppercase"
                                 value={editingMainCategory}
                                 onChange={(e) => setEditingMainCategory(e.target.value)}
                               >
@@ -147,11 +147,11 @@ export default function AdminCategoryPage() {
                      </td>
                      <td className="py-6 px-8">
                         <div className="flex items-center gap-4">
-                           <LayoutGrid className="w-5 h-5 text-[#5B9BD5]" />
+                           <LayoutGrid className="w-5 h-5 text-primary-light" />
                            {editingId === cat._id ? (
                               <input 
                                 type="text"
-                                className="px-4 py-2 border border-[#5B9BD5] bg-slate-900 outline-none text-xs font-bold text-white w-full max-w-xs font-mono"
+                                className="px-4 py-2 border border-primary-light bg-slate-900 outline-none text-xs font-bold text-white w-full max-w-xs font-mono"
                                 value={editingName}
                                 onChange={(e) => setEditingName(e.target.value)}
                                 autoFocus
@@ -177,7 +177,7 @@ export default function AdminCategoryPage() {
                               <>
                                  <button 
                                     onClick={() => { setEditingId(cat._id); setEditingName(cat.name); setEditingMainCategory(cat.mainCategory || 'Navigation'); }} 
-                                    className="text-[#5B9BD5] hover:text-white p-2 bg-transparent border-0 cursor-pointer"
+                                    className="text-primary-light hover:text-white p-2 bg-transparent border-0 cursor-pointer"
                                  >
                                     <Edit2 className="w-4 h-4" />
                                  </button>

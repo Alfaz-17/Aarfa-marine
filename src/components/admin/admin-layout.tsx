@@ -13,7 +13,8 @@ import {
   Home,
   Anchor,
   ShoppingCart,
-  Settings as SettingsIcon
+  Settings as SettingsIcon,
+  MessageSquare
 } from 'lucide-react';
 import { MarineLoader } from '@/components/common/marine-loader';
 
@@ -39,14 +40,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   // Don't show layout on login page
   if (pathname === '/admin/login') return <>{children}</>;
 
-  const navigation = [
-    { name: 'Dashboard', href: '/admin', icon: Home },
-    { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-    { name: 'Products', href: '/admin/products', icon: Package },
-    { name: 'Categories', href: '/admin/categories', icon: Grid3X3 },
-    { name: 'Brands', href: '/admin/brands', icon: Award },
-    { name: 'Settings', href: '/admin/settings', icon: SettingsIcon },
-  ];
+    const navigation = [
+      { name: 'Dashboard', href: '/admin', icon: Home },
+      { name: 'Inquiries', href: '/admin/inquiries', icon: MessageSquare },
+      { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
+      { name: 'Products', href: '/admin/products', icon: Package },
+      { name: 'Categories', href: '/admin/categories', icon: Grid3X3 },
+      { name: 'Brands', href: '/admin/brands', icon: Award },
+      { name: 'Services', href: '/admin/services', icon: Anchor },
+      { name: 'Settings', href: '/admin/settings', icon: SettingsIcon },
+    ];
 
   const handleLogout = async () => {
     await logout();
@@ -73,19 +76,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-[280px] bg-[#0A1F40] shadow-2xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-[#5B9BD5]/20 flex flex-col overflow-hidden ${
+      <div className={`fixed inset-y-0 left-0 z-50 w-[280px] bg-primary shadow-2xl transform transition-transform duration-300 ease-in-out lg:translate-x-0 border-r border-primary-light/20 flex flex-col overflow-hidden ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         {/* Marine Tech Grid Background */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(91,155,213,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(91,155,213,0.03)_1px,transparent_1px)] bg-[size:30px_30px] opacity-20 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0A1F40]/50 to-[#0A1F40] pointer-events-none" />
         
-        <div className="flex flex-col items-center justify-center p-8 border-b border-[#5B9BD5]/10 bg-[#0A1F40]/80 backdrop-blur-md relative overflow-hidden">
+        <div className="flex flex-col items-center justify-center p-8 border-b border-primary-light/10 bg-primary/80 backdrop-blur-md relative overflow-hidden">
           {/* HUD Brackets for logo area */}
-          <div className="absolute top-4 left-4 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-          <div className="absolute top-4 right-4 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-          <div className="absolute bottom-4 left-4 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-          <div className="absolute bottom-4 right-4 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+          <div className="absolute top-4 left-4 w-2 h-2 border-t border-l border-primary-light/40" />
+          <div className="absolute top-4 right-4 w-2 h-2 border-t border-r border-primary-light/40" />
+          <div className="absolute bottom-4 left-4 w-2 h-2 border-b border-l border-primary-light/40" />
+          <div className="absolute bottom-4 right-4 w-2 h-2 border-b border-r border-primary-light/40" />
           
           <div className="w-full flex items-center justify-between mb-4">
             <Link href="/">
@@ -102,8 +105,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             </button>
           </div>
           <div className="w-full flex justify-between items-center px-1">
-             <span className="text-[8px] font-mono text-[#5B9BD5]/60 tracking-[0.2em] uppercase">Vessel ID: AM-804</span>
-             <span className="text-[8px] font-mono text-[#5B9BD5]/60 tracking-[0.2em] uppercase">Auth: L3</span>
+             <span className="text-[8px] font-mono text-primary-light/60 tracking-[0.2em] uppercase">Vessel ID: AM-804</span>
+             <span className="text-[8px] font-mono text-primary-light/60 tracking-[0.2em] uppercase">Auth: L3</span>
           </div>
         </div>
 
@@ -120,18 +123,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 }`}>
                   {active && (
                     <>
-                      <div className="absolute inset-0 bg-[#5B9BD5]/10 border-l-2 border-[#5B9BD5]" />
-                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/60" />
-                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/60" />
+                      <div className="absolute inset-0 bg-primary-light/10 border-l-2 border-primary-light" />
+                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/60" />
+                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/60" />
                     </>
                   )}
                   {!active && (
-                     <div className="absolute left-0 w-0.5 h-full bg-white/5 group-hover:bg-[#5B9BD5]/20 transition-all" />
+                     <div className="absolute left-0 w-0.5 h-full bg-white/5 group-hover:bg-primary-light/20 transition-all" />
                   )}
-                  <Icon className={`w-4 h-4 mr-4 transition-all duration-300 ${active ? 'text-[#5B9BD5] scale-110' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                  <Icon className={`w-4 h-4 mr-4 transition-all duration-300 ${active ? 'text-primary-light scale-110' : 'text-slate-500 group-hover:text-slate-300'}`} />
                   <span className="relative z-10 font-mono tracking-widest">{item.name}</span>
                   {active && (
-                     <div className="ml-auto w-1 h-1 bg-[#5B9BD5] animate-pulse rounded-full shadow-[0_0_8px_#5B9BD5]" />
+                     <div className="ml-auto w-1 h-1 bg-primary-light animate-pulse rounded-full shadow-[0_0_8px_#1E5FA6]" />
                   )}
                 </a>
               </Link>
@@ -139,15 +142,15 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           })}
         </nav>
 
-        <div className="p-6 bg-[#0A1F40]/80 backdrop-blur-md border-t border-[#5B9BD5]/10 relative z-10">
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#5B9BD5]/20 to-transparent" />
+        <div className="p-6 bg-primary/80 backdrop-blur-md border-t border-primary-light/10 relative z-10">
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#1E5FA6]/20 to-transparent" />
           
-          <div className="bg-slate-950/40 rounded-sm p-4 mb-4 border border-[#5B9BD5]/10 relative group overflow-hidden">
-            <div className="absolute top-0 right-0 px-2 py-0.5 bg-[#5B9BD5]/10 border-b border-l border-[#5B9BD5]/20">
-               <span className="text-[7px] font-mono text-[#5B9BD5]/80">CORE_SYNC</span>
+          <div className="bg-slate-950/40 rounded-sm p-4 mb-4 border border-primary-light/10 relative group overflow-hidden">
+            <div className="absolute top-0 right-0 px-2 py-0.5 bg-primary-light/10 border-b border-l border-primary-light/20">
+               <span className="text-[7px] font-mono text-primary-light/80">CORE_SYNC</span>
             </div>
             <div className="flex items-center">
-                <div className="w-10 h-10 bg-slate-950 border border-[#5B9BD5]/30 rounded-sm flex items-center justify-center text-[#5B9BD5] font-black shadow-[0_0_15px_rgba(91,155,213,0.1)] relative">
+                <div className="w-10 h-10 bg-slate-950 border border-primary-light/30 rounded-sm flex items-center justify-center text-primary-light font-black shadow-[0_0_15px_rgba(91,155,213,0.1)] relative">
                   <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,var(--primary),transparent)]" />
                   {user?.name?.charAt(0) || 'A'}
                 </div>
@@ -155,7 +158,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   <p className="text-[10px] font-mono font-black text-white uppercase tracking-tighter truncate m-0">
                       {user?.name || user?.email || 'Admin'}
                   </p>
-                  <p className="text-[8px] text-[#5B9BD5]/60 font-mono uppercase tracking-[0.2em] mt-0.5 m-0">Fleet Commander</p>
+                  <p className="text-[8px] text-primary-light/60 font-mono uppercase tracking-[0.2em] mt-0.5 m-0">Fleet Commander</p>
                 </div>
             </div>
           </div>
@@ -176,13 +179,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <header className="sticky top-0 z-30 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 h-16 flex items-center justify-between px-8">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 text-[#5B9BD5] bg-transparent border-0 cursor-pointer"
+              className="lg:hidden p-2 text-primary-light bg-transparent border-0 cursor-pointer"
             >
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex-1" />
             <Link href="/">
-              <a className="text-[10px] font-bold uppercase tracking-widest text-[#5B9BD5] hover:text-white transition-colors no-underline">
+              <a className="text-[10px] font-bold uppercase tracking-widest text-primary-light hover:text-white transition-colors no-underline">
                 View Public Site →
               </a>
             </Link>

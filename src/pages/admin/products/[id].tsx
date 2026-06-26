@@ -18,7 +18,7 @@ export default function AdminProductEditPage() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    price: '',
+    brandName: '',
     category: '',
     featured: false
   });
@@ -78,7 +78,7 @@ export default function AdminProductEditPage() {
         setFormData({
           title: prod.title || '',
           description: prod.description || '',
-          price: prod.price || '',
+          brandName: prod.brandName || '',
           category: prod.category?._id || prod.category || '',
           featured: prod.featured || false
         });
@@ -302,21 +302,21 @@ export default function AdminProductEditPage() {
       )}
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="space-y-8 bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 relative">
+        <div className="space-y-8 bg-primary/55 p-10 border border-primary-light/20 relative">
           {/* Corner highlights */}
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-          <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] border-b border-slate-800 pb-4 mb-6 m-0">Product Specs</h2>
+          <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light border-b border-slate-800 pb-4 mb-6 m-0">Product Specs</h2>
           
           <div className="space-y-4">
              <div className="space-y-2">
                 <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Product Name *</label>
                 <input
                   name="title"
-                  className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono"
+                  className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono"
                   value={formData.title}
                   onChange={handleChange}
                   required
@@ -327,7 +327,7 @@ export default function AdminProductEditPage() {
                 <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Description *</label>
                 <textarea
                   name="description"
-                  className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono h-32"
+                  className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono h-32"
                   value={formData.description}
                   onChange={handleChange}
                   required
@@ -339,7 +339,7 @@ export default function AdminProductEditPage() {
                   <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Category *</label>
                   <select
                     name="category"
-                    className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs font-bold font-mono text-white tracking-widest uppercase"
+                    className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs font-bold font-mono text-white tracking-widest uppercase"
                     value={formData.category}
                     onChange={handleChange}
                     required
@@ -350,6 +350,17 @@ export default function AdminProductEditPage() {
                     ))}
                   </select>
                 </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Brand (Optional)</label>
+                  <input
+                    name="brandName"
+                    type="text"
+                    placeholder="e.g. Raytheon, JRC, Furuno"
+                    className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono"
+                    value={formData.brandName}
+                    onChange={handleChange}
+                  />
+                </div>
              </div>
 
              <div className="flex items-center gap-4 pt-4">
@@ -357,7 +368,7 @@ export default function AdminProductEditPage() {
                   type="checkbox"
                   name="featured"
                   id="featured"
-                  className="w-4 h-4 border-slate-700 bg-slate-950 accent-[#5B9BD5] cursor-pointer"
+                  className="w-4 h-4 border-slate-700 bg-slate-950 accent-[#1E5FA6] cursor-pointer"
                   checked={formData.featured}
                   onChange={handleChange}
                 />
@@ -368,18 +379,18 @@ export default function AdminProductEditPage() {
 
         <div className="space-y-8">
            {/* Main Image */}
-           <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 relative">
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+           <div className="bg-primary/55 p-10 border border-primary-light/20 relative">
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
               <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] m-0">Main Image</h2>
+                <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light m-0">Main Image</h2>
                 
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2 px-3 py-1 bg-slate-950 border border-slate-800 text-[9px] font-mono font-bold uppercase tracking-tight text-slate-400">
-                    <ShieldCheck className="w-3 h-3 text-[#5B9BD5]" />
+                    <ShieldCheck className="w-3 h-3 text-primary-light" />
                     WM: {globalSettings.applyWatermark ? 'AUTO' : 'OFF'}
                   </div>
                 </div>
@@ -401,7 +412,7 @@ export default function AdminProductEditPage() {
                        </div>
                     </div>
                  ) : (
-                    <label className="block w-full border-2 border-dashed border-slate-800 py-12 text-center hover:border-[#5B9BD5] transition-colors cursor-pointer bg-slate-950/40">
+                    <label className="block w-full border-2 border-dashed border-slate-800 py-12 text-center hover:border-primary-light transition-colors cursor-pointer bg-slate-950/40">
                        <Upload className="w-8 h-8 text-slate-500 mx-auto mb-4" />
                        <span className="text-[10px] font-mono uppercase font-bold text-slate-400 tracking-widest block">Upload Image</span>
                        <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -411,13 +422,13 @@ export default function AdminProductEditPage() {
            </div>
 
            {/* Gallery Images */}
-           <div className="bg-[#0A1F40]/55 p-10 border border-[#5B9BD5]/20 relative">
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#5B9BD5]/40" />
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#5B9BD5]/40" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#5B9BD5]/40" />
+           <div className="bg-primary/55 p-10 border border-primary-light/20 relative">
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
 
-              <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-[#5B9BD5] border-b border-slate-800 pb-4 mb-6 m-0">Gallery Images</h2>
+              <h2 className="text-sm font-mono font-bold uppercase tracking-widest text-primary-light border-b border-slate-800 pb-4 mb-6 m-0">Gallery Images</h2>
               <div className="grid grid-cols-3 gap-4 mb-6">
                   {existingImages.map((src, idx) => (
                     <div key={`exist-${idx}`} className="relative aspect-square border border-slate-850 bg-slate-950/60 flex items-center justify-center overflow-hidden">
@@ -426,7 +437,7 @@ export default function AdminProductEditPage() {
                     </div>
                   ))}
                   {imagePreviews.map((src, idx) => (
-                    <div key={`new-${idx}`} className="relative aspect-square border border-dashed border-[#5B9BD5]/50 bg-slate-950/60 flex items-center justify-center overflow-hidden">
+                    <div key={`new-${idx}`} className="relative aspect-square border border-dashed border-primary-light/50 bg-slate-950/60 flex items-center justify-center overflow-hidden">
                        <img src={src} alt="New" className="max-w-full max-h-full w-auto h-auto object-contain" />
                        <button type="button" onClick={() => {
                           setImagesFile(prev => prev.filter((_, i) => i !== idx));
@@ -434,7 +445,7 @@ export default function AdminProductEditPage() {
                        }} className="absolute -top-1 -right-1 bg-red-600 p-1 text-white rounded-full border-0 cursor-pointer"><X className="w-3 h-3" /></button>
                     </div>
                   ))}
-                  <label className="aspect-square border-2 border-dashed border-slate-800 flex items-center justify-center hover:border-[#5B9BD5] transition-colors cursor-pointer bg-slate-950/40">
+                  <label className="aspect-square border-2 border-dashed border-slate-800 flex items-center justify-center hover:border-primary-light transition-colors cursor-pointer bg-slate-950/40">
                      <Upload className="w-6 h-6 text-slate-500" />
                      <input type="file" accept="image/*" multiple onChange={handleImagesChange} className="hidden" />
                   </label>
@@ -444,7 +455,7 @@ export default function AdminProductEditPage() {
            <button
               type="submit"
               disabled={isSaving || isUploading}
-              className="w-full py-5 bg-[#1E5FA6] hover:bg-[#5B9BD5] text-white font-mono font-bold uppercase tracking-[0.3em] text-xs transition-all shadow-2xl flex items-center justify-center gap-4 border-0 cursor-pointer"
+              className="w-full py-5 bg-primary-light hover:bg-primary-light text-white font-mono font-bold uppercase tracking-[0.3em] text-xs transition-all shadow-2xl flex items-center justify-center gap-4 border-0 cursor-pointer"
            >
               {isSaving || isUploading ? (
                 <>

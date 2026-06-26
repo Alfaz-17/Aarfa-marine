@@ -18,14 +18,14 @@ const ServiceInstallation: FC<ServiceInstallationProps> = ({ services }) => {
         <Grid container spacing={8} alignItems="center">
           <Grid item xs={12} md={6}>
             <Box sx={{ mb: 4 }}>
-              <Typography variant="caption" sx={{ color: '#5B9BD5', fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2, fontFamily: 'Outfit, sans-serif' }}>
+              <Typography variant="caption" sx={{ color: '#1E5FA6', fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2, fontFamily: 'Outfit, sans-serif' }}>
                 Service & Installation
               </Typography>
               <Typography variant="h2" sx={{ fontFamily: 'Outfit, sans-serif', fontSize: { xs: '2.5rem', md: '3.5rem' }, fontWeight: 700, color: 'common.white', mb: 3, lineHeight: 1.1 }}>
                 We Don't Just Sell &mdash; We Install &{' '}
-                <Box component="span" sx={{ position: 'relative', display: 'inline-block' }}>
+                <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
                   Service Too
-                  <Box sx={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 70, md: 90 }, opacity: 0.9 }, zIndex: -1 }}>
+                  <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 70, md: 90 }, opacity: 0.9 }, zIndex: -1 }}>
                     <img src="/images/headline-curve.svg" alt="Headline curve" />
                   </Box>
                 </Box>
@@ -39,7 +39,7 @@ const ServiceInstallation: FC<ServiceInstallationProps> = ({ services }) => {
                   variant="contained" 
                   size="large"
                   sx={{ 
-                    bgcolor: '#5B9BD5', 
+                    bgcolor: '#1E5FA6', 
                     color: 'white', 
                     px: 4, py: 1.5, 
                     borderRadius: 50,
@@ -64,7 +64,7 @@ const ServiceInstallation: FC<ServiceInstallationProps> = ({ services }) => {
               boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
             }}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-                <BuildIcon sx={{ color: '#5B9BD5', fontSize: 32, mr: 2 }} />
+                <BuildIcon sx={{ color: '#1E5FA6', fontSize: 32, mr: 2 }} />
                 <Typography variant="h4" sx={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600 }}>
                   Equipment We Service
                 </Typography>

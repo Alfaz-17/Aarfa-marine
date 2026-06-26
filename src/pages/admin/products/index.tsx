@@ -63,7 +63,7 @@ export default function AdminProductListPage() {
     }
   };
 
-  if (isLoading) return <div className="text-xs font-mono font-bold uppercase tracking-widest animate-pulse text-[#5B9BD5]">Scanning Inventory Telemetry...</div>;
+  if (isLoading) return <div className="text-xs font-mono font-bold uppercase tracking-widest animate-pulse text-primary-light">Scanning Inventory Telemetry...</div>;
 
   return (
     <div className="space-y-12">
@@ -71,10 +71,10 @@ export default function AdminProductListPage() {
       <div className="flex items-center justify-between border-b border-slate-800 pb-8 relative">
         <div>
           <h1 className="text-3xl font-extrabold text-white uppercase tracking-tighter font-syne m-0">Inventory Console</h1>
-          <p className="text-xs font-mono font-bold text-[#5B9BD5] uppercase tracking-[0.3em] mt-2 m-0">Manage Marine Components & Spares</p>
+          <p className="text-xs font-mono font-bold text-primary-light uppercase tracking-[0.3em] mt-2 m-0">Manage Marine Components & Spares</p>
         </div>
         <Link href="/admin/products/new">
-          <a className="px-8 py-4 bg-[#1E5FA6] hover:bg-[#5B9BD5] text-white text-[10px] font-mono font-bold uppercase tracking-widest transition-all shadow-xl flex items-center gap-3 no-underline">
+          <a className="px-8 py-4 bg-primary-light hover:bg-primary-light text-white text-[10px] font-mono font-bold uppercase tracking-widest transition-all shadow-xl flex items-center gap-3 no-underline">
             <Plus className="w-4 h-4" /> Add New Asset
           </a>
         </Link>
@@ -87,25 +87,25 @@ export default function AdminProductListPage() {
       )}
 
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-[#0A1F40]/55 p-8 border border-[#5B9BD5]/20">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-primary/55 p-8 border border-primary-light/20">
           <div className="space-y-2">
             <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Search Matrix</label>
             <div className="relative">
               <input
                 type="text"
                 placeholder="Title, Specs, or Brand..."
-                className="w-full pl-10 pr-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs text-white font-mono"
+                className="w-full pl-10 pr-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs text-white font-mono"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5B9BD5]/70" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-light/70" />
             </div>
           </div>
 
           <div className="space-y-2">
             <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Sector Filter</label>
             <select
-              className="w-full px-4 py-4 bg-slate-950/60 border border-[#5B9BD5]/20 focus:border-[#5B9BD5] focus:bg-slate-950 outline-none text-xs uppercase font-bold font-mono text-white tracking-widest"
+              className="w-full px-4 py-4 bg-slate-950/60 border border-primary-light/20 focus:border-primary-light focus:bg-slate-950 outline-none text-xs uppercase font-bold font-mono text-white tracking-widest"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
@@ -118,11 +118,11 @@ export default function AdminProductListPage() {
       </div>
 
       {/* Products Table */}
-      <div className="bg-[#0A1F40]/20 border border-slate-800 overflow-hidden shadow-2xl">
+      <div className="bg-primary/20 border border-slate-800 overflow-hidden shadow-2xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-slate-900 border-b border-slate-800 text-[#5B9BD5] text-[10px] font-mono font-bold uppercase tracking-widest">
+              <tr className="bg-slate-900 border-b border-slate-800 text-primary-light text-[10px] font-mono font-bold uppercase tracking-widest">
                 <th className="py-5 px-6">Asset Component</th>
                 <th className="py-5 px-6">Sector</th>
                 <th className="py-5 px-6 text-center">Focus</th>
@@ -131,10 +131,10 @@ export default function AdminProductListPage() {
             </thead>
             <tbody className="divide-y divide-slate-800 font-mono text-xs">
               {filteredProducts.map((product) => (
-                <tr key={product._id} className="hover:bg-[#5B9BD5]/5 transition-colors">
+                <tr key={product._id} className="hover:bg-primary-light/5 transition-colors">
                   <td className="py-6 px-6">
                     <div className="flex items-center gap-6">
-                       <div className="w-16 h-16 bg-slate-950 relative border border-[#5B9BD5]/20 shrink-0">
+                       <div className="w-16 h-16 bg-slate-950 relative border border-primary-light/20 shrink-0">
                           {product.image ? (
                             <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
                           ) : (
@@ -148,7 +148,7 @@ export default function AdminProductListPage() {
                     </div>
                   </td>
                   <td className="py-6 px-6">
-                    <span className="px-3 py-1 bg-[#5B9BD5]/10 border border-[#5B9BD5]/20 text-[#5B9BD5] text-[9px] font-extrabold uppercase tracking-widest">
+                    <span className="px-3 py-1 bg-primary-light/10 border border-primary-light/20 text-primary-light text-[9px] font-extrabold uppercase tracking-widest">
                       {product.category?.name || 'Unassigned'}
                     </span>
                   </td>
@@ -164,7 +164,7 @@ export default function AdminProductListPage() {
                   <td className="py-6 px-6">
                     <div className="flex items-center gap-4">
                       <Link href={`/admin/products/${product._id}`}>
-                        <a className="p-2 text-[#5B9BD5] hover:text-white transition-colors">
+                        <a className="p-2 text-primary-light hover:text-white transition-colors">
                           <Edit className="w-4 h-4" />
                         </a>
                       </Link>

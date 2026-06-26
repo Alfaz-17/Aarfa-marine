@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
@@ -12,13 +13,16 @@ import WhatsApp from '@mui/icons-material/WhatsApp'
 
 const Header: FC = () => {
   const [visibleMenu, setVisibleMenu] = useState<boolean>(false)
-  const [isScrolled, setIsScrolled] = useState<boolean>(false)
+  const [scrollState, setScrollState] = useState<boolean>(false)
   const { breakpoints } = useTheme()
   const matchMobileView = useMediaQuery(breakpoints.down('md'))
+  const router = useRouter()
+  const isHomePage = router.pathname === '/'
+  const isScrolled = isHomePage ? scrollState : true
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
+      setScrollState(window.scrollY > 20)
       
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -70,9 +74,10 @@ const Header: FC = () => {
         maxWidth: 1400,
         backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(16px)' : 'none',
-        border: isScrolled ? '1px solid rgba(30, 95, 166, 0.28)' : '1px solid transparent',
+        border: '2px solid',
+        borderColor: isScrolled ? 'primary.dark' : 'transparent',
         borderRadius: isScrolled ? { xs: 2, md: 50 } : 0,
-        boxShadow: isScrolled ? '0 10px 40px rgba(0, 0, 0, 0.08)' : 'none',
+        boxShadow: isScrolled ? '0 12px 40px rgba(30, 95, 166, 0.15)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         py: isScrolled ? 1 : 2, // Thinner when scrolled
         px: { xs: 1.5, md: 4 },

@@ -50,9 +50,9 @@ const ProductDetailPage: NextPageWithLayout = () => {
   if (loading) return <MarineLoader />;
   if (!product) return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-6 bg-slate-50 font-sans">
-      <h2 className="text-3xl font-extrabold text-[#0A1F40] font-syne m-0">Asset Not Found</h2>
+      <h2 className="text-3xl font-extrabold text-primary font-syne m-0">Asset Not Found</h2>
       <Link href="/products">
-        <a className="px-8 py-3 bg-[#1E5FA6] text-white font-mono text-xs uppercase tracking-widest no-underline">
+        <a className="px-8 py-3 bg-primary-light text-white font-mono text-xs uppercase tracking-widest no-underline">
           Return to Inventory
         </a>
       </Link>
@@ -74,7 +74,7 @@ const ProductDetailPage: NextPageWithLayout = () => {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <Link href="/products">
-            <a className="inline-flex items-center gap-2 text-xs font-mono font-bold text-slate-400 hover:text-[#0A1F40] transition-colors mb-8 md:mb-12 uppercase tracking-widest no-underline">
+            <a className="inline-flex items-center gap-2 text-xs font-mono font-bold text-slate-400 hover:text-primary transition-colors mb-8 md:mb-12 uppercase tracking-widest no-underline">
               <ChevronLeft className="w-4 h-4" />
               Back to Inventory
             </a>
@@ -88,7 +88,7 @@ const ProductDetailPage: NextPageWithLayout = () => {
               className="space-y-4 md:space-y-6"
             >
               <div 
-                className="relative aspect-square bg-[#0A1F40]/5 overflow-hidden border border-slate-200 shadow-2xl cursor-pointer"
+                className="relative aspect-square bg-primary/5 overflow-hidden border border-slate-200 shadow-2xl cursor-pointer"
                 onClick={() => setLightboxImage(product.image)}
               >
                 {product.image ? (
@@ -100,7 +100,7 @@ const ProductDetailPage: NextPageWithLayout = () => {
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-slate-400 font-mono text-sm">NO IMAGE AVAILABLE</div>
                 )}
-                <div className="absolute top-4 right-4 bg-[#0A1F40] text-white px-3 md:px-4 py-1.5 text-[9px] font-mono font-bold uppercase tracking-widest">
+                <div className="absolute top-4 right-4 bg-primary text-white px-3 md:px-4 py-1.5 text-[9px] font-mono font-bold uppercase tracking-widest">
                   {product.category?.name || "General"}
                 </div>
               </div>
@@ -132,8 +132,8 @@ const ProductDetailPage: NextPageWithLayout = () => {
               className="flex flex-col"
             >
               <div className="mb-8 md:mb-10 lg:pt-4">
-                <span className="text-[#1E5FA6] tracking-widest uppercase text-[10px] font-mono font-bold mb-4 block">Refurbished Unit</span>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0A1F40] mb-5 md:mb-6 leading-tight uppercase tracking-normal font-syne m-0">
+                <span className="text-primary-light tracking-widest uppercase text-[10px] font-mono font-bold mb-4 block">Refurbished Unit</span>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-primary mb-5 md:mb-6 leading-tight uppercase tracking-normal font-syne m-0">
                   {product.title}
                 </h1>
                 <p className="text-sm md:text-base text-slate-600 leading-relaxed mb-8 border-l-4 border-primary-light/40 pl-6 m-0 mt-6">
@@ -144,15 +144,15 @@ const ProductDetailPage: NextPageWithLayout = () => {
               {/* Quick Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8 md:mb-10 pb-8 md:pb-10 border-b border-slate-200">
                  <div className="text-center">
-                    <ShieldCheck className="w-6 h-6 text-[#1E5FA6] mx-auto mb-2" />
+                    <ShieldCheck className="w-6 h-6 text-primary-light mx-auto mb-2" />
                     <span className="text-[8px] font-mono uppercase font-bold text-slate-400 tracking-widest block">Class Approved</span>
                  </div>
                  <div className="text-center">
-                    <Cpu className="w-6 h-6 text-[#1E5FA6] mx-auto mb-2" />
+                    <Cpu className="w-6 h-6 text-primary-light mx-auto mb-2" />
                     <span className="text-[8px] font-mono uppercase font-bold text-slate-400 tracking-widest block">Bench Tested</span>
                  </div>
                  <div className="text-center">
-                    <Globe className="w-6 h-6 text-[#1E5FA6] mx-auto mb-2" />
+                    <Globe className="w-6 h-6 text-primary-light mx-auto mb-2" />
                     <span className="text-[8px] font-mono uppercase font-bold text-slate-400 tracking-widest block">Worldwide Ship</span>
                  </div>
               </div>
@@ -161,10 +161,10 @@ const ProductDetailPage: NextPageWithLayout = () => {
               <div className="space-y-4 mb-12">
                  <OrderForm productId={product._id} productTitle={product.title} />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                     <a href="tel:+919023968557" className="flex items-center justify-center gap-2 py-4 border border-slate-300 hover:border-[#0A1F40] text-[#0A1F40] font-mono font-bold uppercase text-[10px] tracking-widest hover:bg-slate-50 transition-all no-underline">
+                     <a href="tel:+919023968557" className="flex items-center justify-center gap-2 py-4 border border-slate-300 hover:border-primary text-primary font-mono font-bold uppercase text-[10px] tracking-widest hover:bg-slate-50 transition-all no-underline">
                        <Phone className="w-4 h-4" /> Call Hotline
                      </a>
-                     <a href={`mailto:aarfa.navigation@gmail.com?subject=Enquiry for ${product.title}`} className="flex items-center justify-center gap-2 py-4 border border-slate-300 hover:border-[#0A1F40] text-[#0A1F40] font-mono font-bold uppercase text-[10px] tracking-widest hover:bg-slate-50 transition-all no-underline">
+                     <a href={`mailto:aarfa.navigation@gmail.com?subject=Enquiry for ${product.title}`} className="flex items-center justify-center gap-2 py-4 border border-slate-300 hover:border-primary text-primary font-mono font-bold uppercase text-[10px] tracking-widest hover:bg-slate-50 transition-all no-underline">
                         <Mail className="w-4 h-4" /> Email Inquiry
                      </a>
                   </div>
@@ -178,7 +178,7 @@ const ProductDetailPage: NextPageWithLayout = () => {
                       onClick={() => setOpenAccordion(openAccordion === item.id ? null : item.id)}
                       className="w-full flex items-center justify-between py-5 text-left group bg-transparent border-0 cursor-pointer"
                     >
-                      <span className="text-xs uppercase font-mono font-bold tracking-widest text-[#0A1F40] group-hover:text-primary-light transition-colors">{item.title}</span>
+                      <span className="text-xs uppercase font-mono font-bold tracking-widest text-primary group-hover:text-primary-light transition-colors">{item.title}</span>
                       <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${openAccordion === item.id ? "rotate-180 text-primary-light" : ""}`} />
                     </button>
 
@@ -200,14 +200,14 @@ const ProductDetailPage: NextPageWithLayout = () => {
           {/* Related Products */}
           {relatedProducts.length > 0 && (
             <div className="mt-20 md:mt-40">
-              <h2 className="text-xl md:text-2xl font-extrabold text-[#0A1F40] mb-8 md:mb-12 uppercase tracking-normal font-syne border-b border-primary-light/50 pb-6 inline-block m-0">
+              <h2 className="text-xl md:text-2xl font-extrabold text-primary mb-8 md:mb-12 uppercase tracking-normal font-syne border-b border-primary-light/50 pb-6 inline-block m-0">
                 Compatible Components
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
                 {relatedProducts.map((rel) => (
                   <Link key={rel._id} href={`/product/${rel._id}`}>
                     <a className="group relative overflow-hidden bg-white border border-slate-200 hover:border-primary-light transition-all duration-500 block no-underline">
-                       <div className="aspect-[4/3] relative bg-[#0A1F40]/5 overflow-hidden">
+                       <div className="aspect-[4/3] relative bg-primary/5 overflow-hidden">
                           {rel.image ? (
                             <img src={rel.image} alt={rel.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                           ) : (
@@ -215,7 +215,7 @@ const ProductDetailPage: NextPageWithLayout = () => {
                           )}
                        </div>
                        <div className="p-4 border-t border-slate-100">
-                          <h3 className="text-[10px] font-mono font-bold text-[#0A1F40] uppercase truncate group-hover:text-primary-light transition-colors tracking-wider m-0">{rel.title}</h3>
+                          <h3 className="text-[10px] font-mono font-bold text-primary uppercase truncate group-hover:text-primary-light transition-colors tracking-wider m-0">{rel.title}</h3>
                        </div>
                     </a>
                   </Link>
@@ -232,7 +232,7 @@ const ProductDetailPage: NextPageWithLayout = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-[#0A1F40]/90 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
+              className="fixed inset-0 z-50 bg-primary/90 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer"
               onClick={() => setLightboxImage(null)}
             >
               <button 

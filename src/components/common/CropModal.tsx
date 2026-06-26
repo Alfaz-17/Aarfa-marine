@@ -66,7 +66,7 @@ const CropModal: React.FC<CropModalProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-800 bg-slate-950">
             <div className="flex items-center gap-3">
-              <div className="bg-[#5B9BD5]/10 p-2 text-[#5B9BD5]">
+              <div className="bg-primary-light/10 p-2 text-primary-light">
                 <Crop className="w-5 h-5" />
               </div>
               <h2 className="text-sm font-bold uppercase tracking-widest text-white font-syne m-0">Crop Image</h2>
@@ -85,8 +85,8 @@ const CropModal: React.FC<CropModalProps> = ({
                 onClick={() => setAspect(ratio.value)}
                 className={`px-4 py-2 text-[8px] font-mono font-bold uppercase tracking-widest transition-all shrink-0 cursor-pointer ${
                   aspect === ratio.value 
-                  ? 'bg-[#1E5FA6] text-white border-0' 
-                  : 'bg-slate-900 border border-slate-700 text-slate-300 hover:border-[#5B9BD5] hover:text-[#5B9BD5]'
+                  ? 'bg-primary-light text-white border-0' 
+                  : 'bg-slate-900 border border-slate-700 text-slate-300 hover:border-primary-light hover:text-primary-light'
                 }`}
               >
                 {ratio.label}
@@ -119,7 +119,7 @@ const CropModal: React.FC<CropModalProps> = ({
                 step={0.1}
                 aria-labelledby="Zoom"
                 onChange={(e) => setZoom(Number(e.target.value))}
-                className="flex-grow h-1 bg-slate-850 rounded-full appearance-none accent-[#5B9BD5] cursor-pointer"
+                className="flex-grow h-1 bg-slate-850 rounded-full appearance-none accent-[#1E5FA6] cursor-pointer"
               />
             </div>
             
@@ -132,7 +132,7 @@ const CropModal: React.FC<CropModalProps> = ({
               </button>
               <button
                 onClick={handleCrop}
-                className="flex-1 py-4 bg-[#1E5FA6] hover:bg-[#5B9BD5] border-0 text-white text-[10px] font-mono font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 py-4 bg-primary-light hover:bg-primary-light border-0 text-white text-[10px] font-mono font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Check className="w-4 h-4" /> Save Crop
               </button>
