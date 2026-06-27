@@ -19,6 +19,7 @@ import Paper from '@mui/material/Paper'
 
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
+import PageHero from '@/components/page-hero'
 import ProductCard from '@/components/product-card'
 import { InquiryModal } from '@/components/common/inquiry-modal'
 import connectToDatabase from '@/lib/db'
@@ -80,40 +81,49 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
         <meta name="description" content={product.metaDescription || product.description?.substring(0, 160)} />
       </Head>
 
-      {/* Top Navigation Banner */}
-      <Box sx={{ bgcolor: 'primary.main', color: 'white', pt: { xs: 13, md: 16 }, pb: { xs: 3, md: 4 } }}>
-        <Container maxWidth="lg">
-          <Link href="/products" passHref>
-            <Button 
-              component="a" 
-              startIcon={<ChevronLeft size={20} />} 
-              sx={{ 
-                color: 'rgba(255,255,255,0.7)', 
-                textTransform: 'uppercase', 
-                letterSpacing: 2, 
-                fontWeight: 700, 
-                mb: 2,
-                '&:hover': { color: 'white', bgcolor: 'transparent' } 
-              }}
-            >
-              Back to Products
-            </Button>
-          </Link>
-          <Breadcrumbs aria-label="breadcrumb" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
-            <Link href="/" passHref>
-              <Box component="a" sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { color: 'white' } }}>Home</Box>
-            </Link>
-            <Link href="/products" passHref>
-              <Box component="a" sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { color: 'white' } }}>Products</Box>
-            </Link>
-            <Typography sx={{ color: 'white', fontWeight: 600 }}>{product.title}</Typography>
-          </Breadcrumbs>
-        </Container>
-      </Box>
+      {/* Top Navigation Banner / Hero */}
+      <PageHero
+        title={product.title}
+        image={product.image || product.images?.[0] || '/images/marine-bridge.jpg'}
+        compact
+      />
 
       {/* Main Content */}
-      <Box sx={{ py: { xs: 5, md: 10 }, bgcolor: 'background.paper' }}>
+      <Box sx={{ py: { xs: 5, md: 8 }, bgcolor: 'background.paper' }}>
         <Container maxWidth="lg">
+          {/* Breadcrumbs and Back Navigation */}
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { xs: 'flex-start', sm: 'center' }, gap: 2, mb: { xs: 4, md: 6 }, pb: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
+            <Breadcrumbs aria-label="breadcrumb" sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>
+              <Link href="/" passHref>
+                <Box component="a" sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>Home</Box>
+              </Link>
+              <Link href="/products" passHref>
+                <Box component="a" sx={{ color: 'inherit', textDecoration: 'none', '&:hover': { color: 'primary.main' } }}>Products</Box>
+              </Link>
+              <Typography sx={{ color: 'text.primary', fontWeight: 600 }}>{product.title}</Typography>
+            </Breadcrumbs>
+            
+            <Link href="/products" passHref>
+              <Button 
+                component="a" 
+                startIcon={<ChevronLeft size={20} />} 
+                variant="outlined"
+                color="inherit"
+                sx={{ 
+                  textTransform: 'uppercase', 
+                  letterSpacing: 1, 
+                  fontWeight: 600, 
+                  borderRadius: 50,
+                  borderColor: 'divider',
+                  color: 'text.secondary',
+                  '&:hover': { bgcolor: 'grey.50', color: 'primary.main' } 
+                }}
+              >
+                Back to Products
+              </Button>
+            </Link>
+          </Box>
+
           <Grid container spacing={{ xs: 4, md: 8 }}>
             {/* Left: Images */}
             <Grid item xs={12} md={6}>

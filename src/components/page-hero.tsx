@@ -5,12 +5,13 @@ import Typography from '@mui/material/Typography'
 
 interface PageHeroProps {
   title: string
-  subtitle: string
+  subtitle?: string
   image?: string
   compact?: boolean
+  children?: React.ReactNode
 }
 
-const PageHero: FC<PageHeroProps> = ({ title, subtitle, image = '/images/marine-bridge.jpg', compact = false }) => {
+const PageHero: FC<PageHeroProps> = ({ title, subtitle, image = '/images/marine-bridge.jpg', compact = false, children }) => {
   return (
     <Box
       sx={{
@@ -44,9 +45,12 @@ const PageHero: FC<PageHeroProps> = ({ title, subtitle, image = '/images/marine-
             </Box>
           </Box>
         </Typography>
-        <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.82)', fontWeight: 400, maxWidth: 680, mx: 'auto', lineHeight: 1.7, fontSize: compact ? { xs: '0.9rem', md: '1.05rem' } : undefined }}>
-          {subtitle}
-        </Typography>
+        {subtitle && (
+          <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.82)', fontWeight: 400, maxWidth: 680, mx: 'auto', lineHeight: 1.7, fontSize: compact ? { xs: '0.9rem', md: '1.05rem' } : undefined }}>
+            {subtitle}
+          </Typography>
+        )}
+        {children}
       </Container>
     </Box>
   )
