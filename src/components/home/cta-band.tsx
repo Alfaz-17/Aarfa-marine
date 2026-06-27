@@ -15,7 +15,7 @@ const CtaBand: FC<CtaBandProps> = ({ tone = 'light' }) => {
     <Box
       sx={{
         backgroundColor: isDark ? 'primary.main' : 'background.default',
-        py: { xs: 6, md: 10 },
+        py: { xs: 6, md: 6 },
         borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(10,25,47,0.08)',
       }}
     >

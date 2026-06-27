@@ -19,8 +19,8 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
     <Box
       id="featured-products"
       sx={{
-        pt: { xs: 5, md: 10 },
-        pb: { xs: 6, md: 10 },
+        pt: { xs: 5, md: 6 },
+        pb: { xs: 6, md: 6 },
         backgroundColor: 'background.default',
       }}
     >

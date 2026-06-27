@@ -24,9 +24,87 @@ const categories = [
   }
 ]
 
+const CategoryCard = ({ category, isLarge = false }: { category: any, isLarge?: boolean }) => (
+  <Link href={`/products?category=${category.name}`} passHref>
+    <Box
+      component="a"
+      sx={{
+        textDecoration: 'none',
+        display: 'flex',
+        position: 'relative',
+        borderRadius: 3,
+        overflow: 'hidden',
+        height: isLarge ? { xs: 350, sm: 400, md: '100%' } : { xs: 300, sm: 350, md: '100%' },
+        minHeight: isLarge ? { md: 520 } : { md: 248 },
+        alignItems: 'flex-end',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
+        cursor: 'pointer',
+        '&:hover': {
+          boxShadow: '0 15px 50px rgba(0,0,0,0.15)',
+          '& .bg-image': {
+            transform: 'scale(1.08)',
+          },
+          '& .overlay': {
+            opacity: 0.8,
+          },
+          '& .explore-btn': {
+            opacity: 1,
+            transform: 'translateY(0)',
+          }
+        }
+      }}
+    >
+      <Box
+        className="bg-image"
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url(${category.image})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          transition: 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        }}
+      />
+      <Box
+        className="overlay"
+        sx={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to top, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 40%, transparent 100%)',
+          opacity: 0.85,
+          transition: 'opacity 0.5s ease',
+        }}
+      />
+      <Box sx={{ position: 'relative', zIndex: 1, p: { xs: 3, md: 4 }, width: '100%' }}>
+        <Typography variant="h4" component="h3" sx={{ color: 'common.white', fontWeight: 800, mb: 1, fontSize: { xs: '1.5rem', md: isLarge ? '2.2rem' : '1.6rem' } }}>
+          {category.name}
+        </Typography>
+        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', mb: 2, lineHeight: 1.6 }}>
+          {category.description}
+        </Typography>
+        <Box 
+          className="explore-btn"
+          sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1, 
+            color: 'secondary.main', 
+            fontWeight: 700,
+            opacity: { xs: 1, md: 0 },
+            transform: { xs: 'translateY(0)', md: 'translateY(10px)' },
+            transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          }}
+        >
+          Explore Equipment <ArrowForwardIcon fontSize="small" />
+        </Box>
+      </Box>
+    </Box>
+  </Link>
+)
+
 const MainCategories: FC = () => {
   return (
-    <Box id="main-categories" sx={{ py: { xs: 6, md: 10 }, backgroundColor: 'background.paper' }}>
+    <Box id="main-categories" sx={{ py: { xs: 6, md: 6 }, backgroundColor: 'background.paper' }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: { xs: 5, md: 8 } }}>
           <Typography variant="caption" sx={{ color: 'primary.light', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
@@ -43,91 +121,23 @@ const MainCategories: FC = () => {
           </Typography>
         </Box>
 
-        <Grid container spacing={4}>
-          {categories.map((category) => (
-            <Grid item xs={12} md={4} key={category.name}>
-              <Link href={`/products?category=${category.name}`} passHref>
-                <Box
-                  component="a"
-                  sx={{
-                    textDecoration: 'none',
-                    display: 'flex',
-                    position: 'relative',
-                    borderRadius: 2,
-                    overflow: 'hidden',
-                    height: { xs: 350, sm: 400, md: 480 },
-                    alignItems: 'flex-end',
-                    boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
-                    cursor: 'pointer',
-                    '&:hover': {
-                      boxShadow: '0 15px 50px rgba(0,0,0,0.15)',
-                      '& .bg-image': {
-                        transform: 'scale(1.08)',
-                      },
-                      '& .overlay': {
-                        opacity: 0.8,
-                      },
-                      '& .explore-btn': {
-                        opacity: 1,
-                        transform: 'translateY(0)',
-                      }
-                    }
-                  }}
-                >
-                  {/* Background Image */}
-                  <Box
-                    className="bg-image"
-                    sx={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundImage: `url(${category.image})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      transition: 'transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                    }}
-                  />
-                  
-                  {/* Dark Gradient Overlay */}
-                  <Box
-                    className="overlay"
-                    sx={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(to top, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.4) 40%, transparent 100%)',
-                      opacity: 0.85,
-                      transition: 'opacity 0.5s ease',
-                    }}
-                  />
-
-                  {/* Content */}
-                  <Box sx={{ position: 'relative', zIndex: 1, p: { xs: 3, md: 4 }, width: '100%' }}>
-                    <Typography variant="h4" component="h3" sx={{ color: 'common.white', fontWeight: 800, mb: 1, fontSize: { xs: '1.5rem', md: '1.8rem' } }}>
-                      {category.name}
-                    </Typography>
-                    <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', mb: 3, lineHeight: 1.6 }}>
-                      {category.description}
-                    </Typography>
-                    
-                    <Box 
-                      className="explore-btn"
-                      sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: 1, 
-                        color: 'secondary.main', 
-                        fontWeight: 700,
-                        opacity: { xs: 1, md: 0 },
-                        transform: { xs: 'translateY(0)', md: 'translateY(10px)' },
-                        transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                      }}
-                    >
-                      Explore Equipment <ArrowForwardIcon fontSize="small" />
-                    </Box>
-                  </Box>
-                </Box>
-              </Link>
+        <Grid container spacing={3}>
+          {/* Large Left Card */}
+          <Grid item xs={12} md={6}>
+            <CategoryCard category={categories[0]} isLarge />
+          </Grid>
+          
+          {/* Two Smaller Right Cards Stacked */}
+          <Grid item xs={12} md={6}>
+            <Grid container spacing={3} sx={{ height: '100%' }}>
+              <Grid item xs={12}>
+                <CategoryCard category={categories[1]} />
+              </Grid>
+              <Grid item xs={12}>
+                <CategoryCard category={categories[2]} />
+              </Grid>
             </Grid>
-          ))}
+          </Grid>
         </Grid>
       </Container>
     </Box>

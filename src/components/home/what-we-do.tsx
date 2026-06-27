@@ -28,7 +28,7 @@ const services = [
 const WhatWeDo: FC = () => {
   return (
     <Box sx={{ 
-      py: { xs: 6, md: 14 }, 
+      py: { xs: 6, md: 8 }, 
       bgcolor: 'primary.dark',
       position: 'relative',
       overflow: 'hidden'
@@ -38,7 +38,7 @@ const WhatWeDo: FC = () => {
       <Box sx={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '50%', height: '50%', background: 'radial-gradient(circle, rgba(237,28,36,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-        <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
+        <Grid container spacing={{ xs: 3, md: 4 }} alignItems="stretch">
           
           {/* LEFT SIDE: Image */}
           <Grid item xs={12} md={5}>
@@ -48,7 +48,8 @@ const WhatWeDo: FC = () => {
               overflow: 'hidden',
               boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
               border: '1px solid rgba(255,255,255,0.05)',
-              height: { xs: 350, md: 700 }
+              height: { xs: 280, md: '100%' },
+              minHeight: { md: 380 }
             }}>
               <img src="/images/what-we-do.png" alt="Marine engineer installing navigation equipment" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(to top, rgba(10,25,47,0.8) 0%, transparent 100%)', pointerEvents: 'none' }} />
@@ -57,11 +58,11 @@ const WhatWeDo: FC = () => {
 
           {/* RIGHT SIDE: Title + Cards */}
           <Grid item xs={12} md={7}>
-            <Box sx={{ textAlign: { xs: 'center', md: 'left' }, mb: { xs: 4, md: 5 } }}>
-              <Typography variant="caption" sx={{ color: 'primary.light', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
+            <Box sx={{ textAlign: { xs: 'center', md: 'left' }, mb: { xs: 3, md: 3 } }}>
+              <Typography variant="caption" sx={{ color: 'primary.light', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 1 }}>
                 What We Do
               </Typography>
-              <Typography variant="h2" sx={{ fontSize: { xs: '1.8rem', md: '3.5rem' }, fontWeight: 700, color: 'common.white', position: 'relative', display: 'inline-block' }}>
+              <Typography variant="h2" sx={{ fontSize: { xs: '1.5rem', md: '2.5rem' }, fontWeight: 700, color: 'common.white', position: 'relative', display: 'inline-block' }}>
                 Our Three Core{' '}
                 <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
                   Solutions
@@ -80,7 +81,7 @@ const WhatWeDo: FC = () => {
                     backdropFilter: 'blur(16px)',
                     border: '1px solid rgba(255,255,255,0.05)', 
                     borderRadius: 2, 
-                    p: { xs: 3, md: 4 },
+                    p: { xs: 2, md: 2.5 },
                     position: 'relative',
                     overflow: 'hidden',
                     display: 'flex',
@@ -111,21 +112,21 @@ const WhatWeDo: FC = () => {
 
                     <Box className="icon-wrapper" sx={{ 
                       flexShrink: 0,
-                      width: { xs: 54, md: 70 }, height: { xs: 54, md: 70 }, 
+                      width: { xs: 45, md: 55 }, height: { xs: 45, md: 55 }, 
                       borderRadius: '50%', 
                       bgcolor: 'rgba(255,255,255,0.03)', 
                       display: 'flex', alignItems: 'center', justifyContent: 'center', 
                       border: '1px solid rgba(255,255,255,0.08)',
                       transition: 'all 0.4s ease',
                     }}>
-                      {React.cloneElement(item.icon as React.ReactElement, { className: 'icon', sx: { fontSize: 32, color: 'primary.light', transition: 'color 0.4s ease' } })}
+                      {React.cloneElement(item.icon as React.ReactElement, { className: 'icon', sx: { fontSize: 26, color: 'primary.light', transition: 'color 0.4s ease' } })}
                     </Box>
                     
                     <Box>
-                      <Typography variant="h4" sx={{ color: 'common.white', mb: 1, fontWeight: 700, fontSize: { xs: '1.1rem', md: '1.3rem' }, letterSpacing: 0 }}>
+                      <Typography variant="h4" sx={{ color: 'common.white', mb: 0.5, fontWeight: 700, fontSize: { xs: '1rem', md: '1.15rem' }, letterSpacing: 0 }}>
                         {item.title}
                       </Typography>
-                      <Typography sx={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, fontSize: { xs: '0.9rem', md: '0.95rem' } }}>
+                      <Typography sx={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, fontSize: { xs: '0.8rem', md: '0.85rem' } }}>
                         {item.desc}
                       </Typography>
                     </Box>

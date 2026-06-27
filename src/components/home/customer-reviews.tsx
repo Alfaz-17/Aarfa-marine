@@ -18,7 +18,7 @@ const reviews = [
 
 const CustomerReviews: FC = () => {
   return (
-    <Box id="customer-reviews" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.default' }}>
+    <Box id="customer-reviews" sx={{ py: { xs: 8, md: 6 }, backgroundColor: 'background.default' }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 8 }}>
           <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>

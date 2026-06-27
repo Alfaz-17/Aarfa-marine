@@ -9,7 +9,7 @@ const StatsBand: FC = () => {
     <Box
       sx={{
         backgroundColor: 'primary.dark',
-        py: { xs: 8, md: 10 },
+        py: { xs: 8, md: 6 },
         color: 'common.white',
         position: 'relative',
         overflow: 'hidden'
