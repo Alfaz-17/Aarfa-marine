@@ -73,9 +73,9 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
                 <Box
                   key={`${product._id}-${index}`}
                   sx={{
-                    width: { xs: '42vw', sm: 250, md: 340 },
-                    maxWidth: { xs: 170, sm: 250, md: 340 },
-                    minWidth: { xs: 150, sm: 250, md: 340 },
+                    width: { xs: '65vw', sm: 250, md: 340 },
+                    maxWidth: { xs: 260, sm: 250, md: 340 },
+                    minWidth: { xs: 220, sm: 250, md: 340 },
                     flexShrink: 0,
                   }}
                 >
