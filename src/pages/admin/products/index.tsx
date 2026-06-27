@@ -41,8 +41,8 @@ export default function AdminProductListPage() {
 
   const handleToggleFeatured = async (product: any) => {
     try {
-      const updatedProduct = { ...product, featured: !product.featured };
-      await api.put(`/products/${product._id}`, updatedProduct);
+      const { data } = await api.put(`/products/${product._id}`, { featured: !product.featured });
+      const updatedProduct = { ...product, ...data };
       setProducts(products.map(p => p._id === product._id ? updatedProduct : p));
       setMessage({ type: 'success', text: `Asset ${updatedProduct.featured ? 'promoted to strategic status' : 'removed from strategic focus'}.` });
     } catch (error) {

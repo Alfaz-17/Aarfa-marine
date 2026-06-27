@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#040d1a] flex items-center justify-center p-6 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 relative overflow-hidden font-sans">
       {/* Background Marine Tech grid & overlays */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(91,155,213,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(91,155,213,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
       <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-primary-light/5 rounded-full filter blur-[120px] pointer-events-none" />
@@ -64,7 +64,7 @@ export default function AdminLoginPage() {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md relative z-10"
       >
-        <div className="bg-primary/80 backdrop-blur-md p-10 border border-primary-light/20 shadow-2xl relative">
+        <div className="bg-white backdrop-blur-md p-10 border border-slate-200 shadow-2xl relative">
           {/* Corner highlights (HUD/Industrial brackets style) */}
           <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary-light" />
           <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary-light" />
@@ -74,27 +74,27 @@ export default function AdminLoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
              <div className="flex flex-col items-center justify-center gap-3 mb-2">
-                <img src="/aarfa-logo.png" alt="Aarfa Marine Logo" className="h-16 w-auto object-contain brightness-0 invert" />
-                <h1 className="text-xl font-bold tracking-widest text-white uppercase font-syne m-0">AARFA MARINE</h1>
+                <img src="/aarfa-logo.png" alt="Aarfa Marine Logo" className="h-16 w-auto object-contain" />
+                <h1 className="text-xl font-bold tracking-widest text-slate-950 uppercase font-syne m-0">AARFA MARINE</h1>
              </div>
              <p className="text-[9px] font-mono font-bold text-primary-light tracking-[0.45em] uppercase m-0">Control Console Access</p>
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-950/50 border border-red-500/50 text-red-200 text-xs font-mono uppercase tracking-wider">
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 text-xs font-mono uppercase tracking-wider">
               [SYSTEM ERROR]: {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Operator Email</label>
+              <label className="text-[10px] font-mono font-bold text-slate-600 uppercase tracking-widest block">Operator Email</label>
               <div className="relative">
                 <input
                   type="email"
                   name="email"
                   placeholder="operator@aarfamarine.com"
-                  className="w-full px-4 py-4 pl-12 border border-primary-light/20 bg-slate-950/60 focus:border-primary-light focus:bg-slate-950 outline-none text-sm transition-all text-white font-mono"
+                  className="w-full px-4 py-4 pl-12 border border-slate-200 bg-white focus:border-primary-light outline-none text-sm transition-all text-slate-950 font-mono"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -104,13 +104,13 @@ export default function AdminLoginPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-widest block">Access Key</label>
+              <label className="text-[10px] font-mono font-bold text-slate-600 uppercase tracking-widest block">Access Key</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
                   placeholder="••••••••••••"
-                  className="w-full px-4 py-4 pl-12 pr-12 border border-primary-light/20 bg-slate-950/60 focus:border-primary-light focus:bg-slate-950 outline-none text-sm transition-all text-white font-mono"
+                  className="w-full px-4 py-4 pl-12 pr-12 border border-slate-200 bg-white focus:border-primary-light outline-none text-sm transition-all text-slate-950 font-mono"
                   value={formData.password}
                   onChange={handleChange}
                   required

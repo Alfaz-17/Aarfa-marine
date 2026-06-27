@@ -1,6 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from '@/lib/db'
 import { Brand } from '@/lib/models'
+import { getSession } from '@/lib/auth'
+
+const normalizeBrandPayload = (body: any) => {
+  const payload = { ...body }
+  if (!payload.image && payload.logo) payload.image = payload.logo
+  delete payload.logo
+  return payload
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase()
@@ -16,7 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'POST') {
     try {
-      const brand = await Brand.create(req.body)
+      const session = await getSession(req)
+      if (!session) return res.status(401).json({ error: 'Unauthorized' })
+
+      const brand = await Brand.create(normalizeBrandPayload(req.body))
       return res.status(201).json(brand)
     } catch (error) {
       return res.status(500).json({ error: 'Failed to create brand' })

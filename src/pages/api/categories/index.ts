@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from '@/lib/db'
 import { Category } from '@/lib/models'
+import { getSession } from '@/lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase()
@@ -16,6 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'POST') {
     try {
+      const session = await getSession(req)
+      if (!session) return res.status(401).json({ error: 'Unauthorized' })
+
       const category = await Category.create(req.body)
       return res.status(201).json(category)
     } catch (error) {

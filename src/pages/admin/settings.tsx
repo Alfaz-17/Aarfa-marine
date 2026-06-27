@@ -5,8 +5,16 @@ import api from '@/lib/api';
 import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminSettingsPage() {
-  const [settings, setSettings] = useState<{geminiApiKey?: string}>({
-    geminiApiKey: ''
+  const [settings, setSettings] = useState<{
+    geminiApiKey?: string
+    autoBackgroundRemoval?: boolean
+    applyWatermark?: boolean
+    watermarkText?: string
+  }>({
+    geminiApiKey: '',
+    autoBackgroundRemoval: false,
+    applyWatermark: true,
+    watermarkText: 'Aarfa Marine Solutions',
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -18,7 +26,10 @@ export default function AdminSettingsPage() {
         const { data } = await api.get('/settings');
         if (data) {
           setSettings({
-            geminiApiKey: data.geminiApiKey || ''
+            geminiApiKey: data.geminiApiKey || '',
+            autoBackgroundRemoval: Boolean(data.autoBackgroundRemoval),
+            applyWatermark: data.applyWatermark !== false,
+            watermarkText: data.watermarkText || 'Aarfa Marine Solutions',
           });
         }
       } catch (err) {
@@ -93,6 +104,55 @@ export default function AdminSettingsPage() {
             />
             <p className="text-[9px] font-mono text-slate-400 italic m-0">This key is used to power AI features across the admin panel.</p>
           </div>
+        </div>
+
+        <div className="bg-primary/55 p-10 border border-primary-light/20 space-y-8 relative">
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
+
+          <div className="flex items-center gap-4 text-primary-light border-b border-slate-800 pb-6">
+            <Type className="w-5 h-5" />
+            <h2 className="text-xs font-mono font-bold uppercase tracking-widest m-0">Product Image Processing</h2>
+          </div>
+
+          <label className="flex items-center justify-between gap-4 border border-primary-light/20 p-4 cursor-pointer">
+            <span>
+              <span className="block text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-slate-300">Apply Watermark</span>
+              <span className="block text-[9px] font-mono text-slate-400 mt-1">Used when admins upload product images.</span>
+            </span>
+            <input
+              type="checkbox"
+              checked={settings.applyWatermark !== false}
+              onChange={(e) => setSettings(prev => ({ ...prev, applyWatermark: e.target.checked }))}
+              className="w-4 h-4 accent-[#1E5FA6]"
+            />
+          </label>
+
+          <div className="space-y-4">
+            <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-[0.2em] block">Watermark Text</label>
+            <input
+              type="text"
+              value={settings.watermarkText || ''}
+              onChange={(e) => setSettings(prev => ({ ...prev, watermarkText: e.target.value }))}
+              className="w-full bg-slate-950/60 border border-primary-light/20 p-5 text-sm outline-none focus:border-primary-light transition-colors font-mono text-white"
+              placeholder="Aarfa Marine Solutions"
+            />
+          </div>
+
+          <label className="flex items-center justify-between gap-4 border border-primary-light/20 p-4 cursor-pointer">
+            <span>
+              <span className="block text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-slate-300">Auto Background Removal</span>
+              <span className="block text-[9px] font-mono text-slate-400 mt-1">Prepares transparent-style product images before upload.</span>
+            </span>
+            <input
+              type="checkbox"
+              checked={Boolean(settings.autoBackgroundRemoval)}
+              onChange={(e) => setSettings(prev => ({ ...prev, autoBackgroundRemoval: e.target.checked }))}
+              className="w-4 h-4 accent-[#1E5FA6]"
+            />
+          </label>
         </div>
       </div>
 

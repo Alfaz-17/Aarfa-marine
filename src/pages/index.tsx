@@ -1,6 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
 import connectToDatabase from '@/lib/db'
@@ -35,7 +35,7 @@ const Home: NextPageWithLayout<HomeProps> = ({ featuredProducts, brands }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     await connectToDatabase()
     
@@ -54,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         featuredProducts: serializedProducts,
         brands: serializedBrands,
       },
+      revalidate: 60, // ISR: revalidate every 60 seconds
     }
   } catch (error) {
     console.error("Error fetching homepage data:", error)
@@ -62,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         featuredProducts: [],
         brands: [],
       },
+      revalidate: 60,
     }
   }
 }

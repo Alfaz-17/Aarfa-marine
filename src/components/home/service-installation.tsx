@@ -34,8 +34,9 @@ const ServiceInstallation: FC<ServiceInstallationProps> = ({ services }) => {
                 We provide on-site installation, testing, and commissioning for all the equipment we supply. Our certified engineers handle everything from fitting a simple GPS unit to setting up a full ECDIS navigation system.
               </Typography>
               
-              <Link href="/services" passHref legacyBehavior>
+              <Link href="/services" passHref>
                 <Button 
+                  component="a"
                   variant="contained" 
                   size="large"
                   sx={{ 

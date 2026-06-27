@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import Box from '@mui/material/Box'
-import Image from 'next/image'
 
 interface Props {
   onClick?: () => void
@@ -9,18 +8,28 @@ interface Props {
 }
 
 const Logo: FC<Props> = ({ onClick, isScrolled }) => {
+  const logoWidth = { xs: isScrolled ? 60 : 68, sm: isScrolled ? 64 : 72, md: isScrolled ? 60 : 75 }
+
   return (
     <Box onClick={onClick} sx={{ 
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      '& img': {
-        transition: 'all 0.3s ease-in-out',
-        width: { xs: isScrolled ? 50 : 65, md: isScrolled ? 60 : 75 },
-        height: 'auto',
-      }
+      flexShrink: 0,
     }}>
-      <Image src="/aarfa-logo.png" alt="Aarfa Marine Logo" width={80} height={88} objectFit="contain" />
+      <Box
+        component="img"
+        src="/aarfa-logo.png"
+        alt="Aarfa Marine Logo"
+        sx={{
+          display: 'block',
+          width: logoWidth,
+          height: 'auto',
+          maxHeight: { xs: 72, sm: 78, md: 82 },
+          objectFit: 'contain',
+          transition: 'all 0.3s ease-in-out',
+        }}
+      />
     </Box>
   )
 }

@@ -40,7 +40,6 @@ const Header: FC = () => {
         { label: 'Our Story', path: '/about#our-story' },
         { label: 'The Team', path: '/about#the-team' },
         { label: 'Why Choose Us', path: '/about#why-choose' },
-        { label: 'Customer Reviews', path: '/about#customer-reviews' },
       ]
     },
     { label: 'Services', path: '/services' },
@@ -60,12 +59,12 @@ const Header: FC = () => {
   return (
     <Box sx={{ 
       position: 'fixed',
-      top: { xs: isScrolled ? 10 : 0, md: isScrolled ? 20 : 0 },
+      top: { xs: isScrolled ? 8 : 0, md: isScrolled ? 20 : 0 },
       left: 0,
       right: 0,
       zIndex: 999,
       transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-      px: { xs: 1.5, md: 4 },
+      px: { xs: 1, sm: 1.5, md: 4 },
       display: 'flex',
       justifyContent: 'center',
     }}>
@@ -79,8 +78,8 @@ const Header: FC = () => {
         borderRadius: isScrolled ? { xs: 2, md: 50 } : 0,
         boxShadow: isScrolled ? '0 12px 40px rgba(30, 95, 166, 0.15)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-        py: isScrolled ? 1 : 2, // Thinner when scrolled
-        px: { xs: 1.5, md: 4 },
+        py: { xs: 0.75, md: isScrolled ? 1 : 2 },
+        px: { xs: 1, sm: 1.5, md: 4 },
       }}>
         {/* Desktop Navigation */}
         {!matchMobileView ? (
@@ -130,50 +129,52 @@ const Header: FC = () => {
           </Box>
         ) : (
           /* Mobile Navigation (Centered Logo, Left Hamburguer trigger) */
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', minHeight: { xs: 66, sm: 76 } }}>
             <IconButton 
               onClick={() => setVisibleMenu(!visibleMenu)} 
-              sx={{ color: isScrolled ? 'text.primary' : 'common.white' }}
+              size="small"
+              sx={{ color: isScrolled ? 'text.primary' : 'common.white', width: 40, height: 40 }}
             >
               <Menu />
             </IconButton>
             <Box sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
               <Logo isScrolled={isScrolled} />
             </Box>
-            <Box sx={{ width: 48 }} /> {/* Spacing spacer to balance flex box */}
+            <Box sx={{ width: 40 }} /> {/* Spacing spacer to balance flex box */}
 
             {/* Mobile Navigation Drawer */}
             {visibleMenu && (
               <Box
                 sx={{
-                  py: 6,
-                  px: 4,
+                  py: 3,
+                  px: { xs: 2, sm: 4 },
                   backgroundColor: 'background.paper',
                   zIndex: 'appBar',
                   position: 'fixed',
-                  height: '100svh',
+                  height: '100dvh',
                   width: '100%',
                   top: 0,
                   left: 0,
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  overflowY: 'auto',
                 }}
               >
                 <IconButton
                   sx={{
                     position: 'absolute',
-                    top: 10,
-                    right: 10,
+                    top: 12,
+                    right: 12,
                   }}
                   onClick={() => setVisibleMenu(false)}
                 >
                   <Close />
                 </IconButton>
-                <Box sx={{ mb: 4, mt: 2 }}>
+                <Box sx={{ mb: 2.5, mt: 1 }}>
                   <Logo isScrolled={true} />
                 </Box>
-                <Navigation isScrolled={true} items={links} />
+                <Navigation isScrolled={true} items={links} onNavigate={() => setVisibleMenu(false)} />
               </Box>
             )}
           </Box>

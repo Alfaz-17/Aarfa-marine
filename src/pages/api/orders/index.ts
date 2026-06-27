@@ -1,12 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from '@/lib/db'
 import { Order } from '@/lib/models'
+import { getSession } from '@/lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase()
 
   if (req.method === 'GET') {
     try {
+      const session = await getSession(req)
+      if (!session) return res.status(401).json({ error: 'Unauthorized' })
+
       const { status } = req.query
       const filter: any = {}
       if (status) filter.status = status

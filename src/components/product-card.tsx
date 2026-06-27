@@ -19,7 +19,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
         sx={{
           display: 'block',
           textDecoration: 'none',
-          p: { xs: 1.5, sm: 2, md: 2 },
+          p: { xs: 1, sm: 1.5, md: 2 },
         mb: 0,
         bgcolor: isLight ? 'common.white' : 'rgba(255, 255, 255, 0.03)',
         border: isLight ? '1px solid' : '1px solid rgba(255,255,255,0.12)',
@@ -27,7 +27,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
         backdropFilter: isLight ? 'none' : 'blur(10px)',
         borderRadius: 1,
         height: '100%',
-        boxShadow: isLight ? '0 16px 40px rgba(10,25,47,0.08)' : 'none',
+        boxShadow: isLight ? { xs: '0 8px 20px rgba(10,25,47,0.07)', md: '0 16px 40px rgba(10,25,47,0.08)' } : 'none',
         transition: 'all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         '&:hover': {
           transform: 'translateY(-6px)',
@@ -60,9 +60,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           lineHeight: 0,
           overflow: 'hidden',
           borderRadius: 1,
-          mb: 2,
+          mb: { xs: 1, md: 2 },
           position: 'relative',
-          height: { xs: 170, sm: 200, md: 240 },
+          height: { xs: 118, sm: 180, md: 240 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -75,7 +75,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
             src={product.image || product.images[0]}
             alt={product.title}
             style={{
-              width: '100%', height: '100%', objectFit: 'contain', padding: '10px',
+              width: '100%', height: '100%', objectFit: 'contain', padding: '8px',
               transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
           />
@@ -100,12 +100,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           }}
         />
       </Box>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: { xs: 0.25, md: 2 } }}>
         {/* Category tag */}
         {categoryName && (
           <Typography sx={{
-            fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase',
-            letterSpacing: 1, color: 'secondary.main', mb: 0.75,
+            fontSize: { xs: '0.58rem', sm: '0.65rem', md: '0.68rem' }, fontWeight: 700, textTransform: 'uppercase',
+            letterSpacing: { xs: 0.5, md: 1 }, color: 'secondary.main', mb: 0.5,
           }}>
             {categoryName}
           </Typography>
@@ -116,9 +116,9 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           component="h3"
           variant="h5"
           sx={{
-            fontSize: { xs: '0.92rem', sm: '1rem', md: '1.15rem' },
+            fontSize: { xs: '0.76rem', sm: '0.95rem', md: '1.15rem' },
             fontWeight: 700,
-            mb: 1,
+            mb: { xs: 0.25, md: 1 },
             color: isLight ? 'text.primary' : 'common.white',
             transition: 'color 0.3s ease',
             overflow: 'hidden',
@@ -126,7 +126,8 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
-            minHeight: { xs: '2.4rem', md: '2.8rem' }
+            lineHeight: { xs: 1.25, md: 1.35 },
+            minHeight: { xs: '1.95rem', sm: '2.4rem', md: '2.8rem' }
           }}
         >
           {product.title}
@@ -137,12 +138,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           <Typography className="product-desc" variant="body2" sx={{
             color: isLight ? 'text.secondary' : 'rgba(255,255,255,0.5)',
             transition: 'color 0.3s ease',
-            fontSize: { xs: '0.78rem', md: '0.85rem' },
-            lineHeight: 1.5,
+            fontSize: { xs: '0.68rem', sm: '0.78rem', md: '0.85rem' },
+            lineHeight: { xs: 1.35, md: 1.5 },
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            WebkitLineClamp: 2,
+            WebkitLineClamp: { xs: 1, sm: 2 },
             WebkitBoxOrient: 'vertical',
             mb: 0.5,
           }}>

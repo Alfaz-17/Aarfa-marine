@@ -37,7 +37,8 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
       display: 'flex', 
       alignItems: 'center', 
       justifyContent: 'center',
-      gap: 1.5,
+      flexDirection: { xs: 'column', sm: 'row' },
+      gap: { xs: 0.25, sm: 1.5 },
       py: { xs: 0.5, md: 0 }
     }}>
       <Typography
@@ -45,7 +46,7 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
       >
         {value}
       </Typography>
-      <Typography sx={{ color: '#D9EAF8', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1 }}>
+      <Typography sx={{ color: '#D9EAF8', fontSize: { xs: '0.62rem', sm: '0.8rem' }, fontWeight: 700, textTransform: 'uppercase', letterSpacing: { xs: 0.5, sm: 1 }, textAlign: 'center', lineHeight: 1.25 }}>
         {label}
       </Typography>
     </Box>
@@ -81,11 +82,11 @@ const HomeHero: FC = () => {
       <Box id="hero" sx={{ 
         position: 'relative', 
         minHeight: { xs: '100svh', md: '100vh' },
-        height: { md: '100vh' },
+        height: { xs: '100svh', md: '100vh' },
         display: 'flex',
         alignItems: 'center',
-        pt: { xs: 11, md: 8 },
-        pb: { xs: 5, md: 2 },
+        pt: { xs: 11.5, sm: 12.5, md: 8 },
+        pb: { xs: 2.5, md: 2 },
         overflow: 'hidden',
         backgroundColor: 'primary.dark',
       }}>
@@ -105,6 +106,9 @@ const HomeHero: FC = () => {
             zIndex: 0,
             filter: 'blur(20px)',
             transform: 'scale(1.1)', // prevent blur edge artifacts
+            opacity: videoReady ? 0 : 1,
+            transition: 'opacity 0.6s ease-in-out',
+            willChange: videoReady ? 'auto' : 'filter, transform, opacity',
           }}
         />
         {/* Video element with poster for fast first-frame display */}
@@ -121,6 +125,7 @@ const HomeHero: FC = () => {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            objectPosition: 'left center',
             top: 0,
             left: 0,
             zIndex: 1,
@@ -154,7 +159,7 @@ const HomeHero: FC = () => {
           flex: { md: 1 }, 
           alignItems: 'center',
           justifyContent: 'center',
-          py: { xs: 4, md: 0 }
+          py: { xs: 2, md: 0 }
         }}>
           <Grid item xs={12} md={10} lg={8} sx={{ mx: 'auto' }}>
             <Box
@@ -170,13 +175,13 @@ const HomeHero: FC = () => {
               <Typography
                 component="h1"
                 sx={{
-                  fontSize: { xs: '2.25rem', sm: '2.8rem', md: '3rem', lg: '3.5rem' },
+                  fontSize: { xs: '1.72rem', sm: '2.8rem', md: '2.85rem', lg: '3.25rem' },
                   fontWeight: 800,
-                  lineHeight: 1.15,
+                  lineHeight: { xs: 1.35, md: 0.95 },
                   letterSpacing: 0,
                   color: 'common.white',
                   mb: 0,
-                  textShadow: '0px 2px 4px rgba(0,0,0,0.5)',
+                  textShadow: '0px 4px 12px rgba(0,0,0,0.9), 0px 8px 24px rgba(0,0,0,0.6)',
                 }}
               >
                 Marine Navigation & <br />
@@ -186,7 +191,7 @@ const HomeHero: FC = () => {
                     fontSize: 'inherit',
                     fontWeight: 'inherit',
                     fontFamily: 'inherit',
-                    color: '#D9EAF8',
+                    color: 'primary.light',
                   }}
                 >
                   Communication
@@ -197,11 +202,11 @@ const HomeHero: FC = () => {
               <Typography 
                 sx={{ 
                   color: '#F8FAFC',
-                  lineHeight: 1.6,
-                  fontSize: { xs: '1rem', md: '1.125rem' },
+                  lineHeight: { xs: 1.8, md: 1.3 },
+                  fontSize: { xs: '0.9rem', md: '1.125rem' },
                   fontWeight: 400,
-                  mt: 3,
-                  mb: 4,
+                  mt: { xs: 0.5, md: 1 },
+                  mb: { xs: 2, md: 3 },
                   maxWidth: { xs: 520, md: 600 },
                   mx: 'auto',
                   textShadow: '0px 1px 3px rgba(0,0,0,0.5)',
@@ -210,7 +215,7 @@ const HomeHero: FC = () => {
                 Trader, distributor, and service provider for reconditioned marine electronics, navigation aids, and automation equipment.
               </Typography>
 
-              <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, width: { xs: '100%', sm: 'auto' }, flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', width: 'auto', flexWrap: 'wrap', justifyContent: 'center', gap: { xs: 1.25, sm: 2 } }}>
                 <Link href="/products" passHref>
                   <StyledButton color="primary" size="large" variant="contained" sx={{
                     borderRadius: 1,
@@ -219,10 +224,11 @@ const HomeHero: FC = () => {
                     textTransform: 'uppercase',
                     fontWeight: 800,
                     letterSpacing: 1,
-                    fontSize: '0.75rem',
-                    px: 4.5,
-                    py: 1.5,
-                    width: { xs: '100%', sm: 'auto' },
+                    fontSize: { xs: '0.68rem', md: '0.75rem' },
+                    px: { xs: 2.4, md: 4.5 },
+                    py: { xs: 1.15, md: 1.5 },
+                    width: 'auto',
+                    minWidth: { xs: 128, sm: 140 },
                     backgroundColor: 'primary.main',
                     '&:hover': { 
                       transform: 'translateY(-2px)', 
@@ -244,10 +250,11 @@ const HomeHero: FC = () => {
                     textTransform: 'uppercase',
                     fontWeight: 800,
                     letterSpacing: 1,
-                    fontSize: '0.75rem',
-                    px: 4.5,
-                    py: 1.5,
-                    width: { xs: '100%', sm: 'auto' },
+                    fontSize: { xs: '0.68rem', md: '0.75rem' },
+                    px: { xs: 2.4, md: 4.5 },
+                    py: { xs: 1.15, md: 1.5 },
+                    width: 'auto',
+                    minWidth: { xs: 128, sm: 140 },
                     '&:hover': { 
                       transform: 'translateY(-2px)', 
                       borderColor: 'common.white', 
@@ -265,13 +272,13 @@ const HomeHero: FC = () => {
         {/* Experience Stats - Card-less Clean Text */}
         <Box sx={{ 
           py: 2, 
-          mt: { xs: 4, md: 2 },
+          mt: { xs: 2, md: 2 },
           mb: { xs: 0, md: 2 },
           borderTop: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
-          <Grid container spacing={2}>
+          <Grid container spacing={{ xs: 1, md: 2 }}>
             {exps.map((item) => (
-              <Grid key={item.value} item xs={12} md={4}>
+              <Grid key={item.value} item xs={4} md={4}>
                 <ExpItem item={item} />
               </Grid>
             ))}

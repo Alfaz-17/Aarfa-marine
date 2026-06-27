@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import mongoose from 'mongoose'
 import connectToDatabase from '@/lib/db'
 import { Service } from '@/lib/models'
 import { getSession } from '@/lib/auth'
@@ -6,6 +7,9 @@ import { getSession } from '@/lib/auth'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await connectToDatabase()
   const { id } = req.query
+  if (typeof id !== 'string' || !mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'Invalid service id' })
+  }
 
   if (req.method === 'GET') {
     try {

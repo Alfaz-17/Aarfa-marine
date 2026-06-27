@@ -6,7 +6,7 @@ import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminBrandPage() {
   const [brands, setBrands] = useState<any[]>([]);
-  const [newBrand, setNewBrand] = useState({ name: '', logo: '' });
+  const [newBrand, setNewBrand] = useState({ name: '', image: '' });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState('');
@@ -33,20 +33,20 @@ export default function AdminBrandPage() {
     if (file) {
       setLogoFile(file);
       setLogoPreview(URL.createObjectURL(file));
-      if (editingId) setNewBrand({ ...newBrand, logo: '' }); // Clear existing on new selection
+      if (editingId) setNewBrand({ ...newBrand, image: '' }); // Clear existing on new selection
     }
   };
 
   const handleEdit = (brand: any) => {
     setEditingId(brand._id);
-    setNewBrand({ name: brand.name, logo: brand.logo });
-    setLogoPreview(brand.logo);
+    setNewBrand({ name: brand.name, image: brand.image || brand.logo || '' });
+    setLogoPreview(brand.image || brand.logo || '');
     setLogoFile(null);
   };
 
   const handleCancelEdit = () => {
     setEditingId(null);
-    setNewBrand({ name: '', logo: '' });
+    setNewBrand({ name: '', image: '' });
     setLogoPreview('');
     setLogoFile(null);
   };
@@ -57,7 +57,7 @@ export default function AdminBrandPage() {
 
     setIsUploading(true);
     try {
-      let logoUrl = newBrand.logo;
+      let logoUrl = newBrand.image;
       if (logoFile) {
         logoUrl = await uploadToCloudinary(logoFile, "brands");
       }
@@ -65,7 +65,7 @@ export default function AdminBrandPage() {
       if (editingId) {
         const res = await api.put(`/brands/${editingId}`, { 
           name: newBrand.name, 
-          logo: logoUrl 
+          image: logoUrl 
         });
         setBrands(brands.map(b => b._id === editingId ? res.data : b));
         setEditingId(null);
@@ -73,13 +73,13 @@ export default function AdminBrandPage() {
       } else {
         const res = await api.post('/brands', { 
           name: newBrand.name, 
-          logo: logoUrl 
+          image: logoUrl 
         });
         setBrands([...brands, res.data]);
         setMessage({ type: 'success', text: 'Partner brand synchronized.' });
       }
       
-      setNewBrand({ name: '', logo: '' });
+      setNewBrand({ name: '', image: '' });
       setLogoFile(null);
       setLogoPreview('');
     } catch (error) {
@@ -168,8 +168,8 @@ export default function AdminBrandPage() {
          {brands.map(brand => (
             <div key={brand._id} className="bg-primary/55 p-6 border border-primary-light/20 flex flex-col items-center group relative h-48">
                <div className="flex-1 flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-                  {brand.logo ? (
-                    <img src={brand.logo} alt={brand.name} className="max-h-16 max-w-full object-contain" />
+                  {(brand.image || brand.logo) ? (
+                    <img src={brand.image || brand.logo} alt={brand.name} className="max-h-16 max-w-full object-contain" />
                   ) : (
                     <div className="text-[10px] font-mono text-slate-500">NO_LOGO</div>
                   )}

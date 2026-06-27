@@ -12,7 +12,6 @@ export const navigations: Navigation[] = [
       { label: 'Who We Are', path: '/about#who-we-are' },
       { label: 'Our Story', path: '/about#our-story' },
       { label: 'The Team', path: '/about#the-team' },
-      { label: 'Customer Reviews', path: '/about#customer-reviews' },
     ]
   },
   {

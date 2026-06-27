@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import connectToDatabase from '@/lib/db'
 import { Inquiry } from '@/lib/models'
-import { getAuthSession } from '@/lib/auth'
+import { getSession } from '@/lib/auth'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (req.method === 'GET') {
       // Basic auth check for admin panel
-      const session = await getAuthSession(req, res)
+      const session = await getSession(req)
       if (!session) {
         return res.status(401).json({ error: 'Unauthorized' })
       }

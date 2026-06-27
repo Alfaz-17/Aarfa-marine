@@ -31,7 +31,7 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
       <PageHero 
         title="About Aarfa Marine" 
         subtitle="The Technical Room Specialists for the Global Maritime Fleet. Sourcing directly from Alang to supply certified navigation and automation systems."
-        image="/images/marine-bridge.jpg"
+        image="/images/about-bridge.png"
       />
 
       {/* SECTION 1: WHO WE ARE */}
@@ -40,7 +40,7 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
             <Grid item xs={12} md={6}>
               <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-                <img src="/images/marine-bridge.jpg" alt="Who We Are" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/images/about-bridge.png" alt="Who We Are" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -70,7 +70,7 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center" direction="row-reverse">
             <Grid item xs={12} md={6}>
               <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>
-                <img src="/images/home-hero.jpg" alt="Our Story" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/images/about-workshop.png" alt="Our Story" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>

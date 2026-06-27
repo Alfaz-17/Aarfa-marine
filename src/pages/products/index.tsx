@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -179,15 +179,9 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
   }, [category])
 
   const handleMainCategoryClick = (catName: string) => {
-    if (selectedMainCategory === catName) {
-      setSelectedMainCategory(null)
-      setSelectedSubCategory(null)
-      router.push('/products', undefined, { shallow: true })
-    } else {
-      setSelectedMainCategory(catName)
-      setSelectedSubCategory(null)
-      router.push(`/products?category=${catName}`, undefined, { shallow: true })
-    }
+    setSelectedMainCategory(catName)
+    setSelectedSubCategory(null)
+    router.push(`/products?category=${catName}`, undefined, { shallow: true })
     setCurrentPage(1)
   }
 
@@ -264,8 +258,8 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
         {/* Subtle background glow */}
         <Box sx={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100vw', height: '500px', background: 'radial-gradient(circle, #1E5FA61A 0%, rgba(245,247,250,0) 70%)', zIndex: 0, pointerEvents: 'none' }} />
 
-        <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1, py: { xs: 3, md: 4 } }}>
-          <Box sx={{ display: 'flex', gap: 4 }}>
+        <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 1, py: { xs: 2.5, md: 4 } }}>
+          <Box sx={{ display: 'flex', gap: { xs: 0, md: 4 } }}>
 
             {/* ─── DESKTOP SIDEBAR ─── */}
             <Box
@@ -305,9 +299,11 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
 
               {/* Top bar: Search + Sort + Mobile Filter Toggle */}
               <Box sx={{
-                display: 'flex', gap: 2, mb: 3,
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: { sm: 'center' },
+                display: 'grid',
+                gap: { xs: 1, sm: 2 },
+                mb: { xs: 2, md: 3 },
+                gridTemplateColumns: { xs: '44px minmax(0, 1fr)', sm: '48px minmax(0, 1fr) 200px', md: 'minmax(0, 1fr) 200px' },
+                alignItems: 'center',
               }}>
                 {/* Mobile filter button */}
                 <IconButton
@@ -315,7 +311,7 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
                   sx={{
                     display: { xs: 'flex', md: 'none' },
                     bgcolor: 'common.white', border: '1px solid rgba(10,25,47,0.1)',
-                    borderRadius: 1, width: 48, height: 48,
+                    borderRadius: 1, width: { xs: 44, sm: 48 }, height: { xs: 44, sm: 48 },
                     boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                   }}
                 >
@@ -331,6 +327,7 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
                   onChange={handleSearchChange}
                   size="small"
                   sx={{
+                    gridColumn: { xs: '2 / 3', sm: '2 / 3', md: '1 / 2' },
                     '& .MuiOutlinedInput-root': {
                       backgroundColor: 'common.white',
                       borderRadius: 1,
@@ -361,7 +358,14 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
                 />
 
                 {/* Sort */}
-                <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 200 }, flexShrink: 0 }}>
+                <FormControl
+                  size="small"
+                  sx={{
+                    minWidth: { xs: '100%', sm: 200 },
+                    flexShrink: 0,
+                    gridColumn: { xs: '1 / -1', sm: '3 / 4', md: '2 / 3' },
+                  }}
+                >
                   <Select
                     value={sortBy}
                     onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1) }}
@@ -411,7 +415,7 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
 
               {/* Product Grid */}
               {paginatedProducts.length > 0 ? (
-                <Grid container spacing={{ xs: 2, md: 3 }}>
+                <Grid container spacing={{ xs: 1.25, sm: 2, md: 3 }}>
                   {paginatedProducts.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product._id}>
                       <ProductCard product={product} tone="light" />
@@ -440,13 +444,15 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
                     }}
                     color="primary"
                     size="large"
+                    siblingCount={0}
+                    boundaryCount={1}
                     sx={{
                       '& .MuiPaginationItem-root': {
                         fontWeight: 600,
-                        fontSize: '0.95rem',
+                        fontSize: { xs: '0.82rem', md: '0.95rem' },
                         borderRadius: 1,
                         border: '1px solid rgba(10,25,47,0.08)',
-                        mx: 0.5,
+                        mx: { xs: 0.1, md: 0.5 },
                         transition: 'all 0.2s',
                         '&.Mui-selected': {
                           bgcolor: 'primary.main',
@@ -475,7 +481,8 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
         sx={{
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': {
-            width: 300,
+            width: { xs: '86vw', sm: 320 },
+            maxWidth: 340,
             pt: 2,
             px: 2,
           }
@@ -491,7 +498,7 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
           categories={categories}
           selectedMainCategory={selectedMainCategory}
           selectedSubCategory={selectedSubCategory}
-          onMainCategoryClick={(name) => { handleMainCategoryClick(name); setMobileFilterOpen(false) }}
+          onMainCategoryClick={(name) => { handleMainCategoryClick(name) }}
           onSubCategoryClick={(id) => { handleSubCategoryClick(id); setMobileFilterOpen(false) }}
         />
       </Drawer>
@@ -501,7 +508,7 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     await connectToDatabase()
     
@@ -521,6 +528,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         categories: serializedCategories || [],
         brands: serializedBrands || [],
       },
+      revalidate: 60, // ISR: revalidate every 60 seconds
     }
   } catch (error) {
     console.error("Error fetching products catalog:", error)
@@ -530,6 +538,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         categories: [],
         brands: [],
       },
+      revalidate: 60,
     }
   }
 }

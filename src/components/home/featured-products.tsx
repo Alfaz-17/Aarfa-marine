@@ -19,16 +19,13 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
     <Box
       id="featured-products"
       sx={{
-        pt: {
-          xs: 6,
-          md: 10,
-        },
-        pb: 10,
+        pt: { xs: 5, md: 10 },
+        pb: { xs: 6, md: 10 },
         backgroundColor: 'background.default',
       }}
     >
       <Container maxWidth="lg">
-        <Box sx={{ mb: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 4 }}>
+        <Box sx={{ mb: { xs: 4, md: 8 }, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: { xs: 2, md: 4 } }}>
           <Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
               <Box sx={{ width: 24, height: 2, bgcolor: 'primary.light' }} />
@@ -36,16 +33,16 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
                 Featured Products
               </Typography>
             </Box>
-            <Typography variant="h2" sx={{ fontSize: { xs: '2.2rem', md: '3rem' }, color: 'primary.main', lineHeight: 1.15 }}>
+            <Typography variant="h2" sx={{ fontSize: { xs: '1.75rem', sm: '2.2rem', md: '3rem' }, color: 'primary.main', lineHeight: 1.15 }}>
               <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
                 Equipment
                 <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 80, md: 100 }, opacity: 0.9 }, zIndex: -1 }}>
                   <img src="/images/headline-curve.svg" alt="Headline curve" />
                 </Box>
               </Box>{' '}
-              That Powers<br />
+              For Every<br />
               <Typography component="span" sx={{ color: 'primary.light', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'inherit' }}>
-                Safe Navigation
+                Maritime Need
               </Typography>
             </Typography>
           </Box>
@@ -57,14 +54,14 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
               width: '100vw',
               ml: 'calc(-50vw + 50%)',
               overflow: 'hidden',
-              py: 2,
+              py: { xs: 1, md: 2 },
             }}
           >
             <Box
               sx={{
                 display: 'flex',
-                gap: 4,
-                pr: 4, // padding equal to gap for seamless infinite loop
+                gap: { xs: 1.25, sm: 2.5, md: 4 },
+                pr: { xs: 1.25, sm: 2.5, md: 4 }, // padding equal to gap for seamless infinite loop
                 width: 'max-content',
                 animation: `${scrollAnimation} 40s linear infinite`,
                 '&:hover': {
@@ -76,7 +73,9 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
                 <Box
                   key={`${product._id}-${index}`}
                   sx={{
-                    width: { xs: 260, sm: 300, md: 340 },
+                    width: { xs: '42vw', sm: 250, md: 340 },
+                    maxWidth: { xs: 170, sm: 250, md: 340 },
+                    minWidth: { xs: 150, sm: 250, md: 340 },
                     flexShrink: 0,
                   }}
                 >

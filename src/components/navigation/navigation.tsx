@@ -9,11 +9,11 @@ import { navigations } from './navigation.data'
 interface NavigationProps {
   isScrolled?: boolean
   items?: NavType[]
+  onNavigate?: () => void
 }
 
-const Navigation: FC<NavigationProps> = ({ isScrolled, items }) => {
+const Navigation: FC<NavigationProps> = ({ isScrolled, items, onNavigate }) => {
   const router = useRouter()
-  const isHome = router.pathname === '/'
   const activeItems = items || navigations
 
   const linkStyles = (isActive: boolean) => ({
@@ -26,10 +26,11 @@ const Navigation: FC<NavigationProps> = ({ isScrolled, items }) => {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
+    width: { xs: '100%', md: 'auto' },
     px: { xs: 2, md: 3 },
-    py: { xs: 1.25, md: 1 },
-    mb: { xs: 1, md: 0 },
-    fontSize: { xs: '1.1rem', md: '1rem' },
+    py: { xs: 1, md: 1 },
+    mb: { xs: 0.25, md: 0 },
+    fontSize: { xs: '1rem', md: '1rem' },
     textDecoration: 'none',
     transition: 'color 0.3s ease-in-out',
     '&:hover': {
@@ -64,16 +65,17 @@ const Navigation: FC<NavigationProps> = ({ isScrolled, items }) => {
   )
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'center', width: { xs: '100%', md: 'auto' }, maxWidth: { xs: 360, md: 'none' } }}>
       {activeItems.map(({ path: destination, label, children }) => {
         const isActive = router.pathname === destination
 
         return (
-          <Box key={destination} sx={{ position: 'relative', '&:hover .dropdown-menu': { display: 'block', opacity: 1, transform: 'translateY(0)' } }}>
+          <Box key={destination} sx={{ position: 'relative', width: { xs: '100%', md: 'auto' }, '&:hover .dropdown-menu': { display: 'block', opacity: 1, transform: 'translateY(0)' } }}>
             <NextLink href={destination} passHref>
               <Box
                 component="a"
                 sx={linkStyles(isActive)}
+                onClick={onNavigate}
               >
                 {renderCurve(isActive)}
                 {label}
@@ -85,35 +87,37 @@ const Navigation: FC<NavigationProps> = ({ isScrolled, items }) => {
               <Box
                 className="dropdown-menu"
                 sx={{
-                  display: 'none',
-                  opacity: 0,
-                  transform: 'translateY(10px)',
-                  position: 'absolute',
+                  display: { xs: 'block', md: 'none' },
+                  opacity: { xs: 1, md: 0 },
+                  transform: { xs: 'none', md: 'translateY(10px)' },
+                  position: { xs: 'static', md: 'absolute' },
                   top: '100%',
                   left: { xs: '50%', md: 0 },
                   transformOrigin: 'top',
-                  minWidth: 220,
-                  bgcolor: 'background.paper',
-                  boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
-                  borderRadius: 2,
-                  py: 1.5,
+                  minWidth: { md: 220 },
+                  width: { xs: '100%', md: 'auto' },
+                  bgcolor: { xs: 'rgba(30,95,166,0.06)', md: 'background.paper' },
+                  boxShadow: { xs: 'none', md: '0 10px 40px rgba(0,0,0,0.15)' },
+                  borderRadius: 1,
+                  py: { xs: 0.5, md: 1.5 },
+                  mb: { xs: 0.75, md: 0 },
                   zIndex: 999,
-                  border: '1px solid rgba(0,0,0,0.05)',
+                  border: { xs: '1px solid rgba(30,95,166,0.08)', md: '1px solid rgba(0,0,0,0.05)' },
                   transition: 'all 0.3s ease',
-                  ...( { xs: { transform: 'translateX(-50%)' }, md: {} } )
                 }}
               >
                 {children.map((child, idx) => (
                   <NextLink key={idx} href={child.path} passHref>
                     <Box
                       component="a"
+                      onClick={onNavigate}
                       sx={{
                         display: 'block',
                         px: 3,
-                        py: 1.5,
+                        py: { xs: 1, md: 1.5 },
                         color: 'text.secondary',
                         textDecoration: 'none',
-                        fontSize: '0.95rem',
+                        fontSize: { xs: '0.86rem', md: '0.95rem' },
                         fontWeight: 600,
                         transition: 'all 0.2s',
                         '&:hover': {

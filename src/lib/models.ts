@@ -42,6 +42,12 @@ const ProductSchema = new Schema({
   questions: [{ question: String, answer: String, userName: String, date: Date }]
 }, { timestamps: true })
 
+// Performance optimization indexes
+ProductSchema.index({ title: 'text', description: 'text' }, { weights: { title: 10, description: 1 } })
+ProductSchema.index({ category: 1 })
+ProductSchema.index({ brand: 1 })
+ProductSchema.index({ featured: 1 })
+
 export const Product: Model<any> = models.Product || model('Product', ProductSchema)
 
 // ── Brand ──
@@ -95,6 +101,9 @@ const SettingsSchema = new Schema({
   contactPhone: { type: String },
   address: { type: String },
   geminiApiKey: { type: String },
+  autoBackgroundRemoval: { type: Boolean, default: false },
+  applyWatermark: { type: Boolean, default: true },
+  watermarkText: { type: String, default: 'Aarfa Marine Solutions' },
 }, { timestamps: true })
 
 export const Settings: Model<any> = models.Settings || model('Settings', SettingsSchema)
