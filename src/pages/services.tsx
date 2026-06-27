@@ -59,10 +59,10 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
               </Box>
             </Typography>
           </Box>
-          <Grid container spacing={4}>
+          <Grid container spacing={{ xs: 2, sm: 4 }}>
             {services && services.length > 0 ? (
               services.map((service, index) => (
-                <Grid item xs={12} sm={6} md={4} key={service._id || index}>
+                <Grid item xs={6} sm={6} md={4} key={service._id || index}>
                   <Card 
                     onClick={() => handleServiceClick(service.name)}
                     sx={{ 
@@ -80,15 +80,15 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
                   }}>
                     <CardMedia
                       component="img"
-                      height="200"
+                      height={{ xs: 120, sm: 200 }}
                       image={service.img || '/images/marine-radio.jpg'}
                       alt={service.name}
                     />
-                    <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                      <Typography variant="h5" component="h3" sx={{ fontWeight: 600, mb: 1, color: 'text.primary' }}>
+                    <CardContent sx={{ flexGrow: 1, p: { xs: 1.5, sm: 3 } }}>
+                      <Typography variant="h5" component="h3" sx={{ fontWeight: 600, mb: 1, color: 'text.primary', fontSize: { xs: '1.05rem', sm: '1.5rem' } }}>
                         {service.name}
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                      <Typography sx={{ color: 'text.secondary', fontSize: { xs: '0.75rem', sm: '0.95rem' }, lineHeight: { xs: 1.4, sm: 1.6 } }}>
                         {service.dec}
                       </Typography>
                     </CardContent>
