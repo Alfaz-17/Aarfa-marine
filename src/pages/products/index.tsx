@@ -179,9 +179,17 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
   }, [category])
 
   const handleMainCategoryClick = (catName: string) => {
-    setSelectedMainCategory(catName)
-    setSelectedSubCategory(null)
-    router.push(`/products?category=${catName}`, undefined, { shallow: true })
+    if (selectedMainCategory === catName) {
+      // Toggle off (close dropdown and clear filter)
+      setSelectedMainCategory(null)
+      setSelectedSubCategory(null)
+      router.push(`/products`, undefined, { shallow: true })
+    } else {
+      // Toggle on (open dropdown and apply filter)
+      setSelectedMainCategory(catName)
+      setSelectedSubCategory(null)
+      router.push(`/products?category=${catName}`, undefined, { shallow: true })
+    }
     setCurrentPage(1)
   }
 
