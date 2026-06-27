@@ -66,29 +66,48 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
                   <Card 
                     onClick={() => handleServiceClick(service.name)}
                     sx={{ 
-                    height: '100%', 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    cursor: 'pointer',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                      borderColor: 'primary.light'
-                    }
-                  }}>
-                    <CardMedia
-                      component="img"
-                      image={service.img || '/images/marine-radio.jpg'}
-                      alt={service.name}
-                      sx={{ height: { xs: 120, sm: 200 }, objectFit: 'cover' }}
-                    />
+                      height: '100%', 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      boxShadow: '0 8px 20px rgba(10,25,47,0.07)',
+                      transition: 'all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                      cursor: 'pointer',
+                      border: '1px solid',
+                      borderColor: 'divider',
+                      overflow: 'hidden',
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        bgcolor: 'primary.main',
+                        borderColor: 'primary.main',
+                        boxShadow: '0 20px 40px rgba(10,25,47,0.2), 0 8px 16px #1E5FA624',
+                        '& .service-img': {
+                          transform: 'scale(1.08)',
+                        },
+                        '& .service-title': {
+                          color: 'common.white',
+                        },
+                        '& .service-desc': {
+                          color: 'rgba(255,255,255,0.7)',
+                        },
+                      }
+                    }}>
+                    <Box sx={{ overflow: 'hidden', height: { xs: 120, sm: 200 } }}>
+                      <CardMedia
+                        className="service-img"
+                        component="img"
+                        sx={{ 
+                          height: '100%',
+                          transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' 
+                        }}
+                        image={service.img || '/images/marine-radio.jpg'}
+                        alt={service.name}
+                      />
+                    </Box>
                     <CardContent sx={{ flexGrow: 1, p: { xs: 1.5, sm: 3 } }}>
-                      <Typography variant="h5" component="h3" sx={{ fontWeight: 600, mb: 1, color: 'text.primary', fontSize: { xs: '1.05rem', sm: '1.5rem' } }}>
+                      <Typography className="service-title" variant="h5" component="h3" sx={{ fontWeight: 600, mb: 1, color: 'text.primary', fontSize: { xs: '1.05rem', sm: '1.5rem' }, transition: 'color 0.3s ease' }}>
                         {service.name}
                       </Typography>
-                      <Typography sx={{ color: 'text.secondary', fontSize: { xs: '0.75rem', sm: '0.95rem' }, lineHeight: { xs: 1.4, sm: 1.6 } }}>
+                      <Typography className="service-desc" sx={{ color: 'text.secondary', fontSize: { xs: '0.75rem', sm: '0.95rem' }, lineHeight: { xs: 1.4, sm: 1.6 }, transition: 'color 0.3s ease' }}>
                         {service.dec}
                       </Typography>
                     </CardContent>

@@ -46,14 +46,16 @@ const MainCategories: FC = () => {
         <Grid container spacing={4}>
           {categories.map((category) => (
             <Grid item xs={12} md={4} key={category.name}>
-              <Link href={`/products?category=${category.name}`} passHref style={{ textDecoration: 'none' }}>
+              <Link href={`/products?category=${category.name}`} passHref>
                 <Box
+                  component="a"
                   sx={{
+                    textDecoration: 'none',
+                    display: 'flex',
                     position: 'relative',
                     borderRadius: 2,
                     overflow: 'hidden',
                     height: { xs: 350, sm: 400, md: 480 },
-                    display: 'flex',
                     alignItems: 'flex-end',
                     boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
                     cursor: 'pointer',
