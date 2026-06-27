@@ -11,8 +11,8 @@
   --color-text: #0a1f40;
   --color-muted: #5f6f84;
   --color-border: #dde5ef;
-  --color-scrollbar: #c7d2df;
-  --color-scrollbar-hover: #9daec2;
+  --color-scrollbar: #1e5fa6;
+  --color-scrollbar-hover: #0a1f40;
 }
 
 ::-webkit-scrollbar {
