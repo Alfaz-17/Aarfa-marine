@@ -56,6 +56,20 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
 const HomeHero: FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoReady, setVideoReady] = useState(false)
+  const [videoSrc, setVideoSrc] = useState('/videos/hero.webm')
+
+  useEffect(() => {
+    const mobileQuery = window.matchMedia('(max-width: 600px)')
+    const updateVideoSource = () => {
+      setVideoReady(false)
+      setVideoSrc(mobileQuery.matches ? '/videos/hero-mobile.mp4' : '/videos/hero.webm')
+    }
+
+    updateVideoSource()
+    mobileQuery.addEventListener('change', updateVideoSource)
+
+    return () => mobileQuery.removeEventListener('change', updateVideoSource)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
@@ -63,6 +77,7 @@ const HomeHero: FC = () => {
 
     const handleCanPlay = () => setVideoReady(true)
     video.addEventListener('canplay', handleCanPlay)
+    video.load()
 
     // If already ready (cached)
     if (video.readyState >= 3) {
@@ -70,13 +85,11 @@ const HomeHero: FC = () => {
     }
 
     return () => video.removeEventListener('canplay', handleCanPlay)
-  }, [])
+  }, [videoSrc])
 
   return (
     <>
-      {/* Preload the hero video for fastest possible start */}
       <Head>
-        <link rel="preload" href="/videos/hero.webm" as="video" type="video/webm" />
         <link rel="preload" href="/videos/hero-poster.jpg" as="image" />
       </Head>
       <Box id="hero" sx={{ 
@@ -118,7 +131,7 @@ const HomeHero: FC = () => {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/videos/hero-poster.jpg"
           style={{
             position: 'absolute',
@@ -133,8 +146,7 @@ const HomeHero: FC = () => {
             transition: 'opacity 0.6s ease-in-out',
           }}
         >
-          <source src="/videos/hero.webm" type="video/webm" />
-          <source src="/videos/hero.mp4" type="video/mp4" />
+          <source src={videoSrc} type={videoSrc.endsWith('.mp4') ? 'video/mp4' : 'video/webm'} />
         </video>
       {/* Slight black overlay for cinematic feel and text contrast */}
       <Box sx={{ 

@@ -5,6 +5,7 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import { FooterSocialLinks } from '@/components/footer'
+import { Logo } from '@/components/logo'
 
 const Footer: FC = () => {
   return (
@@ -36,6 +37,9 @@ const Footer: FC = () => {
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
             <Box sx={{ borderLeft: '3px solid', borderColor: 'primary.light', pl: 3 }}>
+              <Box sx={{ mb: 2 }}>
+                <Logo />
+              </Box>
               <Typography variant="h4" sx={{ color: 'common.white', fontWeight: 800, mb: 1 }}>
                 AARFA MARINE
               </Typography>

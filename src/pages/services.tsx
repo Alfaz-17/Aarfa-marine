@@ -80,9 +80,9 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
                   }}>
                     <CardMedia
                       component="img"
-                      height={{ xs: 120, sm: 200 }}
                       image={service.img || '/images/marine-radio.jpg'}
                       alt={service.name}
+                      sx={{ height: { xs: 120, sm: 200 }, objectFit: 'cover' }}
                     />
                     <CardContent sx={{ flexGrow: 1, p: { xs: 1.5, sm: 3 } }}>
                       <Typography variant="h5" component="h3" sx={{ fontWeight: 600, mb: 1, color: 'text.primary', fontSize: { xs: '1.05rem', sm: '1.5rem' } }}>

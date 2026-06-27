@@ -6,7 +6,8 @@ import { MainLayout } from '@/components/layout'
 import connectToDatabase from '@/lib/db'
 import { Product } from '@/lib/models'
 
-const DynamicHomeHero = dynamic(() => import('../components/home/hero'))
+const DynamicHomeHero = dynamic(() => import('@/components/home/hero'))
+const DynamicMainCategories = dynamic(() => import('@/components/home/main-categories'))
 const DynamicStatsBand = dynamic(() => import('../components/home/stats'))
 const DynamicAboutSection = dynamic(() => import('../components/home/about-section'))
 const DynamicBrandsSection = dynamic(() => import('../components/home/brands-section'))
@@ -27,6 +28,7 @@ const Home: NextPageWithLayout<HomeProps> = ({ featuredProducts, brands }) => {
       <DynamicHomeHero />
       <DynamicBrandsSection brands={brands} />
       <DynamicWhatWeDo />
+      <DynamicMainCategories />
       <DynamicFeaturedProducts products={featuredProducts} />
       <DynamicStatsBand />
       <DynamicCustomerReviews />
