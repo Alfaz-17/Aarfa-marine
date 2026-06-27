@@ -46,13 +46,6 @@ const MAIN_CATEGORIES = [
 ]
 
 const PRODUCTS_PER_PAGE = 8
-const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest First' },
-  { value: 'name_asc', label: 'Name: A → Z' },
-  { value: 'name_desc', label: 'Name: Z → A' },
-  { value: 'price_asc', label: 'Price: Low → High' },
-  { value: 'price_desc', label: 'Price: High → Low' },
-]
 
 // ─── Sidebar Filter Content (shared between desktop sidebar and mobile drawer) ───
 interface FilterContentProps {
@@ -167,7 +160,6 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
   const [selectedMainCategory, setSelectedMainCategory] = useState<string | null>(null)
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
-  const [sortBy, setSortBy] = useState('newest')
   const [currentPage, setCurrentPage] = useState(1)
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
 
@@ -215,20 +207,8 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
       return match
     })
 
-    // Sort
-    result = [...result].sort((a, b) => {
-      switch (sortBy) {
-        case 'name_asc': return (a.title || '').localeCompare(b.title || '')
-        case 'name_desc': return (b.title || '').localeCompare(a.title || '')
-        case 'price_asc': return (a.price || 0) - (b.price || 0)
-        case 'price_desc': return (b.price || 0) - (a.price || 0)
-        case 'newest':
-        default: return 0 // already sorted by createdAt desc from DB
-      }
-    })
-
     return result
-  }, [products, categories, selectedMainCategory, selectedSubCategory, searchQuery, sortBy])
+  }, [products, categories, selectedMainCategory, selectedSubCategory, searchQuery])
 
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE)
@@ -310,7 +290,7 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
                 display: 'grid',
                 gap: { xs: 1, sm: 2 },
                 mb: { xs: 2, md: 3 },
-                gridTemplateColumns: { xs: '44px minmax(0, 1fr)', sm: '48px minmax(0, 1fr) 200px', md: 'minmax(0, 1fr) 200px' },
+                gridTemplateColumns: { xs: '44px minmax(0, 1fr)', md: 'minmax(0, 1fr)' },
                 alignItems: 'center',
               }}>
                 {/* Mobile filter button */}
@@ -364,34 +344,6 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
                     ),
                   }}
                 />
-
-                {/* Sort */}
-                <FormControl
-                  size="small"
-                  sx={{
-                    minWidth: { xs: '100%', sm: 200 },
-                    flexShrink: 0,
-                    gridColumn: { xs: '1 / -1', sm: '3 / 4', md: '2 / 3' },
-                  }}
-                >
-                  <Select
-                    value={sortBy}
-                    onChange={(e) => { setSortBy(e.target.value); setCurrentPage(1) }}
-                    sx={{
-                      bgcolor: 'common.white',
-                      border: '1px solid rgba(10,25,47,0.1)',
-                      borderRadius: 1,
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                      '& fieldset': { border: 'none' },
-                      fontSize: '0.9rem',
-                      '& .MuiSelect-select': { py: 1.4 },
-                    }}
-                  >
-                    {SORT_OPTIONS.map(opt => (
-                      <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
               </Box>
 
               {/* Mobile active filters chips */}
