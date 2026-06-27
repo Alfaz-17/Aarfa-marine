@@ -94,8 +94,8 @@ const HomeHero: FC = () => {
       </Head>
       <Box id="hero" sx={{ 
         position: 'relative', 
-        minHeight: { xs: '100svh', md: '80vh' },
-        height: { xs: '100svh', md: '80vh' },
+        minHeight: { xs: '100svh', md: '100vh' },
+        height: { xs: '100svh', md: '100vh' },
         display: 'flex',
         alignItems: 'center',
         pt: { xs: 11.5, sm: 12.5, md: 8 },

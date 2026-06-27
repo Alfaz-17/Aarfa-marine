@@ -44,9 +44,7 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
-                Section 01
-              </Typography>
+
               <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, mb: 3, color: 'text.primary', position: 'relative', display: 'inline-block' }}>
                 We Are Aarfa Marine
                 <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(2deg)', '& img': { width: { xs: 70, md: 90 }, opacity: 0.9 }, zIndex: -1 }}>
@@ -74,9 +72,7 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption" sx={{ color: '#1E5FA6', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
-                Section 02
-              </Typography>
+
               <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, mb: 3 }}>
                 How It All Started
               </Typography>
@@ -102,9 +98,7 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
       <Box id="the-team" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', display: 'block', mb: 2 }}>
-              Section 03
-            </Typography>
+
             <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, color: 'text.primary' }}>
               Meet the People Behind Aarfa Marine
             </Typography>
