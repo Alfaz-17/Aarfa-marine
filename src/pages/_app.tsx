@@ -11,6 +11,7 @@ import 'slick-carousel/slick/slick.css'
 import '@/styles/globals.css'
 import '@/styles/react-slick.css'
 import { NextPageWithLayout } from '@/interfaces/layout'
+import { TopProgressBar } from '@/components/common/top-progress-bar'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -40,6 +41,7 @@ const App: FC<AppPropsWithLayout> = (props: AppPropsWithLayout) => {
       <MUIProvider>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
+        <TopProgressBar />
         <AuthProvider>
           {getLayout(<Component {...pageProps} />)}
         </AuthProvider>
