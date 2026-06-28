@@ -10,7 +10,14 @@ interface ProductCardProps {
 
 const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
   const isLight = tone === 'light'
-  const categoryName = typeof product.category === 'object' ? product.category?.name : ''
+  let categoryText = ''
+  if (typeof product.category === 'object' && product.category) {
+    if (product.category.mainCategory) {
+      categoryText = `${product.category.mainCategory} / ${product.category.name}`
+    } else {
+      categoryText = product.category.name
+    }
+  }
 
   return (
     <Link href={`/products/${product.slug || product._id}`} passHref>
@@ -62,7 +69,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           borderRadius: 1,
           mb: { xs: 1, md: 2 },
           position: 'relative',
-          height: { xs: 118, sm: 180, md: 240 },
+          height: { xs: 220, sm: 180, md: 240 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -102,12 +109,12 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
       </Box>
       <Box sx={{ mb: { xs: 0.25, md: 2 } }}>
         {/* Category tag */}
-        {categoryName && (
+        {categoryText && (
           <Typography sx={{
-            fontSize: { xs: '0.58rem', sm: '0.65rem', md: '0.68rem' }, fontWeight: 700, textTransform: 'uppercase',
+            fontSize: { xs: '0.65rem', sm: '0.65rem', md: '0.68rem' }, fontWeight: 700, textTransform: 'uppercase',
             letterSpacing: { xs: 0.5, md: 1 }, color: 'secondary.main', mb: 0.5,
           }}>
-            {categoryName}
+            {categoryText}
           </Typography>
         )}
 
@@ -116,7 +123,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           component="h3"
           variant="h5"
           sx={{
-            fontSize: { xs: '0.76rem', sm: '0.95rem', md: '1.15rem' },
+            fontSize: { xs: '0.9rem', sm: '0.95rem', md: '1.15rem' },
             fontWeight: 700,
             mb: { xs: 0.25, md: 1 },
             color: isLight ? 'text.primary' : 'common.white',
@@ -127,7 +134,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
             lineHeight: { xs: 1.25, md: 1.35 },
-            minHeight: { xs: '1.95rem', sm: '2.4rem', md: '2.8rem' }
+            minHeight: { xs: '2.2rem', sm: '2.4rem', md: '2.8rem' }
           }}
         >
           {product.title}
@@ -138,7 +145,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
           <Typography className="product-desc" variant="body2" sx={{
             color: isLight ? 'text.secondary' : 'rgba(255,255,255,0.5)',
             transition: 'color 0.3s ease',
-            fontSize: { xs: '0.68rem', sm: '0.78rem', md: '0.85rem' },
+            fontSize: { xs: '0.8rem', sm: '0.78rem', md: '0.85rem' },
             lineHeight: { xs: 1.35, md: 1.5 },
             overflow: 'hidden',
             textOverflow: 'ellipsis',

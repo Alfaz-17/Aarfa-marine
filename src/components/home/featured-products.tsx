@@ -19,8 +19,8 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
     <Box
       id="featured-products"
       sx={{
-        pt: { xs: 5, md: 6 },
-        pb: { xs: 6, md: 6 },
+        pt: { xs: 8, md: 10 },
+        pb: { xs: 8, md: 10 },
         backgroundColor: 'background.default',
       }}
     >
@@ -33,7 +33,7 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
                 Featured Products
               </Typography>
             </Box>
-            <Typography variant="h2" sx={{ fontSize: { xs: '1.75rem', sm: '2.2rem', md: '3rem' }, color: 'primary.main', lineHeight: 1.15 }}>
+            <Typography variant="h2" sx={{ fontSize: { xs: '2.25rem', sm: '2.5rem', md: '3rem' }, color: 'primary.main', lineHeight: 1.15 }}>
               <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
                 Equipment
                 <Box sx={{ position: 'absolute', bottom: '0px', left: '50%', transform: 'translateX(-50%) rotate(-2deg)', '& img': { width: { xs: 80, md: 100 }, opacity: 0.9 }, zIndex: -1 }}>
@@ -73,9 +73,9 @@ const FeaturedProducts: FC<FeaturedProductsProps> = ({ products }) => {
                 <Box
                   key={`${product._id}-${index}`}
                   sx={{
-                    width: { xs: '65vw', sm: 250, md: 340 },
-                    maxWidth: { xs: 260, sm: 250, md: 340 },
-                    minWidth: { xs: 220, sm: 250, md: 340 },
+                    width: { xs: '70vw', sm: 250, md: 340 },
+                    maxWidth: { xs: '100%', sm: 250, md: 340 },
+                    minWidth: { xs: '70vw', sm: 250, md: 340 },
                     flexShrink: 0,
                   }}
                 >

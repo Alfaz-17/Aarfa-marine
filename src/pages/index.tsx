@@ -26,8 +26,8 @@ const Home: NextPageWithLayout<HomeProps> = ({ featuredProducts, brands }) => {
   return (
     <>
       <DynamicHomeHero />
-      <DynamicBrandsSection brands={brands} />
       <DynamicWhatWeDo />
+      <DynamicBrandsSection brands={brands} />
       <DynamicMainCategories />
       <DynamicFeaturedProducts products={featuredProducts} />
       <DynamicStatsBand />
@@ -43,7 +43,7 @@ export const getStaticProps: GetStaticProps = async () => {
     
     // Fetch products and brands concurrently
     const [products, brands] = await Promise.all([
-      Product.find({}).limit(6).lean(),
+      Product.find({}).populate('category').limit(6).lean(),
       import('@/lib/models').then(m => m.Brand.find({}).lean())
     ])
     
