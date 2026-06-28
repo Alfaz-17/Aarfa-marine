@@ -20,9 +20,9 @@ export default function AdminLoginPage() {
   // Handle redirect if user is already logged in
   useEffect(() => {
     if (user) {
-      router.push('/admin');
+      window.location.href = '/admin';
     }
-  }, [user, router]);
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
     try {
       const result = await login(formData.email, formData.password);
       if (result.success) {
-        router.push('/admin');
+        window.location.href = '/admin';
       } else {
         setError(result.error || 'Login failed');
       }
