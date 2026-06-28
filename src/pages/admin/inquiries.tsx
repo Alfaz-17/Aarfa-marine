@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import AdminLayout from '@/components/admin/admin-layout';
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import { 
   Typography, 
   Box, 
@@ -23,29 +24,13 @@ import { Eye, Mail, Phone, Calendar } from 'lucide-react';
 import { MarineLoader } from '@/components/common/marine-loader';
 
 export default function AdminInquiries() {
-  const [inquiries, setInquiries] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading } = useAdminCache<any[]>('/inquiries');
+  const inquiries = data || [];
+  
   const [selectedInquiry, setSelectedInquiry] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  useEffect(() => {
-    fetchInquiries();
-  }, []);
 
-  const fetchInquiries = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch('/api/inquiries');
-      if (res.ok) {
-        const data = await res.json();
-        setInquiries(data);
-      }
-    } catch (error) {
-      console.error('Error fetching inquiries:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleOpenDialog = (inquiry: any) => {
     setSelectedInquiry(inquiry);
@@ -78,7 +63,7 @@ export default function AdminInquiries() {
         </Typography>
       </Box>
 
-      {loading ? (
+      {isLoading ? (
         <MarineLoader />
       ) : inquiries.length === 0 ? (
         <Paper sx={{ p: 4, textAlign: 'center' }}>

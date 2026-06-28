@@ -1,33 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Plus, Trash2, Edit2, LayoutGrid, Layers } from 'lucide-react';
 import api from '@/lib/api';
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import AdminLayout from '@/components/admin/admin-layout';
 
 const MAIN_CATEGORIES = ['Navigation', 'Automation', 'Communication'];
 
 export default function AdminCategoryPage() {
-  const [categories, setCategories] = useState<any[]>([]);
+  const { data, isLoading, mutate } = useAdminCache<any[]>('/categories');
+  const categories = data || [];
+  
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newMainCategory, setNewMainCategory] = useState('Navigation');
-  const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingName, setEditingName] = useState('');
   const [editingMainCategory, setEditingMainCategory] = useState('Navigation');
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await api.get('/categories');
-        setCategories(res.data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +23,7 @@ export default function AdminCategoryPage() {
 
     try {
       const res = await api.post('/categories', { name: newCategoryName, mainCategory: newMainCategory });
-      setCategories([...categories, res.data]);
+      mutate([...categories, res.data]);
       setNewCategoryName('');
       setMessage({ type: 'success', text: 'New sub-sector registered.' });
     } catch (error) {
@@ -47,7 +35,7 @@ export default function AdminCategoryPage() {
     if (!editingName.trim()) return;
     try {
       const res = await api.put(`/categories/${id}`, { name: editingName, mainCategory: editingMainCategory });
-      setCategories(categories.map(c => c._id === id ? res.data : c));
+      mutate(categories.map(c => c._id === id ? res.data : c));
       setEditingId(null);
       setMessage({ type: 'success', text: 'Sector designation updated.' });
     } catch (error) {
@@ -59,7 +47,7 @@ export default function AdminCategoryPage() {
     if (!window.confirm('Decommission this sector? This may affect linked assets.')) return;
     try {
       await api.delete(`/categories/${id}`);
-      setCategories(categories.filter(c => c._id !== id));
+      mutate(categories.filter(c => c._id !== id));
       setMessage({ type: 'success', text: 'Sector decommissioned.' });
     } catch (error) {
       setMessage({ type: 'error', text: 'Operation failed.' });

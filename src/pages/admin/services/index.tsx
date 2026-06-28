@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import api from '@/lib/api';
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminServiceListPage() {
-  const [services, setServices] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading, mutate } = useAdminCache<any[]>("/services");
+  const services = data || [];
+  
   const [message, setMessage] = useState({ type: '', text: '' });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await api.get("/services");
-        setServices(data);
-      } catch (error) {
-        console.error("Error fetching services", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const handleDelete = async (serviceId: string) => {
     if (!window.confirm('Confirm removal of this service?')) return;
 
     try {
       await api.delete(`/services/${serviceId}`);
-      setServices(services.filter(s => s._id !== serviceId));
+      mutate(services.filter(s => s._id !== serviceId));
       setMessage({ type: 'success', text: 'Service removed successfully.' });
     } catch (error) {
       setMessage({ type: 'error', text: 'Removal failed.' });

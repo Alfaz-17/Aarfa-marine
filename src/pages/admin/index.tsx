@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Package, Grid3X3, Award, ArrowUpRight, ShoppingCart } from 'lucide-react';
-import api from '@/lib/api';
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<any>(null);
+  const { data: stats } = useAdminCache('/products/dashboard/stats');
   const [time, setTime] = useState('');
 
   useEffect(() => {
     setTime(new Date().toLocaleTimeString());
-    const fetchStats = async () => {
-      try {
-        const { data } = await api.get('/products/dashboard/stats');
-        setStats(data);
-      } catch (err) {
-        console.error("Error fetching stats:", err);
-      }
-    };
-    fetchStats();
+    const interval = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
+    return () => clearInterval(interval);
   }, []);
 
   if (!stats) return <div className="text-xs font-mono font-bold uppercase tracking-widest animate-pulse p-4 text-primary-light">Syncing marine system data...</div>;

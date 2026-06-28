@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Plus, Trash2, Award, Upload, X } from 'lucide-react';
 import api from '@/lib/api';
 import { uploadToCloudinary } from '@/lib/utils/cloudinary';
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminBrandPage() {
-  const [brands, setBrands] = useState<any[]>([]);
+  const { data, isLoading, mutate } = useAdminCache<any[]>('/brands');
+  const brands = data || [];
+  
   const [newBrand, setNewBrand] = useState({ name: '', image: '' });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const res = await api.get('/brands');
-        setBrands(res.data);
-      } catch (error) {
-        console.error('Error fetching brands:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchBrands();
-  }, []);
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,7 +55,7 @@ export default function AdminBrandPage() {
           name: newBrand.name, 
           image: logoUrl 
         });
-        setBrands(brands.map(b => b._id === editingId ? res.data : b));
+        mutate(brands.map(b => b._id === editingId ? res.data : b));
         setEditingId(null);
         setMessage({ type: 'success', text: 'Brand identity updated.' });
       } else {
@@ -75,7 +63,7 @@ export default function AdminBrandPage() {
           name: newBrand.name, 
           image: logoUrl 
         });
-        setBrands([...brands, res.data]);
+        mutate([...brands, res.data]);
         setMessage({ type: 'success', text: 'Partner brand synchronized.' });
       }
       
@@ -93,7 +81,7 @@ export default function AdminBrandPage() {
     if (!window.confirm('Sever partnership link with this brand?')) return;
     try {
       await api.delete(`/brands/${id}`);
-      setBrands(brands.filter(b => b._id !== id));
+      mutate(brands.filter(b => b._id !== id));
       setMessage({ type: 'success', text: 'Brand removed.' });
     } catch (error) {
       setMessage({ type: 'error', text: 'Operation failed.' });

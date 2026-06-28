@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, Package, Phone, Mail, Calendar, Loader2, Trash2, CheckCircle, Clock, XCircle, AlertCircle } from "lucide-react"
 import api from "@/lib/api"
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import AdminLayout from '@/components/admin/admin-layout';
 
 interface OrderItem {
@@ -29,30 +30,16 @@ const statusConfig = {
 }
 
 export default function AdminOrdersPage() {
-  const [orders, setOrders] = useState<Order[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data, isLoading, mutate } = useAdminCache<Order[]>("/orders");
+  const orders = data || [];
+  
   const [updating, setUpdating] = useState<string | null>(null)
-
-  useEffect(() => {
-    fetchOrders()
-  }, [])
-
-  const fetchOrders = async () => {
-    try {
-      const { data } = await api.get("/orders")
-      setOrders(data)
-    } catch (err) {
-      console.error("Failed to fetch orders:", err)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const updateStatus = async (orderId: string, newStatus: string) => {
     setUpdating(orderId)
     try {
       await api.put(`/orders/${orderId}`, { status: newStatus })
-      setOrders(orders.map(order => 
+      mutate(orders.map(order => 
         order._id === orderId ? { ...order, status: newStatus as Order['status'] } : order
       ))
     } catch (err) {
@@ -67,7 +54,7 @@ export default function AdminOrdersPage() {
     
     try {
       await api.delete(`/orders/${orderId}`)
-      setOrders(orders.filter(order => order._id !== orderId))
+      mutate(orders.filter(order => order._id !== orderId))
     } catch (err) {
       console.error("Failed to delete order:", err)
     }
@@ -83,7 +70,7 @@ export default function AdminOrdersPage() {
     })
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center p-12 text-primary-light">
         <Loader2 className="w-8 h-8 animate-spin text-primary-light" />

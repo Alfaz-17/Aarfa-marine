@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Search, Star } from 'lucide-react';
 import api from '@/lib/api';
+import { useAdminCache } from '@/hooks/use-admin-cache';
 import AdminLayout from '@/components/admin/admin-layout';
 
 export default function AdminProductListPage() {
-  const [products, setProducts] = useState<any[]>([]);
+  const { data: productsData, mutate: mutateProducts } = useAdminCache<any[]>("/products");
+  const { data: categoriesData } = useAdminCache<any[]>("/categories");
+  
+  const products = productsData || [];
+  const categories = categoriesData || [];
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [categories, setCategories] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState({ type: '', text: '' });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [prodRes, catRes] = await Promise.all([
-          api.get("/products"),
-          api.get("/categories")
-        ]);
-        setProducts(prodRes.data);
-        setCategories(catRes.data);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -43,7 +29,7 @@ export default function AdminProductListPage() {
     try {
       const { data } = await api.put(`/products/${product._id}`, { featured: !product.featured });
       const updatedProduct = { ...product, ...data };
-      setProducts(products.map(p => p._id === product._id ? updatedProduct : p));
+      mutateProducts(products.map(p => p._id === product._id ? updatedProduct : p));
       setMessage({ type: 'success', text: `Asset ${updatedProduct.featured ? 'promoted to strategic status' : 'removed from strategic focus'}.` });
     } catch (error) {
       console.error("Error toggling featured", error);
@@ -56,14 +42,12 @@ export default function AdminProductListPage() {
 
     try {
       await api.delete(`/products/${productId}`);
-      setProducts(products.filter(p => p._id !== productId));
+      mutateProducts(products.filter(p => p._id !== productId));
       setMessage({ type: 'success', text: 'Unit removed from fleet inventory.' });
     } catch (error) {
       setMessage({ type: 'error', text: 'Decommissioning failed. Check system logs.' });
     }
   };
-
-  if (isLoading) return <div className="text-xs font-mono font-bold uppercase tracking-widest animate-pulse text-primary-light">Scanning Inventory Telemetry...</div>;
 
   return (
     <div className="space-y-12">
