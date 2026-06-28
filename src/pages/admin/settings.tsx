@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Save, Sparkles, Type, ShieldCheck, Loader2 } from 'lucide-react';
+import { Save, Sparkles, Type, ShieldCheck, Loader2, Eye, EyeOff } from 'lucide-react';
 import api from '@/lib/api';
 import AdminLayout from '@/components/admin/admin-layout';
 
@@ -18,6 +18,9 @@ export default function AdminSettingsPage() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [passwords, setPasswords] = useState({ currentPassword: '********', newPassword: '' });
+  const [showPasswords, setShowPasswords] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
@@ -53,6 +56,21 @@ export default function AdminSettingsPage() {
       setMessage({ type: 'error', text: 'Failed to save settings.' });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    setIsUpdatingPassword(true);
+    setMessage({ type: '', text: '' });
+    try {
+      await api.post('/auth/change-password', passwords);
+      setMessage({ type: 'success', text: 'Password updated successfully.' });
+      setPasswords({ currentPassword: '', newPassword: '' });
+    } catch (err: any) {
+      console.error("Error updating password:", err);
+      setMessage({ type: 'error', text: err.response?.data?.error || 'Failed to update password.' });
+    } finally {
+      setIsUpdatingPassword(false);
     }
   };
 
@@ -153,6 +171,71 @@ export default function AdminSettingsPage() {
               className="w-4 h-4 accent-[#1E5FA6]"
             />
           </label>
+        </div>
+
+        {/* Security & Authentication */}
+        <div className="bg-primary/55 p-10 border border-primary-light/20 space-y-8 relative">
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-primary-light/40" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary-light/40" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary-light/40" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-primary-light/40" />
+
+          <div className="flex items-center gap-4 text-primary-light border-b border-slate-800 pb-6">
+            <ShieldCheck className="w-5 h-5" />
+            <h2 className="text-xs font-mono font-bold uppercase tracking-widest m-0">Security & Authentication</h2>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-[0.2em] block">Current Password</label>
+              <div className="relative">
+                <input
+                  type={showPasswords ? "text" : "password"}
+                  autoComplete="current-password"
+                  value={passwords.currentPassword}
+                  onChange={(e) => setPasswords(prev => ({ ...prev, currentPassword: e.target.value }))}
+                  className="w-full bg-slate-950/60 border border-primary-light/20 p-5 pr-14 text-sm outline-none focus:border-primary-light transition-colors font-mono text-white"
+                  placeholder="Enter current password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPasswords(!showPasswords)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors bg-transparent border-0 cursor-pointer"
+                >
+                  {showPasswords ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <label className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-[0.2em] block">New Password</label>
+              <div className="relative">
+                <input
+                  type={showPasswords ? "text" : "password"}
+                  autoComplete="new-password"
+                  value={passwords.newPassword}
+                  onChange={(e) => setPasswords(prev => ({ ...prev, newPassword: e.target.value }))}
+                  className="w-full bg-slate-950/60 border border-primary-light/20 p-5 pr-14 text-sm outline-none focus:border-primary-light transition-colors font-mono text-white"
+                  placeholder="Enter new password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPasswords(!showPasswords)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors bg-transparent border-0 cursor-pointer"
+                >
+                  {showPasswords ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <button
+              onClick={handlePasswordChange}
+              disabled={isUpdatingPassword || !passwords.currentPassword || !passwords.newPassword}
+              className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-mono font-bold uppercase tracking-[0.2em] text-[10px] transition-all border-0 cursor-pointer disabled:opacity-50"
+            >
+              {isUpdatingPassword ? 'Updating...' : 'Update Password'}
+            </button>
+          </div>
         </div>
       </div>
 
