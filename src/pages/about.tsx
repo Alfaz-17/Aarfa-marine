@@ -103,35 +103,75 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
               Meet the People Behind Aarfa Marine
             </Typography>
           </Box>
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} md={4}>
-              <Box sx={{ textAlign: 'center', p: 4, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%' }}>
-                <Avatar sx={{ width: 100, height: 100, mx: 'auto', mb: 3, bgcolor: 'primary.main', fontSize: '2rem' }}>A</Avatar>
-                <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>Mr. Afzal</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2 }}>Managing Director & Founder</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                  Founded Aarfa Marine after nearly a decade working as a marine electronics engineer. He handles business operations, technical guidance, and customer relationships personally.
+          <Grid container spacing={4} justifyContent="center" alignItems="stretch">
+            {/* Team Member 1 (MD - Differentiated Design) */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box sx={{ 
+                textAlign: 'center', p: 3, 
+                border: '2px solid', borderColor: 'primary.main', 
+                borderRadius: 2, height: '100%', 
+                background: 'linear-gradient(180deg, rgba(30,95,166,0.05) 0%, rgba(255,255,255,1) 100%)',
+                position: 'relative',
+                boxShadow: '0 8px 24px rgba(30,95,166,0.15)',
+                transition: 'all 0.3s', 
+                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 12px 30px rgba(30,95,166,0.25)' } 
+              }}>
+                <Box sx={{ position: 'absolute', top: 0, left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'primary.main', color: 'white', px: 2, py: 0.5, borderRadius: 5, fontSize: '0.75rem', fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                  Founder
+                </Box>
+                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mt: 1, mb: 2.5, bgcolor: 'primary.main', fontSize: '1.8rem', fontWeight: 600, boxShadow: '0 4px 12px rgba(30,95,166,0.4)' }}>AS</Avatar>
+                <Typography variant="h5" sx={{ fontWeight: 800, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Afjal Sarvaiya</Typography>
+                <Typography sx={{ color: 'primary.main', fontWeight: 700, mb: 2, fontSize: '0.9rem' }}>Managing Director</Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
+                  Leading the vision and strategy for global maritime supply and services at Aarfa Marine.
                 </Typography>
-                <Typography sx={{ mt: 2, fontWeight: 700, color: 'text.primary' }}>+91 9081811248</Typography>
+                <Typography sx={{ mt: 'auto', fontWeight: 800, color: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  📞 +91 8160002323
+                </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ textAlign: 'center', p: 4, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%' }}>
-                <Avatar sx={{ width: 100, height: 100, mx: 'auto', mb: 3, bgcolor: 'primary.light', fontSize: '2rem' }}>F</Avatar>
-                <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>F. Gundigara</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2 }}>Operations Manager</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                  Handles day-to-day operations, order processing, and customer coordination ensuring seamless global dispatch.
+
+            {/* Team Member 2 */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
+                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: 'primary.light', fontSize: '1.8rem', fontWeight: 600 }}>FG</Avatar>
+                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Fejal Gundigara</Typography>
+                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>Operations Manager</Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
+                  Overseeing day-to-day operations, ensuring seamless global dispatch and logistics efficiency.
+                </Typography>
+                <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  📞 +91 8347471248
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <Box sx={{ textAlign: 'center', p: 4, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%' }}>
-                <Avatar sx={{ width: 100, height: 100, mx: 'auto', mb: 3, bgcolor: 'secondary.main', fontSize: '2rem' }}>ET</Avatar>
-                <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, color: 'text.primary' }}>Engineering Team</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2 }}>Certified Technicians</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                  A team of regularly trained marine electronics engineers who handle installation, testing, commissioning, and after-sales service on vessels globally.
+
+            {/* Team Member 3 */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
+                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: '#4caf50', fontSize: '1.8rem', fontWeight: 600 }}>JD</Avatar>
+                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Javed Deraiya</Typography>
+                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>Service Engineer Manager</Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
+                  Managing technical teams, installations, and critical on-board equipment commissioning.
+                </Typography>
+                <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  📞 +91 8306161422
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Team Member 4 */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
+                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: 'secondary.main', fontSize: '1.8rem', fontWeight: 600 }}>SS</Avatar>
+                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Sahil Sarmali</Typography>
+                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>Finance & Account Manager</Typography>
+                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
+                  Directing financial planning, accounting compliance, and corporate financial health.
+                </Typography>
+                <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                  📞 +91 9081811248
                 </Typography>
               </Box>
             </Grid>
