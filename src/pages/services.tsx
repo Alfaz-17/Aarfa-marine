@@ -11,7 +11,8 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
-import PageHero from '@/components/page-hero'
+import { SEO } from '@/components/seo/SEO'
+const PageHero = dynamic(() => import('@/components/page-hero'))
 import { CtaBand, KeyFacts, CustomerReviews } from '@/components/home'
 import { InquiryModal } from '@/components/common/inquiry-modal'
 import connectToDatabase from '@/lib/db'
@@ -32,10 +33,11 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
 
   return (
     <>
-      <Head>
-        <title>Our Services | Aarfa Marine</title>
-        <meta name="description" content="Aarfa Marine - Explore our expertise in Marine Navigation, Communication, and Automation systems." />
-      </Head>
+      <SEO 
+        title="Our Services"
+        description="Aarfa Marine offers supply, installation, and after-sales service for marine electronics, automation, and navigation equipment."
+        canonicalUrl="/services"
+      />
 
       <PageHero 
         title="Our Services & Installation" 

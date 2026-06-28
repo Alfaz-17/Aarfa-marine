@@ -7,18 +7,28 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Email, Phone, LocationOn } from '@mui/icons-material'
+import dynamic from 'next/dynamic'
 
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
-import PageHero from '@/components/page-hero'
+import { SEO } from '@/components/seo/SEO'
+import { client } from '@/lib/sanity'
+import { GetStaticProps } from 'next'
 
-const Contact: NextPageWithLayout = () => {
+const PageHero = dynamic(() => import('@/components/page-hero'))
+
+interface ContactProps {
+  settings: any
+}
+
+const Contact: NextPageWithLayout<ContactProps> = ({ settings }) => {
   return (
     <>
-      <Head>
-        <title>Contact Us | Aarfa Marine</title>
-        <meta name="description" content="Get in touch with Aarfa Marine for all your marine navigation and communication equipment needs." />
-      </Head>
+      <SEO 
+        title="Contact Us"
+        description="Get in touch with Aarfa Marine for all your marine electronics, navigation, and automation equipment needs. We provide global export and technical support."
+        canonicalUrl="/contact"
+      />
 
       <PageHero 
         title="Contact Aarfa Marine" 
@@ -48,7 +58,7 @@ const Contact: NextPageWithLayout = () => {
                   </Box>
                   <Box>
                     <Typography variant="h6" sx={{ mb: 0.5, color: 'text.primary' }}>Head Office</Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>Alang Shipbreaking Yard,<br/>Bhavnagar, Gujarat, India</Typography>
+                    <Typography sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}>{settings?.branchOfficeAddress || 'Alang Shipbreaking Yard,\nBhavnagar, Gujarat, India'}</Typography>
                   </Box>
                 </Box>
                 
@@ -58,7 +68,7 @@ const Contact: NextPageWithLayout = () => {
                   </Box>
                   <Box>
                     <Typography variant="h6" sx={{ mb: 0.5, color: 'text.primary' }}>Email Us</Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>sales@aarfamarine.com</Typography>
+                    <Typography sx={{ color: 'text.secondary' }}>{settings?.email1 || 'sales@aarfamarine.com'}</Typography>
                   </Box>
                 </Box>
                 
@@ -68,7 +78,7 @@ const Contact: NextPageWithLayout = () => {
                   </Box>
                   <Box>
                     <Typography variant="h6" sx={{ mb: 0.5, color: 'text.primary' }}>Call Us 24/7</Typography>
-                    <Typography sx={{ color: 'text.secondary' }}>+91 123 456 7890</Typography>
+                    <Typography sx={{ color: 'text.secondary' }}>{settings?.tel1 || '+91 123 456 7890'}</Typography>
                   </Box>
                 </Box>
               </Box>
@@ -148,5 +158,24 @@ const Contact: NextPageWithLayout = () => {
 }
 
 Contact.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const settings = await client.fetch(`*[_type == "siteSettings"][0]`)
+    return {
+      props: {
+        settings: settings || null,
+      },
+      revalidate: 60,
+    }
+  } catch (error) {
+    return {
+      props: {
+        settings: null,
+      },
+      revalidate: 60,
+    }
+  }
+}
 
 export default Contact

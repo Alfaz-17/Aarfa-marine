@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /studio/
+
+User-agent: Googlebot-Image
+Allow: /
+
+Sitemap: https://aarfamarine.com/sitemap.xml
+Sitemap: https://aarfamarine.com/image-sitemap.xml

@@ -6,8 +6,19 @@ import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import { FooterSocialLinks } from '@/components/footer'
 import { Logo } from '@/components/logo'
+import { client } from '@/lib/sanity'
 
 const Footer: FC = () => {
+  const [settings, setSettings] = React.useState<any>(null)
+
+  React.useEffect(() => {
+    client.fetch(`*[_type == "siteSettings"][0]`)
+      .then((data) => {
+        if (data) setSettings(data)
+      })
+      .catch((err) => console.error("Failed to fetch siteSettings", err))
+  }, [])
+
   return (
     <Box
       id="contact"
@@ -69,14 +80,8 @@ const Footer: FC = () => {
               <Typography variant="subtitle2" sx={{ color: '#D9EAF8', letterSpacing: 1.2, mb: 3, textTransform: 'uppercase' }}>
                 Head Office
               </Typography>
-              <Typography variant="body2" sx={{ color: 'common.white', mb: 1, fontWeight: 700 }}>
-                Navapara Prime, Shop No. 28
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 1 }}>
-                Haluria Chowk to Navapara Road
-              </Typography>
-              <Typography variant="body2">
-                Bhavnagar 364001, Gujarat, India
+              <Typography variant="body2" sx={{ color: 'common.white', mb: 1, fontWeight: 700, whiteSpace: 'pre-line' }}>
+                {settings?.headOfficeAddress || 'Navapara Prime, Shop No. 28\nHaluria Chowk to Navapara Road\nBhavnagar 364001, Gujarat, India'}
               </Typography>
             </Box>
           </Grid>
@@ -97,22 +102,22 @@ const Footer: FC = () => {
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, mb: 2, borderBottom: '1px solid rgba(217,234,248,0.12)', pb: 1, flexWrap: 'wrap' }}>
                 <Typography variant="body2">Tel 1</Typography>
-                <Typography variant="body2" sx={{ color: 'common.white' }}>+91 9081811248</Typography>
+                <Typography variant="body2" sx={{ color: 'common.white' }}>{settings?.tel1 || '+91 9081811248'}</Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, mb: 2, borderBottom: '1px solid rgba(217,234,248,0.12)', pb: 1, flexWrap: 'wrap' }}>
                 <Typography variant="body2">Tel 2</Typography>
-                <Typography variant="body2" sx={{ color: 'common.white' }}>+91 8160002323</Typography>
+                <Typography variant="body2" sx={{ color: 'common.white' }}>{settings?.tel2 || '+91 8160002323'}</Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, mb: 2, borderBottom: '1px solid rgba(217,234,248,0.12)', pb: 1, flexWrap: 'wrap' }}>
                 <Typography variant="body2">Email 1</Typography>
-                <Link href="mailto:sales@aarfamarine.com" sx={{ color: 'common.white', textDecoration: 'none', '&:hover': { color: '#D9EAF8' } }}>
-                  sales@aarfamarine.com
+                <Link href={`mailto:${settings?.email1 || 'sales@aarfamarine.com'}`} sx={{ color: 'common.white', textDecoration: 'none', '&:hover': { color: '#D9EAF8' } }}>
+                  {settings?.email1 || 'sales@aarfamarine.com'}
                 </Link>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, flexWrap: 'wrap' }}>
                 <Typography variant="body2">Email 2</Typography>
-                <Link href="mailto:aarfamarine@gmail.com" sx={{ color: 'common.white', textDecoration: 'none', '&:hover': { color: '#D9EAF8' } }}>
-                  aarfamarine@gmail.com
+                <Link href={`mailto:${settings?.email2 || 'aarfamarine@gmail.com'}`} sx={{ color: 'common.white', textDecoration: 'none', '&:hover': { color: '#D9EAF8' } }}>
+                  {settings?.email2 || 'aarfamarine@gmail.com'}
                 </Link>
               </Box>
             </Box>

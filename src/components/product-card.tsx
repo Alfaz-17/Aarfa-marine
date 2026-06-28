@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface ProductCardProps {
   product: any
@@ -77,12 +78,16 @@ const ProductCard: FC<ProductCardProps> = ({ product, tone = 'dark' }) => {
         }}
       >
         {product.image || product.images?.[0] ? (
-          <img
+          <Image
             className="product-img"
             src={product.image || product.images[0]}
-            alt={product.title}
+            alt={`Buy ${product.title} - Marine Navigation Spares by Aarfa Marine`}
+            title={`High-quality reconditioned ${product.title}`}
+            layout="fill"
+            objectFit="contain"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{
-              width: '100%', height: '100%', objectFit: 'contain', padding: '8px',
+              padding: '8px',
               transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
           />

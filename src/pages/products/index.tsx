@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
+import { SEO } from '@/components/seo/SEO'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
@@ -230,10 +231,11 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
 
   return (
     <>
-      <Head>
-        <title>Products Catalog | Aarfa Marine</title>
-        <meta name="description" content="Browse our complete catalog of marine electronics, navigation aids, and communication systems." />
-      </Head>
+      <SEO 
+        title="Products Catalog"
+        description="Browse our complete catalog of marine electronics, navigation aids, and communication systems from Alang Shipyard."
+        canonicalUrl="/products"
+      />
 
       <PageHero
         title="Products Catalog"

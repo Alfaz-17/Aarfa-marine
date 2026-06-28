@@ -10,6 +10,8 @@ import { AuthProvider } from '@/components/contexts/auth-context'
 import 'slick-carousel/slick/slick.css'
 import '@/styles/globals.css'
 import '@/styles/react-slick.css'
+import { SEO } from '@/components/seo/SEO'
+import { GlobalStructuredData } from '@/components/seo/structured-data'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { TopProgressBar } from '@/components/common/top-progress-bar'
 
@@ -31,13 +33,9 @@ const App: FC<AppPropsWithLayout> = (props: AppPropsWithLayout) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
-        <title>Aarfa Marine - Your Trusted Partner in Marine Navigation</title>
-        <meta name="description" content="Aarfa Marine - Expert Suppliers of Marine Navigation Spare Parts. We provide advanced technology marine solutions, global export, and quality assured products." />
-        <meta name="keywords" content="ECHOSOUNDER, MARINEAIS, AIS, VDR, MARINEVDR, MARINEAUTOPILOT, SHIPNAVIGATION, NAVIGATION & COMMUNICATION, AUTOMATION, BNWAS, NAVTEX, NAVCOM, SPEEDLOG, ALANGMARINE, ALANGMARINEEQUIPMENTS, ALANG, AARFAMARINE, AARFANAVIGATION, GYROCOMPASS, REPEATER, ANTENNA, SSART, DSART, MARINEGPSANTENA, SATELLITE COMPASS, DFAX, PRINTERS" />
-        <meta property="og:title" content="Aarfa Marine - Your Trusted Partner in Marine Navigation" />
-        <meta property="og:description" content="Aarfa Marine - Expert Suppliers of Marine Navigation Spare Parts. We provide advanced technology marine solutions, global export, and quality assured products." />
-        <meta name="author" content="Aarfa Marine" />
       </Head>
+      <SEO />
+      <GlobalStructuredData />
       <MUIProvider>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 const facts = [
   { label: 'Founded', value: '2018' },
   { label: 'Location', value: 'Bhavnagar, India' },
-  { label: 'Experience', value: '9+ Years' },
+  { label: 'Experience', value: '13+ Years' },
   { label: 'Products in Stock', value: '500+ Items' },
   { label: 'Delivery Time', value: 'Within 24 Hours' },
   { label: 'Brands Available', value: '18+ Brands' },

@@ -54,7 +54,7 @@ const HomeFeature: FC = () => {
                 Founded in 2018, Aarfa Marine is an Indian-based Marine Navigation & Communication Equipment Company. We are expert suppliers of marine navigation spare parts with a wide range of marine products.
               </Typography>
               <Typography sx={{ color: 'primary.contrastText', opacity: 0.9, mb: 2, fontSize: '1.1rem' }}>
-                Under the leadership of Mr. Afzal (Managing Director), an engineer in marine electronics since 2014 with over 9+ years of expertise, we have grown to be a trusted partner in marine navigation.
+                Under the leadership of Mr. Afzal (Managing Director), an engineer in marine electronics since 2014 with over 13+ years of expertise, we have grown to be a trusted partner in marine navigation.
               </Typography>
             </Box>
           </Grid>

@@ -11,22 +11,63 @@ import StarIcon from '@mui/icons-material/Star'
 import { GetServerSideProps } from 'next'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
-import PageHero from '@/components/page-hero'
+import { SEO } from '@/components/seo/SEO'
+const PageHero = dynamic(() => import('@/components/page-hero'))
 import { CtaBand, WhyChoose, BrandsSection } from '@/components/home'
 import connectToDatabase from '@/lib/db'
 import { Brand } from '@/lib/models'
 
+import { client, urlFor } from '@/lib/sanity'
+
 interface AboutUsProps {
   brands: any[]
+  teamMembers: any[]
 }
 
-const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
+const defaultTeam = [
+  {
+    name: 'Afjal Sarvaiya',
+    role: 'Managing Director',
+    description: 'Leading the vision and strategy for global maritime supply and services at Aarfa Marine.',
+    phone: '+91 8160002323',
+    initials: 'AS',
+    isFounder: true,
+  },
+  {
+    name: 'Fejal Gundigara',
+    role: 'Operations Manager',
+    description: 'Overseeing day-to-day operations, ensuring seamless global dispatch and logistics efficiency.',
+    phone: '+91 8347471248',
+    initials: 'FG',
+    isFounder: false,
+  },
+  {
+    name: 'Javed Deraiya',
+    role: 'Service Engineer Manager',
+    description: 'Managing technical teams, installations, and critical on-board equipment commissioning.',
+    phone: '+91 8306161422',
+    initials: 'JD',
+    isFounder: false,
+  },
+  {
+    name: 'Sahil Sarmali',
+    role: 'Finance & Account Manager',
+    description: 'Directing financial planning, accounting compliance, and corporate financial health.',
+    phone: '+91 9081811248',
+    initials: 'SS',
+    isFounder: false,
+  }
+]
+
+const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
+  const team = teamMembers?.length > 0 ? teamMembers : defaultTeam;
   return (
     <>
-      <Head>
-        <title>About Us | Aarfa Marine</title>
-        <meta name="description" content="Aarfa Marine - Sourcing and supplying high-quality reconditioned marine navigation spares and ship machinery parts globally from Alang." />
-      </Head>
+      <SEO 
+        title="About Us"
+        description="Learn about Aarfa Marine, a trusted supplier of marine navigation and automation equipment from the Alang Shipbreaking Yard since 2013."
+        canonicalUrl="/about"
+      />
 
       <PageHero 
         title="About Aarfa Marine" 
@@ -40,7 +81,15 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
             <Grid item xs={12} md={6}>
               <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-                <img src="/images/about-bridge.png" alt="Who We Are" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/images/office-outside.jpeg" alt="Aarfa Marine Office Outside" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                {/* Brand color overlay */}
+                <Box sx={{ 
+                  position: 'absolute', 
+                  inset: 0, 
+                  background: 'linear-gradient(to top right, rgba(10,31,64,0.6) 0%, rgba(30,95,166,0.2) 100%)',
+                  mixBlendMode: 'multiply',
+                  pointerEvents: 'none'
+                }} />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -104,77 +153,59 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
             </Typography>
           </Box>
           <Grid container spacing={4} justifyContent="center" alignItems="stretch">
-            {/* Team Member 1 (MD - Differentiated Design) */}
-            <Grid item xs={12} sm={6} md={3}>
-              <Box sx={{ 
-                textAlign: 'center', p: 3, 
-                border: '2px solid', borderColor: 'primary.main', 
-                borderRadius: 2, height: '100%', 
-                background: 'linear-gradient(180deg, rgba(30,95,166,0.05) 0%, rgba(255,255,255,1) 100%)',
-                position: 'relative',
-                boxShadow: '0 8px 24px rgba(30,95,166,0.15)',
-                transition: 'all 0.3s', 
-                '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 12px 30px rgba(30,95,166,0.25)' } 
-              }}>
-                <Box sx={{ position: 'absolute', top: 0, left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'primary.main', color: 'white', px: 2, py: 0.5, borderRadius: 5, fontSize: '0.75rem', fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-                  Founder
-                </Box>
-                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mt: 1, mb: 2.5, bgcolor: 'primary.main', fontSize: '1.8rem', fontWeight: 600, boxShadow: '0 4px 12px rgba(30,95,166,0.4)' }}>AS</Avatar>
-                <Typography variant="h5" sx={{ fontWeight: 800, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Afjal Sarvaiya</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 700, mb: 2, fontSize: '0.9rem' }}>Managing Director</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
-                  Leading the vision and strategy for global maritime supply and services at Aarfa Marine.
-                </Typography>
-                <Typography sx={{ mt: 'auto', fontWeight: 800, color: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                  📞 +91 8160002323
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Team Member 2 */}
-            <Grid item xs={12} sm={6} md={3}>
-              <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
-                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: 'primary.light', fontSize: '1.8rem', fontWeight: 600 }}>FG</Avatar>
-                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Fejal Gundigara</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>Operations Manager</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
-                  Overseeing day-to-day operations, ensuring seamless global dispatch and logistics efficiency.
-                </Typography>
-                <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                  📞 +91 8347471248
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Team Member 3 */}
-            <Grid item xs={12} sm={6} md={3}>
-              <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
-                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: '#4caf50', fontSize: '1.8rem', fontWeight: 600 }}>JD</Avatar>
-                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Javed Deraiya</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>Service Engineer Manager</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
-                  Managing technical teams, installations, and critical on-board equipment commissioning.
-                </Typography>
-                <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                  📞 +91 8306161422
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Team Member 4 */}
-            <Grid item xs={12} sm={6} md={3}>
-              <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
-                <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: 'secondary.main', fontSize: '1.8rem', fontWeight: 600 }}>SS</Avatar>
-                <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>Sahil Sarmali</Typography>
-                <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>Finance & Account Manager</Typography>
-                <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
-                  Directing financial planning, accounting compliance, and corporate financial health.
-                </Typography>
-                <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                  📞 +91 9081811248
-                </Typography>
-              </Box>
-            </Grid>
+            {team.map((member: any, idx: number) => {
+              const isFounder = member.isFounder || member.role?.toLowerCase().includes('founder') || member.role?.toLowerCase().includes('managing director');
+              const initials = member.initials || member.name.split(' ').map((n: string) => n[0]).join('');
+              
+              if (isFounder) {
+                return (
+                  <Grid item xs={12} sm={6} md={3} key={idx}>
+                    <Box sx={{ 
+                      textAlign: 'center', p: 3, 
+                      border: '2px solid', borderColor: 'primary.main', 
+                      borderRadius: 2, height: '100%', 
+                      background: 'linear-gradient(180deg, rgba(30,95,166,0.05) 0%, rgba(255,255,255,1) 100%)',
+                      position: 'relative',
+                      boxShadow: '0 8px 24px rgba(30,95,166,0.15)',
+                      transition: 'all 0.3s', 
+                      '&:hover': { transform: 'translateY(-5px)', boxShadow: '0 12px 30px rgba(30,95,166,0.25)' } 
+                    }}>
+                      <Box sx={{ position: 'absolute', top: 0, left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'primary.main', color: 'white', px: 2, py: 0.5, borderRadius: 5, fontSize: '0.75rem', fontWeight: 800, letterSpacing: 1, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                        Founder
+                      </Box>
+                      <Avatar sx={{ width: 90, height: 90, mx: 'auto', mt: 1, mb: 2.5, bgcolor: 'primary.main', fontSize: '1.8rem', fontWeight: 600, boxShadow: '0 4px 12px rgba(30,95,166,0.4)' }}>{initials}</Avatar>
+                      <Typography variant="h5" sx={{ fontWeight: 800, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>{member.name}</Typography>
+                      <Typography sx={{ color: 'primary.main', fontWeight: 700, mb: 2, fontSize: '0.9rem' }}>{member.role}</Typography>
+                      <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
+                        {member.description}
+                      </Typography>
+                      <Typography sx={{ mt: 'auto', fontWeight: 800, color: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                        📞 {member.phone}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                )
+              }
+              
+              const bgColors = ['primary.light', '#4caf50', 'secondary.main', '#ff9800', '#9c27b0'];
+              const bgColor = bgColors[idx % bgColors.length];
+              
+              return (
+                <Grid item xs={12} sm={6} md={3} key={idx}>
+                  <Box sx={{ textAlign: 'center', p: 3, border: '1px solid', borderColor: 'grey.200', borderRadius: 2, height: '100%', transition: 'all 0.3s', '&:hover': { borderColor: 'primary.main', boxShadow: '0 10px 30px rgba(10,25,47,0.08)', transform: 'translateY(-5px)' } }}>
+                    <Avatar sx={{ width: 90, height: 90, mx: 'auto', mb: 2.5, bgcolor: bgColor, fontSize: '1.8rem', fontWeight: 600 }}>{initials}</Avatar>
+                    <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, color: 'text.primary', fontSize: '1.25rem' }}>{member.name}</Typography>
+                    <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>{member.role}</Typography>
+                    <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
+                      {member.description}
+                    </Typography>
+                    <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+                      📞 {member.phone}
+                    </Typography>
+                  </Box>
+                </Grid>
+              )
+            })}
           </Grid>
         </Container>
       </Box>
@@ -195,17 +226,22 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands }) => {
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
     await connectToDatabase()
-    const brands = await Brand.find({}).lean()
+    const [brands, teamMembers] = await Promise.all([
+      Brand.find({}).lean(),
+      client.fetch(`*[_type == "teamMember"] | order(order asc)`).catch(() => [])
+    ])
     
     return {
       props: {
         brands: JSON.parse(JSON.stringify(brands)),
+        teamMembers,
       },
     }
   } catch (error) {
     return {
       props: {
         brands: [],
+        teamMembers: [],
       },
     }
   }

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Container from '@mui/material/Container'
@@ -15,7 +15,7 @@ interface ExpItemProps {
   item: Exp
 }
 
-const exps: Array<Exp> = [
+const defaultExps: Array<Exp> = [
   {
     label: 'Years Experience',
     value: '9+',
@@ -53,15 +53,22 @@ const ExpItem: FC<ExpItemProps> = ({ item }) => {
   )
 }
 
-const HomeHero: FC = () => {
+interface HomeHeroProps {
+  data?: any
+}
+
+const HomeHero: FC<HomeHeroProps> = ({ data }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoReady, setVideoReady] = useState(false)
   const [videoSrc, setVideoSrc] = useState('/videos/hero.webm')
+  
+  const headline = data?.heroHeadline || "Marine Navigation & Communication Systems"
+  const subtitle = data?.heroSubtitle || "Trader, distributor, and service provider for reconditioned marine electronics, navigation aids, and automation equipment."
+  const stats = data?.heroStats || defaultExps
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('(max-width: 600px)')
     const updateVideoSource = () => {
-      setVideoReady(false)
       setVideoSrc(mobileQuery.matches ? '/videos/hero-mobile.mp4' : '/videos/hero.webm')
     }
 
@@ -70,22 +77,6 @@ const HomeHero: FC = () => {
 
     return () => mobileQuery.removeEventListener('change', updateVideoSource)
   }, [])
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const handleCanPlay = () => setVideoReady(true)
-    video.addEventListener('canplay', handleCanPlay)
-    video.load()
-
-    // If already ready (cached)
-    if (video.readyState >= 3) {
-      setVideoReady(true)
-    }
-
-    return () => video.removeEventListener('canplay', handleCanPlay)
-  }, [videoSrc])
 
   return (
     <>
@@ -103,30 +94,8 @@ const HomeHero: FC = () => {
         overflow: 'hidden',
         backgroundColor: 'primary.dark',
       }}>
-        {/* Tiny blurred placeholder — renders instantly (~1KB) */}
-        <Box
-          component="img"
-          src="/videos/hero-poster-tiny.jpg"
-          alt=""
-          aria-hidden="true"
-          sx={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            top: 0,
-            left: 0,
-            zIndex: 0,
-            filter: 'blur(20px)',
-            transform: 'scale(1.1)', // prevent blur edge artifacts
-            opacity: videoReady ? 0 : 1,
-            transition: 'opacity 0.6s ease-in-out',
-            willChange: videoReady ? 'auto' : 'filter, transform, opacity',
-          }}
-        />
         {/* Video element with poster for fast first-frame display */}
         <video
-          ref={videoRef}
           autoPlay
           loop
           muted
@@ -142,8 +111,7 @@ const HomeHero: FC = () => {
             top: 0,
             left: 0,
             zIndex: 1,
-            opacity: videoReady ? 0.8 : 0,
-            transition: 'opacity 0.6s ease-in-out',
+            opacity: 0.8,
           }}
         >
           <source src={videoSrc} type={videoSrc.endsWith('.mp4') ? 'video/mp4' : 'video/webm'} />
@@ -170,8 +138,9 @@ const HomeHero: FC = () => {
           flexDirection: 'column', 
           flex: { md: 1 }, 
           alignItems: 'center',
-          justifyContent: 'center',
-          py: { xs: 2, md: 0 }
+          justifyContent: 'flex-start',
+          pt: { xs: 4, md: 8 },
+          pb: { xs: 2, md: 0 }
         }}>
           <Grid item xs={12} md={10} lg={8} sx={{ mx: 'auto' }}>
             <Box
@@ -180,8 +149,9 @@ const HomeHero: FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 width: '100%',
+                mt: { xs: 6, md: 10 },
               }}
             >
               <Typography
@@ -189,26 +159,18 @@ const HomeHero: FC = () => {
                 sx={{
                   fontSize: { xs: '1.72rem', sm: '2.8rem', md: '2.85rem', lg: '3.25rem' },
                   fontWeight: 800,
-                  lineHeight: { xs: 1.35, md: 0.95 },
+                  lineHeight: { xs: 1.1, md: 0.8 },
                   letterSpacing: 0,
                   color: 'common.white',
                   mb: 0,
                   textShadow: '0px 4px 12px rgba(0,0,0,0.9), 0px 8px 24px rgba(0,0,0,0.6)',
                 }}
               >
-                Marine Navigation & <br />
-                <Typography
-                  component="span"
-                  sx={{
-                    fontSize: 'inherit',
-                    fontWeight: 'inherit',
-                    fontFamily: 'inherit',
-                    color: 'primary.light',
-                  }}
-                >
-                  Communication
-                </Typography> <br />
-                Systems
+                <div dangerouslySetInnerHTML={{ 
+                  __html: headline
+                    .replace('&', '& <br />')
+                    .replace('Communication', '<span style="color:#1E5FA6">Communication</span> <br />') 
+                }} />
               </Typography>
 
               <Typography 
@@ -224,7 +186,7 @@ const HomeHero: FC = () => {
                   textShadow: '0px 1px 3px rgba(0,0,0,0.5)',
                 }}
               >
-                Trader, distributor, and service provider for reconditioned marine electronics, navigation aids, and automation equipment.
+                {subtitle}
               </Typography>
 
               <Box sx={{ display: 'flex', flexDirection: 'row', width: 'auto', flexWrap: 'wrap', justifyContent: 'center', gap: { xs: 1.25, sm: 2 } }}>
@@ -289,8 +251,8 @@ const HomeHero: FC = () => {
           borderTop: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
           <Grid container spacing={{ xs: 1, md: 2 }}>
-            {exps.map((item) => (
-              <Grid key={item.value} item xs={4} md={4}>
+            {stats.map((item: any) => (
+              <Grid key={item.label} item xs={4} md={4}>
                 <ExpItem item={item} />
               </Grid>
             ))}

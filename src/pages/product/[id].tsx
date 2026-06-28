@@ -1,53 +1,28 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { ChevronLeft, ChevronDown, Phone, Mail, ShieldCheck, Cpu, Globe, X } from "lucide-react"
-import api from "@/lib/api"
-import { MarineLoader } from "@/components/common/marine-loader"
 import { OrderForm } from "@/components/common/order-form"
 import { motion, AnimatePresence } from "framer-motion"
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/interfaces/layout'
+import { GetServerSideProps } from 'next'
+import connectToDatabase from '@/lib/db'
+import { Product } from '@/lib/models'
+import { SEO } from '@/components/seo/SEO'
+import { ProductSchema } from '@/components/seo/product-schema'
 
-const ProductDetailPage: NextPageWithLayout = () => {
-  const router = useRouter()
-  const { id } = router.query
-  const [product, setProduct] = useState<any>(null)
-  const [relatedProducts, setRelatedProducts] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
+interface ProductProps {
+  product: any
+  relatedProducts: any[]
+}
+
+const ProductDetailPage: NextPageWithLayout<ProductProps> = ({ product, relatedProducts }) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>("details")
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        const { data } = await api.get(`/products/${id}`);
-        setProduct(data);
 
-        // Fetch related products
-        if (data?.category?._id) {
-          const relatedRes = await api.get(
-            `/products?category=${data.category._id}`
-          );
-          const related = relatedRes.data
-            .filter((p: any) => p._id !== data._id)
-            .slice(0, 4);
-          setRelatedProducts(related);
-        }
-      } catch (err) {
-        console.error("Error fetching product:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) fetchProduct();
-  }, [id]);
-
-  if (loading) return <MarineLoader />;
   if (!product) return (
     <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-6 bg-slate-50 font-sans">
       <h2 className="text-3xl font-extrabold text-primary font-syne m-0">Asset Not Found</h2>
@@ -66,10 +41,14 @@ const ProductDetailPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <Head>
-        <title>{product.title} | Aarfa Marine Spares</title>
-        <meta name="description" content={product.description || "Refurbished marine equipment spares."} />
-      </Head>
+      <SEO 
+        title={`${product.title} ${product.brand ? `by ${product.brand}` : ''}`}
+        description={product.description || `Buy ${product.title} from Aarfa Marine. High-quality marine equipment from Alang Shipyard.`}
+        canonicalUrl={`/product/${product._id}`}
+        ogImage={product.image}
+        ogType="article"
+      />
+      <ProductSchema product={product} />
       <main className="min-h-screen pb-16 md:pb-20 pt-28 md:pt-32 bg-marine-mist text-primary font-sans overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
@@ -257,5 +236,37 @@ const ProductDetailPage: NextPageWithLayout = () => {
 }
 
 ProductDetailPage.getLayout = (page) => <MainLayout>{page}</MainLayout>
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const { id } = context.params as { id: string }
+    await connectToDatabase()
+    
+    // Check if valid ObjectId if you are using mongoose ObjectId strictly
+    const product = await Product.findById(id).populate('category').lean()
+    
+    if (!product) {
+      return { notFound: true }
+    }
+
+    let relatedProducts = []
+    if (product.category) {
+      relatedProducts = await Product.find({ 
+        category: product.category._id,
+        _id: { $ne: product._id }
+      }).limit(4).lean()
+    }
+    
+    return {
+      props: {
+        product: JSON.parse(JSON.stringify(product)),
+        relatedProducts: JSON.parse(JSON.stringify(relatedProducts))
+      }
+    }
+  } catch (error) {
+    console.error("Error in getServerSideProps for product:", error)
+    return { notFound: true }
+  }
+}
 
 export default ProductDetailPage

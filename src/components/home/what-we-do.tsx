@@ -7,7 +7,7 @@ import InventoryIcon from '@mui/icons-material/Inventory'
 import BuildIcon from '@mui/icons-material/Build'
 import SupportAgentIcon from '@mui/icons-material/SupportAgent'
 
-const services = [
+const defaultServices = [
   {
     title: 'Supply of Marine Equipment',
     desc: 'We supply a wide range of marine electronics — Navigation, Automation, and Communication equipment — sourced from trusted brands and the Alang Shipbreaking Yard.',
@@ -25,7 +25,20 @@ const services = [
   }
 ]
 
-const WhatWeDo: FC = () => {
+const getIcon = (idx: number) => {
+  if (idx === 0) return <InventoryIcon sx={{ fontSize: 40, color: 'primary.light' }} />;
+  if (idx === 1) return <BuildIcon sx={{ fontSize: 40, color: 'primary.light' }} />;
+  return <SupportAgentIcon sx={{ fontSize: 40, color: 'primary.light' }} />;
+}
+
+interface WhatWeDoProps {
+  data?: any
+}
+
+const WhatWeDo: FC<WhatWeDoProps> = ({ data }) => {
+  const headline = data?.whatWeDoHeadline || "Our Three Core Solutions"
+  const services = data?.whatWeDoServices || defaultServices
+
   return (
     <Box sx={{ 
       py: { xs: 6, md: 8 }, 
@@ -63,13 +76,7 @@ const WhatWeDo: FC = () => {
                 What We Do
               </Typography>
               <Typography variant="h2" sx={{ fontSize: { xs: '1.5rem', md: '2.5rem' }, fontWeight: 700, color: 'common.white', position: 'relative', display: 'inline-block' }}>
-                Our Three Core{' '}
-                <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
-                  Solutions
-                  <Box sx={{ position: 'absolute', bottom: '0px', left: { xs: '50%', md: 0 }, transform: { xs: 'translateX(-50%) rotate(2deg)', md: 'rotate(2deg)' }, '& img': { width: { xs: 80, md: 120 }, opacity: 0.9 }, zIndex: -1 }}>
-                    <img src="/images/headline-curve.svg" alt="Headline curve" />
-                  </Box>
-                </Box>
+                <div dangerouslySetInnerHTML={{ __html: headline.replace('Solutions', '<span style="position:relative;display:inline-block;padding-bottom:12px;">Solutions<div style="position:absolute;bottom:0px;left:0;z-index:-1"><img src="/images/headline-curve.svg" alt="Headline curve" /></div></span>') }} />
               </Typography>
             </Box>
 
@@ -119,7 +126,7 @@ const WhatWeDo: FC = () => {
                       border: '1px solid rgba(255,255,255,0.08)',
                       transition: 'all 0.4s ease',
                     }}>
-                      {React.cloneElement(item.icon as React.ReactElement, { className: 'icon', sx: { fontSize: 26, color: 'primary.light', transition: 'color 0.4s ease' } })}
+                      {React.cloneElement((item.icon || getIcon(idx)) as React.ReactElement, { className: 'icon', sx: { fontSize: 26, color: 'primary.light', transition: 'color 0.4s ease' } })}
                     </Box>
                     
                     <Box>
@@ -127,7 +134,7 @@ const WhatWeDo: FC = () => {
                         {item.title}
                       </Typography>
                       <Typography sx={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, fontSize: { xs: '0.8rem', md: '0.85rem' } }}>
-                        {item.desc}
+                        {item.description || item.desc}
                       </Typography>
                     </Box>
                   </Box>

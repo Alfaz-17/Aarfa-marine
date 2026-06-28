@@ -19,8 +19,7 @@ class MyDocument extends Document<DocumentProps> {
         <Head>
           <meta charSet="utf-8" />
           <link rel="icon" href="/favicon.ico" />
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
-
+          <link rel="icon" href="/favicon.ico" />
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.background.paper} />
 
