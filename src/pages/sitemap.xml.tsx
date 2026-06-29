@@ -45,19 +45,20 @@ function generateSiteMap(products: any[], categories: any[]) {
        })
        .join('')}
 
-     ${products
-       .map(({ _id }) => {
-         return `
-       <url>
-           <loc>${EXTERNAL_DATA_URL}/product/${_id}</loc>
-           <changefreq>weekly</changefreq>
-           <priority>0.85</priority>
-       </url>
-     `
-       })
-       .join('')}
-   </urlset>
- `
+      ${products
+        .map(({ _id, slug }) => {
+          const urlIdentifier = slug || _id
+          return `
+        <url>
+            <loc>${EXTERNAL_DATA_URL}/products/${urlIdentifier}</loc>
+            <changefreq>weekly</changefreq>
+            <priority>0.85</priority>
+        </url>
+      `
+        })
+        .join('')}
+    </urlset>
+  `
 }
 
 export default function SiteMap() {
@@ -69,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     await connectToDatabase()
     
     // Fetch data for dynamic routes
-    const products = await Product.find({}, '_id').lean()
+    const products = await Product.find({}, '_id slug').lean()
     const categories = await Category.find({}, '_id name').lean()
 
     // We generate the XML sitemap with the data

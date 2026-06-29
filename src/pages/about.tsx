@@ -231,18 +231,31 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
       <Dialog 
         open={!!lightboxImage} 
         onClose={() => setLightboxImage(null)}
-        maxWidth="lg"
+        maxWidth="xl"
         fullWidth
-        PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', m: 0, p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' } }}
+        PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', m: 0, p: 0, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' } }}
       >
         <IconButton 
           onClick={() => setLightboxImage(null)} 
-          sx={{ position: 'absolute', top: 16, right: 16, color: 'white', bgcolor: 'rgba(0,0,0,0.5)', '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' }, zIndex: 10 }}
+          sx={{ 
+            position: 'fixed', 
+            top: { xs: 16, md: 32 }, 
+            right: { xs: 16, md: 32 }, 
+            color: 'white', 
+            bgcolor: 'rgba(0,0,0,0.7)', 
+            border: '2px solid rgba(255,255,255,0.3)',
+            width: 56,
+            height: 56,
+            zIndex: 9999,
+            transition: 'all 0.2s',
+            '&:hover': { bgcolor: 'primary.main', borderColor: 'white', transform: 'scale(1.1)' } 
+          }}
+          aria-label="Close"
         >
-          <CloseIcon size={24} />
+          <CloseIcon size={32} />
         </IconButton>
         {lightboxImage && (
-          <Box sx={{ position: 'relative', width: '100%', height: '90vh' }}>
+          <Box sx={{ position: 'relative', width: '90vw', height: '90vh' }}>
             <Image src={lightboxImage} alt="Enlarged view" layout="fill" objectFit="contain" />
           </Box>
         )}
