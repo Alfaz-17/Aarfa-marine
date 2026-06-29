@@ -33,6 +33,7 @@ const App: FC<AppPropsWithLayout> = (props: AppPropsWithLayout) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link rel="icon" type="image/png" href="/aarfa-logo.png" />
       </Head>
       <SEO />
       <GlobalStructuredData />
