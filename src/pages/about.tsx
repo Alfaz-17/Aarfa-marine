@@ -8,10 +8,12 @@ import Avatar from '@mui/material/Avatar'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import StarIcon from '@mui/icons-material/Star'
-import { GetServerSideProps } from 'next'
+import Image from 'next/image'
+import { GetStaticProps } from 'next'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
 import { SEO } from '@/components/seo/SEO'
+import dynamic from 'next/dynamic'
 const PageHero = dynamic(() => import('@/components/page-hero'))
 import { CtaBand, WhyChoose, BrandsSection } from '@/components/home'
 import connectToDatabase from '@/lib/db'
@@ -80,8 +82,8 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
         <Container maxWidth="lg">
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
             <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-                <img src="/images/office-outside.jpeg" alt="Aarfa Marine Office Outside" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', height: { xs: 300, md: 450 } }}>
+                <Image src="/images/office-outside.jpeg" alt="Aarfa Marine Office Outside" layout="fill" objectFit="cover" />
                 {/* Brand color overlay */}
                 <Box sx={{ 
                   position: 'absolute', 
@@ -116,8 +118,8 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
         <Container maxWidth="lg">
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center" direction="row-reverse">
             <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>
-                <img src="/images/about-workshop.png" alt="Our Story" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', height: { xs: 300, md: 450 } }}>
+                <Image src="/images/about-workshop.png" alt="Our Story" layout="fill" objectFit="cover" />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -223,12 +225,12 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     await connectToDatabase()
     const [brands, teamMembers] = await Promise.all([
       Brand.find({}).lean(),
-      client.fetch(`*[_type == "teamMember"] | order(order asc)`).catch(() => [])
+      client.fetch(`*[_type == "teamMember" && !(_id in path("drafts.**"))] | order(order asc)`).catch(() => [])
     ])
     
     return {
@@ -236,6 +238,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         brands: JSON.parse(JSON.stringify(brands)),
         teamMembers,
       },
+      revalidate: 60,
     }
   } catch (error) {
     return {
@@ -243,6 +246,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         brands: [],
         teamMembers: [],
       },
+      revalidate: 60,
     }
   }
 }
