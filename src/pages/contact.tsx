@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { Email, Phone, LocationOn } from '@mui/icons-material'
+import { Email, Phone, LocationOn, Person } from '@mui/icons-material'
 import dynamic from 'next/dynamic'
 
 import { NextPageWithLayout } from '@/interfaces/layout'
@@ -79,6 +79,17 @@ const Contact: NextPageWithLayout<ContactProps> = ({ settings }) => {
                   <Box>
                     <Typography variant="h6" sx={{ mb: 0.5, color: 'text.primary' }}>Call Us 24/7</Typography>
                     <Typography sx={{ color: 'text.secondary' }}>{settings?.tel1 || '+91 123 456 7890'}</Typography>
+                  </Box>
+                </Box>
+                
+                <Box sx={{ display: 'flex', gap: 3 }}>
+                  <Box sx={{ bgcolor: '#1E5FA61A', p: 2, borderRadius: 1, display: 'flex' }}>
+                    <Person sx={{ color: 'primary.light' }} />
+                  </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ mb: 0.5, color: 'text.primary' }}>Founder</Typography>
+                    <Typography sx={{ color: 'text.secondary', fontWeight: 600 }}>Afzal Sarvaiya</Typography>
+                    <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem' }}>Marine Electronics Engineer</Typography>
                   </Box>
                 </Box>
               </Box>

@@ -138,9 +138,9 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
           flexDirection: 'column', 
           flex: { md: 1 }, 
           alignItems: 'center',
-          justifyContent: 'flex-start',
-          pt: { xs: 4, md: 8 },
-          pb: { xs: 2, md: 0 }
+          justifyContent: 'center',
+          pt: { xs: 6, md: 0 },
+          pb: 0
         }}>
           <Grid item xs={12} md={10} lg={8} sx={{ mx: 'auto' }}>
             <Box
@@ -151,25 +151,26 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
                 width: '100%',
-                mt: { xs: 6, md: 10 },
+                mt: 0,
               }}
             >
               <Typography
                 component="h1"
                 sx={{
-                  fontSize: { xs: '1.72rem', sm: '2.8rem', md: '2.85rem', lg: '3.25rem' },
+                  fontSize: { xs: '1.5rem', sm: '2.2rem', md: '2.4rem', lg: '2.8rem' },
                   fontWeight: 800,
-                  lineHeight: { xs: 1.1, md: 0.8 },
+                  lineHeight: { xs: 1.2, md: 1.1 },
                   letterSpacing: 0,
                   color: 'common.white',
                   mb: 0,
+                  maxWidth: { xs: '100%', md: 800 },
+                  mx: 'auto',
                   textShadow: '0px 4px 12px rgba(0,0,0,0.9), 0px 8px 24px rgba(0,0,0,0.6)',
                 }}
               >
-                <div dangerouslySetInnerHTML={{ 
+                <span dangerouslySetInnerHTML={{ 
                   __html: headline
-                    .replace('&', '& <br />')
-                    .replace('Communication', '<span style="color:#1E5FA6">Communication</span> <br />') 
+                    .replace('Communication', '<span style="color:#4BA3E3">Communication</span>') 
                 }} />
               </Typography>
 
@@ -177,10 +178,10 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
                 sx={{ 
                   color: '#F8FAFC',
                   lineHeight: { xs: 1.8, md: 1.3 },
-                  fontSize: { xs: '0.9rem', md: '1.125rem' },
+                  fontSize: { xs: '0.85rem', md: '1rem' },
                   fontWeight: 400,
-                  mt: { xs: 0.5, md: 1 },
-                  mb: { xs: 2, md: 3 },
+                  mt: { xs: 0.5, md: 0.5 },
+                  mb: { xs: 1.5, md: 2 },
                   maxWidth: { xs: 520, md: 600 },
                   mx: 'auto',
                   textShadow: '0px 1px 3px rgba(0,0,0,0.5)',
@@ -200,7 +201,7 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
                     letterSpacing: 1,
                     fontSize: { xs: '0.68rem', md: '0.75rem' },
                     px: { xs: 2.4, md: 4.5 },
-                    py: { xs: 1.15, md: 1.5 },
+                    py: { xs: 0.8, md: 1 },
                     width: 'auto',
                     minWidth: { xs: 128, sm: 140 },
                     backgroundColor: 'primary.main',
@@ -226,7 +227,7 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
                     letterSpacing: 1,
                     fontSize: { xs: '0.68rem', md: '0.75rem' },
                     px: { xs: 2.4, md: 4.5 },
-                    py: { xs: 1.15, md: 1.5 },
+                    py: { xs: 0.8, md: 1 },
                     width: 'auto',
                     minWidth: { xs: 128, sm: 140 },
                     '&:hover': { 

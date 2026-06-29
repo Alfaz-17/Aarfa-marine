@@ -30,7 +30,7 @@ const Navigation: FC<NavigationProps> = ({ isScrolled, items, onNavigate }) => {
     px: { xs: 2, md: 3 },
     py: { xs: 1, md: 1 },
     mb: { xs: 0.25, md: 0 },
-    fontSize: { xs: '1rem', md: '1rem' },
+    fontSize: { xs: '1rem', md: isScrolled ? '1rem' : '1.2rem' },
     textDecoration: 'none',
     transition: 'color 0.3s ease-in-out',
     '&:hover': {

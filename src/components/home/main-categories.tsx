@@ -113,7 +113,7 @@ const MainCategories: FC = () => {
           <Typography variant="h2" sx={{ fontSize: { xs: '2rem', md: '3rem' }, fontWeight: 700, color: 'text.primary', position: 'relative', display: 'inline-block' }}>
             Explore Our Core{' '}
             <Box component="span" sx={{ position: 'relative', display: 'inline-block', pb: { xs: 2, md: 3 } }}>
-              Sectors
+              Categories
               <Box sx={{ position: 'absolute', bottom: '0px', left: { xs: '50%', md: 0 }, transform: { xs: 'translateX(-50%) rotate(2deg)', md: 'rotate(2deg)' }, '& img': { width: { xs: 80, md: 120 }, opacity: 0.9 }, zIndex: -1 }}>
                 <img src="/images/headline-curve.svg" alt="Headline curve" />
               </Box>

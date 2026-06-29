@@ -8,7 +8,7 @@ interface Props {
 }
 
 const Logo: FC<Props> = ({ onClick, isScrolled }) => {
-  const logoWidth = { xs: isScrolled ? 60 : 68, sm: isScrolled ? 64 : 72, md: isScrolled ? 60 : 75 }
+  const logoWidth = { xs: isScrolled ? 60 : 85, sm: isScrolled ? 64 : 110, md: isScrolled ? 60 : 160 }
 
   return (
     <Box onClick={onClick} sx={{ 

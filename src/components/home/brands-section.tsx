@@ -15,15 +15,38 @@ const BrandsSection: FC<BrandsSectionProps> = ({ brands = [] }) => {
     <Box
       sx={{
         backgroundColor: 'common.white',
-        py: { xs: 3, md: 5 },
+        py: { xs: 5, md: 7 },
         borderTop: '1px solid',
         borderBottom: '1px solid',
         borderColor: 'grey.200',
         overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
       }}
     >
+      <Box sx={{ textAlign: 'center', mb: 4, px: 2 }}>
+        <Typography 
+          variant="subtitle2" 
+          sx={{ 
+            color: 'text.secondary', 
+            fontWeight: 700, 
+            letterSpacing: 2, 
+            textTransform: 'uppercase',
+            display: 'inline-block',
+            position: 'relative',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              bottom: -8,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: 40,
+              height: 2,
+              bgcolor: 'primary.light'
+            }
+          }}
+        >
+          We Deal with All Marine Brands
+        </Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
