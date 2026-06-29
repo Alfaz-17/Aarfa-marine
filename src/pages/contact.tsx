@@ -161,7 +161,7 @@ Contact.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const settings = await client.fetch(`*[_type == "siteSettings"][0]`)
+    const settings = await client.fetch(`*[_type == "siteSettings" && !(_id in path("drafts.**"))][0]`)
     return {
       props: {
         settings: settings || null,
