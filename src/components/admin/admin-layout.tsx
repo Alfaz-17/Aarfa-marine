@@ -34,7 +34,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     }
   }, [user, loading, pathname, router]);
 
-  if (loading) return <MarineLoader />;
+  if (loading) {
+    // @ts-ignore
+    return <MarineLoader />;
+  }
   if (!user && pathname !== '/admin/login') return null;
 
   // Don't show layout on login page

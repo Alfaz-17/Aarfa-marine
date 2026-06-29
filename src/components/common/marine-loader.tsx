@@ -1,6 +1,6 @@
 import React from "react";
 
-export const MarineLoader = () => {
+export const MarineLoader = (): React.ReactElement => {
   return (
     <div className="w-full h-screen flex justify-center items-center bg-slate-50">
       <div className="flex flex-col items-center">
