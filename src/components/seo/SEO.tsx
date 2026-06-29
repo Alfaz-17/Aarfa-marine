@@ -17,7 +17,7 @@ const siteMetadata = {
   defaultTitle: 'Aarfa Marine | Marine Spare Parts & Marine Services Supplier',
   description: 'Supplier of high-quality marine spare parts, automation systems, electronics, and reconditioned equipment sourced from Alang Shipyard. Global export available.',
   siteUrl: 'https://aarfamarine.com', // Replace with actual domain when live
-  defaultImage: '/videos/hero-poster.jpg',
+  defaultImage: '/aarfa-logo.png',
   twitterHandle: '@aarfamarine',
   defaultKeywords: ['marine spare parts', 'Alang shipyard', 'ship parts', 'marine automation', 'marine electronics', 'ship engine parts', 'marine equipment supplier'],
 }
