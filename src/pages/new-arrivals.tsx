@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -63,20 +63,25 @@ const NewArrivals: NextPageWithLayout<NewArrivalsProps> = ({ products }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     await connectToDatabase()
     
-    // Fetch products, sort by newest first, limit to 12
-    const products = await Product.find({}).sort({ createdAt: -1 }).limit(12).lean()
+    // Fetch recently added products
+    const recentProducts = await Product.find({})
+      .sort({ createdAt: -1 }) // Sort by newest
+      .limit(16) // Limit to 16 products
+      .populate('category')
+      .lean()
+      
+    // Properly serialize Mongoose documents for Next.js props
+    const serializedProducts = JSON.parse(JSON.stringify(recentProducts))
     
-    // Properly serialize Mongoose documents for Next.js
-    const serializedProducts = JSON.parse(JSON.stringify(products))
-
     return {
       props: {
         products: serializedProducts,
       },
+      revalidate: 60,
     }
   } catch (error) {
     console.error("Error fetching new arrivals:", error)
@@ -84,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       props: {
         products: [],
       },
+      revalidate: 60,
     }
   }
 }

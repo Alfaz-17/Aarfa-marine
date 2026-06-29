@@ -12,7 +12,7 @@ const Footer: FC = () => {
   const [settings, setSettings] = React.useState<any>(null)
 
   React.useEffect(() => {
-    client.fetch(`*[_type == "siteSettings"][0]`)
+    client.fetch(`*[_type == "siteSettings" && !(_id in path("drafts.**"))][0]`)
       .then((data) => {
         if (data) setSettings(data)
       })

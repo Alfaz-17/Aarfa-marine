@@ -7,7 +7,7 @@ import { OrderForm } from "@/components/common/order-form"
 import { motion, AnimatePresence } from "framer-motion"
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/interfaces/layout'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import connectToDatabase from '@/lib/db'
 import { Product } from '@/lib/models'
 import { SEO } from '@/components/seo/SEO'
@@ -237,7 +237,14 @@ const ProductDetailPage: NextPageWithLayout<ProductProps> = ({ product, relatedP
 
 ProductDetailPage.getLayout = (page) => <MainLayout>{page}</MainLayout>
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [], // Pre-render no pages at build time, render on demand
+    fallback: 'blocking' // Wait for HTML to generate on first request
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
   try {
     const { id } = context.params as { id: string }
     await connectToDatabase()
@@ -261,10 +268,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         product: JSON.parse(JSON.stringify(product)),
         relatedProducts: JSON.parse(JSON.stringify(relatedProducts))
-      }
+      },
+      revalidate: 60,
     }
   } catch (error) {
-    console.error("Error in getServerSideProps for product:", error)
+    console.error("Error in getStaticProps for product:", error)
     return { notFound: true }
   }
 }

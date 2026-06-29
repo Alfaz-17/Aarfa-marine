@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -12,6 +12,7 @@ import CardMedia from '@mui/material/CardMedia'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
 import { SEO } from '@/components/seo/SEO'
+import dynamic from 'next/dynamic'
 const PageHero = dynamic(() => import('@/components/page-hero'))
 import { CtaBand, KeyFacts, CustomerReviews } from '@/components/home'
 import { InquiryModal } from '@/components/common/inquiry-modal'
@@ -140,7 +141,7 @@ const Services: NextPageWithLayout<ServicesProps> = ({ services }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   try {
     await connectToDatabase()
     
@@ -154,6 +155,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       props: {
         services: serializedServices,
       },
+      revalidate: 60,
     }
   } catch (error) {
     console.error("Error fetching services:", error)

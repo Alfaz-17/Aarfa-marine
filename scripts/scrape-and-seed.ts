@@ -187,7 +187,7 @@ async function scrapeProductDetail(productHref: string, categoryId: any) {
 
 async function run() {
   console.log('Connecting to MongoDB...');
-  await mongoose.connect(DB_URI);
+  await mongoose.connect(DB_URI as string);
   console.log('Connected to DB.');
 
   console.log('Dropping existing Category and Product collections...');

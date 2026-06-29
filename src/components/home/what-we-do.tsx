@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import BuildIcon from '@mui/icons-material/Build'
 import SupportAgentIcon from '@mui/icons-material/SupportAgent'
+import Image from 'next/image'
 
 const defaultServices = [
   {
@@ -64,7 +65,7 @@ const WhatWeDo: FC<WhatWeDoProps> = ({ data }) => {
               height: { xs: 280, md: '100%' },
               minHeight: { md: 380 }
             }}>
-              <img src="/images/what-we-do.png" alt="Marine engineer installing navigation equipment" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <Image src="/images/what-we-do.png" alt="Marine engineer installing navigation equipment" layout="fill" objectFit="cover" />
               <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(to top, rgba(10,25,47,0.8) 0%, transparent 100%)', pointerEvents: 'none' }} />
             </Box>
           </Grid>

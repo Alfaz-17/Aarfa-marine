@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const [products, brands, homePageData] = await Promise.all([
       Product.find({}).populate('category').limit(6).lean(),
       import('@/lib/models').then(m => m.Brand.find({}).lean()),
-      client.fetch(`*[_type == "homePage"][0]`).catch(() => null)
+      client.fetch(`*[_type == "homePage" && !(_id in path("drafts.**"))][0]`).catch(() => null)
     ])
     
     // Properly serialize Mongoose documents for Next.js props

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GetServerSideProps } from 'next'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -262,7 +262,14 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [], // Pre-render no pages at build time, render on demand
+    fallback: 'blocking' // Wait for HTML to generate on first request
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
   try {
     await connectToDatabase()
     
@@ -278,39 +285,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return { notFound: true }
     }
 
-    const serializedProduct = JSON.parse(JSON.stringify(product))
-
-    // Fetch related products
+    // Fetch related products (same category)
     let relatedProducts = []
     if (product.category) {
-      const categoryId = product.category._id || product.category
-      const related = await Product.find({ 
-        category: categoryId,
+      relatedProducts = await Product.find({ 
+        category: product.category._id,
         _id: { $ne: product._id }
-      })
-      .limit(4)
-      .populate('category brand')
-      .lean()
-      
-      relatedProducts = JSON.parse(JSON.stringify(related))
+      }).limit(4).lean()
     }
-
+    
     return {
       props: {
-        product: serializedProduct,
-        relatedProducts,
+        product: JSON.parse(JSON.stringify(product)),
+        relatedProducts: JSON.parse(JSON.stringify(relatedProducts))
       },
+      revalidate: 60,
     }
   } catch (error) {
-    console.error("Error fetching product:", error)
-    return {
-      props: {
-        product: null,
-      },
-    }
+    console.error("Error in getStaticProps for product:", error)
+    return { notFound: true }
   }
 }
 
-ProductDetailPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>
+ProductDetail.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>
 
 export default ProductDetailPage
