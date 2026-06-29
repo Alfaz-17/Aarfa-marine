@@ -307,6 +307,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-ProductDetail.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>
+ProductDetailPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>
 
 export default ProductDetailPage
