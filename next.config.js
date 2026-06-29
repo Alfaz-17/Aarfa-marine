@@ -11,7 +11,7 @@ const nextConfig = {
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   },
   images: {
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com', 'cdn.sanity.io'],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 2592000,
   },

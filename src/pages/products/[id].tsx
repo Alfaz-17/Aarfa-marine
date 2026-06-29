@@ -7,6 +7,9 @@ import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Dialog from '@mui/material/Dialog'
+import IconButton from '@mui/material/IconButton'
+import { X as CloseIcon } from 'lucide-react'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import Chip from '@mui/material/Chip'
@@ -33,6 +36,7 @@ interface ProductDetailPageProps {
 const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product, relatedProducts }) => {
   const [inquiryMessage, setInquiryMessage] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
   const handleRequestQuoteClick = () => {
     setInquiryMessage(`I am interested in requesting a quote for: ${product.title}`)
@@ -136,7 +140,14 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
                   alignItems: 'center', 
                   justifyContent: 'center',
                   minHeight: { xs: 280, sm: 360, md: 400 },
-                  position: 'relative'
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s',
+                  '&:hover': { transform: 'scale(1.02)' }
+                }}
+                onClick={() => {
+                  if (product.image || product.images?.[0]) {
+                    setLightboxImage(product.image || product.images[0])
+                  }
                 }}
               >
                 {product.featured && (
@@ -162,7 +173,15 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
                 <Grid container spacing={2} sx={{ mt: 1 }}>
                   {product.images.map((img: string, idx: number) => (
                     <Grid item xs={3} key={idx}>
-                      <Box sx={{ bgcolor: 'background.default', borderRadius: 1, p: 1, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Box 
+                        sx={{ 
+                          bgcolor: 'background.default', borderRadius: 1, p: 1, height: 80, 
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          cursor: 'pointer', border: '2px solid transparent',
+                          '&:hover': { borderColor: 'primary.main' }
+                        }}
+                        onClick={() => setLightboxImage(img)}
+                      >
                          <img src={img} alt={`${product.title} ${idx}`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                       </Box>
                     </Grid>
@@ -258,6 +277,25 @@ const ProductDetailPage: NextPageWithLayout<ProductDetailPageProps> = ({ product
         source="Product Page"
         defaultMessage={inquiryMessage}
       />
+
+      {/* Image Lightbox */}
+      <Dialog 
+        open={!!lightboxImage} 
+        onClose={() => setLightboxImage(null)}
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', m: 0, p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' } }}
+      >
+        <IconButton 
+          onClick={() => setLightboxImage(null)} 
+          sx={{ position: 'absolute', top: 16, right: 16, color: 'white', bgcolor: 'rgba(0,0,0,0.5)', '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' } }}
+        >
+          <CloseIcon size={24} />
+        </IconButton>
+        {lightboxImage && (
+          <img src={lightboxImage} alt="Enlarged product view" style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain' }} />
+        )}
+      </Dialog>
     </>
   )
 }

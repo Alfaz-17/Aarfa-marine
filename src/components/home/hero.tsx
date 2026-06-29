@@ -6,6 +6,10 @@ import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 import Head from 'next/head'
 import { StyledButton } from '@/components/styled-button'
+import { useRouter } from 'next/router'
+import InputBase from '@mui/material/InputBase'
+import SearchIcon from '@mui/icons-material/Search'
+import IconButton from '@mui/material/IconButton'
 
 interface Exp {
   label: string
@@ -58,6 +62,17 @@ interface HomeHeroProps {
 }
 
 const HomeHero: FC<HomeHeroProps> = ({ data }) => {
+  const [videoLoaded, setVideoLoaded] = useState(false)
+  const router = useRouter()
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
+
   const videoRef = useRef<HTMLVideoElement>(null)
   const [videoReady, setVideoReady] = useState(false)
   const [videoSrc, setVideoSrc] = useState('/videos/hero.webm')
@@ -139,7 +154,7 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
           flex: { md: 1 }, 
           alignItems: 'center',
           justifyContent: 'center',
-          pt: { xs: 6, md: 0 },
+          pt: { xs: 6, md: 12 },
           pb: 0
         }}>
           <Grid item xs={12} md={10} lg={8} sx={{ mx: 'auto' }}>
@@ -163,14 +178,16 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
                   letterSpacing: 0,
                   color: 'common.white',
                   mb: 0,
-                  maxWidth: { xs: '100%', md: 800 },
+                  maxWidth: { xs: '100%', md: 850 },
                   mx: 'auto',
-                  textShadow: '0px 4px 12px rgba(0,0,0,0.9), 0px 8px 24px rgba(0,0,0,0.6)',
+                  textShadow: '0px 2px 8px rgba(0,0,0,0.4)',
                 }}
               >
                 <span dangerouslySetInnerHTML={{ 
                   __html: headline
-                    .replace('Communication', '<span style="color:#4BA3E3">Communication</span>') 
+                    .replace('Navigation', '<span style="color:#93C5FD">Navigation</span>')
+                    .replace('Automation', '<span style="color:#93C5FD">Automation</span>')
+                    .replace('Communication', '<span style="color:#93C5FD">Communication</span>') 
                 }} />
               </Typography>
 
@@ -189,6 +206,54 @@ const HomeHero: FC<HomeHeroProps> = ({ data }) => {
               >
                 {subtitle}
               </Typography>
+
+              <Box component="form" onSubmit={handleSearch} sx={{ 
+                display: 'flex', 
+                flexDirection: 'row', 
+                alignItems: 'center',
+                width: '100%', 
+                maxWidth: { xs: '100%', sm: 480 },
+                mx: 'auto',
+                mb: 3,
+                backgroundColor: 'common.white',
+                borderRadius: 50,
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+                p: 0.75,
+                transition: 'all 0.3s ease',
+                '&:focus-within': {
+                  boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(75, 163, 227, 0.5)',
+                }
+              }}>
+                <InputBase
+                  placeholder="Search for marine equipment..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  sx={{ 
+                    ml: 2.5, 
+                    flex: 1, 
+                    color: 'text.primary',
+                    fontWeight: 500,
+                    fontSize: { xs: '0.95rem', md: '1.05rem' },
+                    '& input::placeholder': {
+                      color: 'text.secondary',
+                      opacity: 0.8
+                    }
+                  }}
+                />
+                <IconButton type="submit" sx={{ 
+                  p: 1.5, 
+                  mr: 0.25,
+                  color: 'common.white', 
+                  backgroundColor: 'primary.main', 
+                  transition: 'all 0.2s',
+                  '&:hover': { 
+                    backgroundColor: 'primary.dark',
+                    transform: 'scale(1.05)'
+                  } 
+                }}>
+                  <SearchIcon />
+                </IconButton>
+              </Box>
 
               <Box sx={{ display: 'flex', flexDirection: 'row', width: 'auto', flexWrap: 'wrap', justifyContent: 'center', gap: { xs: 1.25, sm: 2 } }}>
                 <Link href="/products" passHref>

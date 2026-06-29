@@ -9,6 +9,10 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import StarIcon from '@mui/icons-material/Star'
 import Image from 'next/image'
+import { useState } from 'react'
+import Dialog from '@mui/material/Dialog'
+import IconButton from '@mui/material/IconButton'
+import { X as CloseIcon } from 'lucide-react'
 import { GetStaticProps } from 'next'
 import { NextPageWithLayout } from '@/interfaces/layout'
 import { MainLayout } from '@/components/layout'
@@ -62,6 +66,7 @@ const defaultTeam = [
 ]
 
 const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
   const team = teamMembers?.length > 0 ? teamMembers : defaultTeam;
   return (
     <>
@@ -82,7 +87,10 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
         <Container maxWidth="lg">
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center">
             <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', height: { xs: 300, md: 450 } }}>
+              <Box 
+                sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', height: { xs: 300, md: 450 }, cursor: 'pointer', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.02)' } }}
+                onClick={() => setLightboxImage('/images/office-outside.jpeg')}
+              >
                 <Image src="/images/office-outside.jpeg" alt="Aarfa Marine Office Outside" layout="fill" objectFit="cover" />
                 {/* Brand color overlay */}
                 <Box sx={{ 
@@ -118,7 +126,10 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
         <Container maxWidth="lg">
           <Grid container spacing={{ xs: 5, md: 8 }} alignItems="center" direction="row-reverse">
             <Grid item xs={12} md={6}>
-              <Box sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', height: { xs: 300, md: 450 } }}>
+              <Box 
+                sx={{ position: 'relative', borderRadius: 2, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.3)', height: { xs: 300, md: 450 }, cursor: 'pointer', transition: 'transform 0.3s', '&:hover': { transform: 'scale(1.02)' } }}
+                onClick={() => setLightboxImage('/images/about-workshop.png')}
+              >
                 <Image src="/images/about-workshop.png" alt="Our Story" layout="fill" objectFit="cover" />
               </Box>
             </Grid>
@@ -181,9 +192,6 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
                       <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
                         {member.description}
                       </Typography>
-                      <Typography sx={{ mt: 'auto', fontWeight: 800, color: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                        📞 {member.phone}
-                      </Typography>
                     </Box>
                   </Grid>
                 )
@@ -200,9 +208,6 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
                     <Typography sx={{ color: 'primary.main', fontWeight: 600, mb: 2, fontSize: '0.9rem' }}>{member.role}</Typography>
                     <Typography sx={{ color: 'text.secondary', fontSize: '0.9rem', lineHeight: 1.5, mb: 2 }}>
                       {member.description}
-                    </Typography>
-                    <Typography sx={{ mt: 'auto', fontWeight: 700, color: 'text.primary', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-                      📞 {member.phone}
                     </Typography>
                   </Box>
                 </Grid>
@@ -221,6 +226,27 @@ const AboutUs: NextPageWithLayout<AboutUsProps> = ({ brands, teamMembers }) => {
 
 
       <CtaBand tone="dark" />
+
+      {/* Image Lightbox */}
+      <Dialog 
+        open={!!lightboxImage} 
+        onClose={() => setLightboxImage(null)}
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none', m: 0, p: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' } }}
+      >
+        <IconButton 
+          onClick={() => setLightboxImage(null)} 
+          sx={{ position: 'absolute', top: 16, right: 16, color: 'white', bgcolor: 'rgba(0,0,0,0.5)', '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' }, zIndex: 10 }}
+        >
+          <CloseIcon size={24} />
+        </IconButton>
+        {lightboxImage && (
+          <Box sx={{ position: 'relative', width: '100%', height: '90vh' }}>
+            <Image src={lightboxImage} alt="Enlarged view" layout="fill" objectFit="contain" />
+          </Box>
+        )}
+      </Dialog>
     </>
   )
 }

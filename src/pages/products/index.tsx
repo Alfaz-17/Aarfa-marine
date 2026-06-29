@@ -156,7 +156,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
 // ─── Main Page ───────────────────────────────────────────────────
 const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categories, brands }) => {
   const router = useRouter()
-  const { category } = router.query
+  const { category, search } = router.query
 
   const [selectedMainCategory, setSelectedMainCategory] = useState<string | null>(null)
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(null)
@@ -169,7 +169,10 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
     if (category && typeof category === 'string') {
       setSelectedMainCategory(category)
     }
-  }, [category])
+    if (search && typeof search === 'string') {
+      setSearchQuery(search)
+    }
+  }, [category, search])
 
   const handleMainCategoryClick = (catName: string) => {
     if (selectedMainCategory === catName) {
@@ -195,16 +198,37 @@ const ProductsPage: NextPageWithLayout<ProductsPageProps> = ({ products, categor
   const filteredProducts = useMemo(() => {
     let result = products.filter((product) => {
       let match = true
-      if (searchQuery && !product.title.toLowerCase().includes(searchQuery.toLowerCase())) match = false
-      if (selectedMainCategory) {
-        const catObj = categories.find(c => c._id === (typeof product.category === 'string' ? product.category : product.category?._id))
-        const mainCatOfProduct = catObj?.mainCategory || 'Navigation'
-        if (mainCatOfProduct !== selectedMainCategory) match = false
+      
+      // Resolve category names for search and filtering
+      const catObj = categories.find(c => c._id === (typeof product.category === 'string' ? product.category : product.category?._id))
+      const mainCatOfProduct = catObj?.mainCategory || 'Navigation'
+      const subCatOfProduct = catObj?.name || ''
+
+      // 1. Text Search (checks title, main category, and subcategory)
+      if (searchQuery) {
+        const sq = searchQuery.toLowerCase()
+        const matchesTitle = product.title?.toLowerCase().includes(sq)
+        const matchesMainCat = mainCatOfProduct.toLowerCase().includes(sq)
+        const matchesSubCat = subCatOfProduct.toLowerCase().includes(sq)
+        
+        if (!matchesTitle && !matchesMainCat && !matchesSubCat) {
+          match = false
+        }
       }
+
+      // 2. Main Category Filter
+      if (selectedMainCategory && mainCatOfProduct !== selectedMainCategory) {
+        match = false
+      }
+
+      // 3. Sub Category Filter
       if (selectedSubCategory) {
         const categoryId = typeof product.category === 'string' ? product.category : product.category?._id
-        if (categoryId !== selectedSubCategory) match = false
+        if (categoryId !== selectedSubCategory) {
+          match = false
+        }
       }
+
       return match
     })
 

@@ -165,6 +165,10 @@ const Footer: FC = () => {
               
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <Box>
+                  <Typography variant="body2" sx={{ color: 'common.white' }}>MD & Founder: Afjal Sarvaiya</Typography>
+                </Box>
+
+                <Box>
                   <Typography variant="caption" sx={{ color: 'primary.light', display: 'block', mb: 0.5, fontWeight: 600 }}>PHONE</Typography>
                   <Typography variant="body2" sx={{ color: 'common.white' }}>{settings?.tel1 || '+91 9081811248'}</Typography>
                   <Typography variant="body2" sx={{ color: 'common.white', mt: 0.3 }}>{settings?.tel2 || '+91 8160002323'}</Typography>

@@ -78,7 +78,7 @@ const Header: FC = () => {
         borderRadius: isScrolled ? { xs: 2, md: 50 } : 0,
         boxShadow: isScrolled ? '0 12px 40px rgba(30, 95, 166, 0.15)' : 'none',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-        py: { xs: 0.75, md: isScrolled ? 1 : 3 },
+        py: { xs: 0.75, md: isScrolled ? 1.5 : 2 },
         px: { xs: 1, sm: 1.5, md: 4 },
       }}>
         {/* Desktop Navigation */}
